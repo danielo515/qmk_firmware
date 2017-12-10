@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
     [VSC] = KEYMAP(
         KC_DEL,   LCTL(LSFT(KC_P)),   KC_ESC,
-        FIX_ALL,  T_TERM,             LINE_COMMENT,
+        FIX_ALL,  T_TERM,             TD(COMMENT),
         MAC_TGL,  TO(NUMPAD),         KC_TRNS),
     /* LAYER 2
   * ,-----------------------------------.
@@ -73,19 +73,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [ENT_5] = ACTION_TAP_DANCE_DOUBLE(KC_5, KC_ENT),
-    [ZERO_1] = ACTION_TAP_DANCE_DOUBLE(KC_1, KC_0),
-    [COMMENT] = ACTION_TAP_DANCE_DOUBLE(BLK_COMMENT, LINE_COMMENT)
-  };
-
-void matrix_init_user(void)
-{
-}
-
-void matrix_scan_user(void)
-{
-}
 
 bool VSCommand(bool isMac, char *cmd)
 {
@@ -95,6 +82,29 @@ bool VSCommand(bool isMac, char *cmd)
   send_string(cmd);
   SEND_STRING(SS_TAP(X_ENTER));
   return false;
+}
+
+void dance_comment_finished (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    VSCommand(on_mac, "toggle line comment");
+  } else {
+    VSCommand(on_mac, "toggle block comment");
+  }
+  reset_tap_dance (state);
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [ENT_5] = ACTION_TAP_DANCE_DOUBLE(KC_5, KC_ENT),
+    [ZERO_1] = ACTION_TAP_DANCE_DOUBLE(KC_1, KC_0),
+    [COMMENT] = ACTION_TAP_DANCE_FN(dance_comment_finished)
+  };
+
+void matrix_init_user(void)
+{
+}
+
+void matrix_scan_user(void)
+{
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
