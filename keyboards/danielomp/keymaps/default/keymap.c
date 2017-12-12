@@ -1,5 +1,5 @@
 #include "danielomp.h"
-#define CMD(str) on_mac ? SS_LGUI(str) : SS_LCTRL(str)
+
 // Tap Dance Declarations
 enum
 {
@@ -15,6 +15,7 @@ enum custom_keycodes
   BLK_COMMENT,
   LINE_COMMENT,
   MAC_TGL,
+  CMD_SHIFT_P,
   DBL_0
 };
 
@@ -54,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * `--------------------------------------------'
   */
     [VSC] = KEYMAP(
-        KC_DEL,   LCTL(LSFT(KC_P)),   KC_ESC,
+        KC_DEL,   CMD_SHIFT_P,   KC_ESC,
         FIX_ALL,  T_TERM,             TD(COMMENT),
         MAC_TGL,  TO(NUMPAD),         KC_TRNS),
     /* LAYER 2
@@ -73,12 +74,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+bool cmd_shift_p (bool isMac) {
+   isMac
+   ? SEND_STRING(SS_DOWN(X_LSHIFT)SS_LGUI("p")SS_UP(X_LSHIFT))
+   : SEND_STRING(SS_DOWN(X_LSHIFT)SS_LCTRL("p")SS_UP(X_LSHIFT));
+   return false;
+ }
 
 bool VSCommand(bool isMac, char *cmd)
 {
-  SEND_STRING(SS_DOWN(X_LSHIFT));
-  isMac ? SEND_STRING(SS_LGUI("p")) : SEND_STRING(SS_LCTRL("p"));
-  SEND_STRING(SS_UP(X_LSHIFT));
+  cmd_shift_p(isMac);
   send_string(cmd);
   SEND_STRING(SS_TAP(X_ENTER));
   return false;
@@ -129,6 +134,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       break;
     case LINE_COMMENT:
       return VSCommand(on_mac, "toggle line comment");
+      break;
+    case CMD_SHIFT_P:
+      return cmd_shift_p(on_mac);
       break;
     case MAC_TGL:
       on_mac = !on_mac;
