@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-docker run --rm -v $(pwd):/qmk -e subproject="" danielomp_builder:latest
+KEYBOARD=${1-:danielomp}
+KEYMAP=${2-:default}
+docker run --rm -v $(pwd):/qmk -e keyboard=$KEYBOARD -e subproject=" " -e keymap="$KEYMAP" danielomp_builder:latest
