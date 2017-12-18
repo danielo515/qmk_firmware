@@ -29,8 +29,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS 8
 #define MATRIX_COLS 15
 
-#define TAPPING_TOGGLE 3
-#define TAPPING_TERM 200
+#define TAPPING_TOGGLE  1
+#define TAPPING_TERM    200
+#define IGNORE_MOD_TAP_INTERRUPT
 
 #define NO_UART 1
 #define BOOTLOADHID_BOOTLOADER 1
