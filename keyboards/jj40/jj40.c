@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <avr/pgmspace.h>
 
 #include "action_layer.h"
-#include "quantum.h"
 
 __attribute__ ((weak))
 void matrix_scan_user(void) {

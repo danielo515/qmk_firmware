@@ -15,9 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "jj40.h"
-#include "action_layer.h"
 #include "keymap_spanish.h"
-#include "quantum.h"
 
 #define _QWERTY 0
 #define _LOWER  1

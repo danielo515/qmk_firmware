@@ -33,6 +33,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM    200
 #define IGNORE_MOD_TAP_INTERRUPT
 
+/* Set 0 if debouncing isn't needed */
+#define DEBOUNCING_DELAY 5
+
 #define NO_UART 1
 #define BOOTLOADHID_BOOTLOADER 1
 
