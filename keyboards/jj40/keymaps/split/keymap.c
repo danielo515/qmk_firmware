@@ -20,12 +20,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _QWERTY 0
 #define _LOWER  1
 #define _RAISE  2
+#define _VSC  3
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
-  TRIPE_TICKS
+  TRIPE_TICKS,
+  T_TERM,
+  FIX_ALL,
+  BLK_COMMENT,
+  LINE_COMMENT,
+  MAC_TGL,
+  CMD_SHIFT_P,
 };
 
 enum tap_dance {
@@ -50,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = KEYMAP( \
  KC_Q,    KC_W,      KC_E,    KC_R,                    KC_T,           KC_ESC,                ES_APOS,         KC_Y,           KC_U,           KC_I,      KC_O,      KC_P,
  KC_A,    KC_S,      KC_D,    KC_F,                    KC_G,           KC_TAB,                KC_ENT,          KC_H,           KC_J,           KC_K,      KC_L,      KC_SCLN,
- KC_Z,    KC_X,      KC_C,    KC_V,                    KC_B,           TD(TD_LBRACES),        TD(TD_RBRACES),  KC_N,           KC_M,           KC_COMMA,  KC_UP,     ES_GRV,
+ KC_Z,    KC_X,      KC_C,    LT(_VSC, KC_V),                    KC_B,           TD(TD_LBRACES),        TD(TD_RBRACES),  KC_N,           KC_M,           KC_COMMA,  KC_UP,     ES_GRV,
  KC_LGUI, KC_LCTRL,  KC_LALT, LT(_RAISE, KC_KP_SLASH), SFT_T(KC_BSPC), KC_DOT ,               ES_PIPE,         SFT_T(KC_SPC),  OSL(_LOWER),    KC_LEFT,   KC_DOWN,   KC_RGHT
 ),
 /* Lower
@@ -87,9 +94,44 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_DEL,     KC_F1,      KC_F2,      KC_F3,      KC_F4,      KC_F5,          KC_F6,     KC_BSLS,     KC_4,        KC_5,         KC_6,       KC_PLUS, \
   _______,    KC_F7,      KC_F8,      KC_F9,      KC_F10,     KC_F11,         KC_F12,    _______,     KC_1,        KC_2,         KC_3,       KC_ENTER, \
   RESET  ,    _______,    _______,    _______,    _______,    _______,        _______,   _______,     KC_0,        KC_SLASH,     KC_PAST,    ES_HASH \
+),
+/* TEMPLATE
+ * ,---------------------------------------------------------------------------------------------------------------------------------------------------.
+ * |           |          |          |             |    T_TERM     |           |           |           |           |           |           |CMD_SHIFT_P|
+ * |-----------+----------+----------+-------------+---------------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
+ * |           |          |          |   FIX_ALL   |               |           |           |           |           |           |LINE_COMMNT|           |
+ * |-----------+----------+----------+-------------+---------------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
+ * |           |          |          |             |  BLK_COMMENT  |           |           |           |           |           |           |           |
+ * |-----------+----------+----------+-------------+---------------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
+ * |  MAC MOD  |          |          |             |               |           |           |           |           |           |           |           |
+ * `---------------------------------------------------------------------------------------------------------------------------------------------------'
+ */
+[_VSC] = KEYMAP( \
+  _______ ,      _______,   _______,   _______,    T_TERM     ,    _______,    _______,   _______,     _______,     _______,      _______     ,  CMD_SHIFT_P, \
+  _______ ,      _______,   _______,   FIX_ALL,    _______    ,    _______,    _______,   _______,     _______,     _______,      LINE_COMMENT,  _______    , \
+  _______ ,      _______,   _______,   _______,    BLK_COMMENT,    _______,    _______,   _______,     _______,     _______,      _______     ,  _______    , \
+  MAC_TGL ,      _______,   _______,   _______,    _______    ,    _______,    _______,   _______,     _______,     _______,      _______     ,  _______
 )
+/* TEMPLATE
+ * ,---------------------------------------------------------------------------------------------------------.
+ * |        |        |        |         |        |        |        |        |        |        |        |        |
+ * |--------+--------+--------+---------+--------+--------+--------+--------+--------+--------+--------+--------|
+ * |        |        |        |         |        |        |        |        |        |        |        |        |
+ * |--------+--------+--------+---------+--------+--------+--------+--------+--------+--------+--------+--------|
+ * |        |        |        |         |        |        |        |        |        |        |        |        |
+ * |--------+--------+--------+---------+--------+--------+--------+--------+--------+--------+--------+--------|
+ * |        |        |        |         |        |        |        |        |        |        |        |        |
+ * `------------------------------------------------------------------------------------------------------------'
+ *
+  [_VSC] = KEYMAP( \
+  _______,    _______,    _______,    _______,    _______,    _______,    _______,   _______,     _______,     _______,      _______,    _______, \
+  _______,    _______,    _______,    _______,    _______,    _______,    _______,   _______,     _______,     _______,      _______,    _______, \
+  _______,    _______,    _______,    _______,    _______,    _______,    _______,   _______,     _______,     _______,      _______,    _______, \
+  _______,    _______,    _______,    _______,    _______,    _______,    _______,   _______,     _______,     _______,      _______,    _______
+)*/
 };
 
+// tap dance declarations
 void dance_brace_finished (qk_tap_dance_state_t *state, void *user_data, bool left) {
     register_code(KC_RALT);
   if (state->count == 1) {
@@ -128,6 +170,27 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [DOT_COMM] = ACTION_TAP_DANCE_DOUBLE(KC_DOT,KC_COMM)
 };
 
+
+// VSCODE shortcuts
+
+bool on_mac = false;
+
+bool cmd_shift_p (bool isMac) {
+   isMac
+   ? SEND_STRING(SS_DOWN(X_LSHIFT)SS_LGUI("p")SS_UP(X_LSHIFT))
+   : SEND_STRING(SS_DOWN(X_LSHIFT)SS_LCTRL("p")SS_UP(X_LSHIFT));
+   return false;
+ }
+
+bool VSCommand(bool isMac, char *cmd)
+{
+  cmd_shift_p(isMac);
+  send_string(cmd);
+  SEND_STRING(SS_TAP(X_ENTER));
+  return false;
+}
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   keyevent_t event = record->event;
@@ -137,6 +200,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     {
     case TRIPE_TICKS:
       SEND_STRING("[[[ ");
+      return false;
+      break;
+    case T_TERM:
+      return VSCommand(on_mac, "tointerm");
+      break;
+    case FIX_ALL:
+      return VSCommand(on_mac, "fixauto");
+      break;
+    case BLK_COMMENT:
+      return VSCommand(on_mac, "blocom");
+      break;
+    case LINE_COMMENT:
+      return VSCommand(on_mac, "tolic");
+      break;
+    case CMD_SHIFT_P:
+      return cmd_shift_p(on_mac);
+      break;
+    case MAC_TGL:
+      on_mac = !on_mac;
       return false;
       break;
     }
