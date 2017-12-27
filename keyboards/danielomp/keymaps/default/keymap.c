@@ -5,6 +5,10 @@ enum
 {
   ENT_5 = 0,
   ZERO_1,
+  DASH_9,
+  PLUS_6,
+  STAR_8,
+  DASH_7,
   COMMENT
 };
 
@@ -34,17 +38,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* LAYER 0
   * ,-----------------------.
-  * |   7   |   8   |   9   |
+  * |  7//  | 8 / * |  9/-  |
   * |-------+-------+-------|
-  * |   4   | 5/ENT |   6   | Dbl Tap 5 for Enter
+  * |   4   | 5/ENT |  6/+  | Dbl Tap 5 for Enter
   * |-------+-------+-------|
   * |  1/0  |   2   | 3/FN  | 1/0 = Dbl Tap 1 for 0  -  3/FN = Hold 3 for FN
   * `-----------------------'
   */
     [NUMPAD] = KEYMAP(
-        KC_7,          KC_8,          KC_9,
-        KC_4,          TD(ENT_5),     KC_6,
-        TD(ZERO_1),    KC_2,          LT(RAISE, KC_3)),
+      TD(DASH_7),    TD(STAR_8),    TD(DASH_9),
+      KC_4,          TD(ENT_5),     TD(PLUS_6),
+      TD(ZERO_1),    KC_2,          LT(RAISE, KC_3)),
     /* LAYER 1
   * ,--------------------------------------------.
   * |    DEL    |  Ctr+SFT+P  |       ESC        |
@@ -101,6 +105,10 @@ void dance_comment_finished (qk_tap_dance_state_t *state, void *user_data) {
 qk_tap_dance_action_t tap_dance_actions[] = {
     [ENT_5] = ACTION_TAP_DANCE_DOUBLE(KC_5, KC_ENT),
     [ZERO_1] = ACTION_TAP_DANCE_DOUBLE(KC_1, KC_0),
+    [DASH_9] = ACTION_TAP_DANCE_DOUBLE(KC_9, KC_KP_MINUS),
+    [PLUS_6] = ACTION_TAP_DANCE_DOUBLE(KC_6, KC_KP_PLUS),
+    [STAR_8] = ACTION_TAP_DANCE_DOUBLE(KC_8, KC_KP_ASTERISK),
+    [DASH_7] = ACTION_TAP_DANCE_DOUBLE(KC_7, KC_KP_SLASH),
     [COMMENT] = ACTION_TAP_DANCE_FN(dance_comment_finished)
   };
 
