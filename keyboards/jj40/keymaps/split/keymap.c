@@ -55,10 +55,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `------------------------------------------------------------------------------------------------------------------------------------------------------'
  */
 [_QWERTY] = KEYMAP( \
- KC_Q,    KC_W,      KC_E,    KC_R,                    KC_T,           KC_ESC,                ES_APOS,         KC_Y,           KC_U,           KC_I,      KC_O,      KC_P,
- KC_A,    KC_S,      KC_D,    KC_F,                    KC_G,           KC_TAB,                KC_ENT,          KC_H,           KC_J,           KC_K,      KC_L,      KC_SCLN,
- KC_Z,    KC_X,      KC_C,    LT(_VSC, KC_V),                    KC_B,           TD(TD_LBRACES),        TD(TD_RBRACES),  KC_N,           KC_M,           KC_COMMA,  KC_UP,     ES_GRV,
- KC_LGUI, KC_LCTRL,  KC_LALT, LT(_RAISE, KC_KP_SLASH), SFT_T(KC_BSPC), KC_DOT ,               ES_PIPE,         SFT_T(KC_SPC),  OSL(_LOWER),    KC_LEFT,   KC_DOWN,   KC_RGHT
+ KC_Q,    KC_W,           KC_E,    KC_R,                    KC_T,           KC_ESC,                ES_APOS,         KC_Y,           KC_U,           KC_I,      KC_O,      KC_P,
+ KC_A,    KC_S,           KC_D,    KC_F,                    KC_G,           KC_TAB,                KC_ENT,          KC_H,           KC_J,           KC_K,      KC_L,      KC_SCLN,
+ KC_Z,    KC_X,           KC_C,    LT(_VSC, KC_V),                    KC_B,           TD(TD_LBRACES),        TD(TD_RBRACES),  KC_N,           KC_M,           KC_COMMA,  KC_UP,     ES_GRV,
+ KC_LGUI, OSM(MOD_LCTL),  OSM(MOD_LALT), LT(_RAISE, KC_KP_SLASH), SFT_T(KC_BSPC), KC_DOT ,               ES_PIPE,         SFT_T(KC_SPC),  OSL(_LOWER),    KC_LEFT,   KC_DOWN,   KC_RGHT
 ),
 /* Lower
  * ,-------------------------------------------------------------------------------------------------------------------------------.
@@ -203,7 +203,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       return false;
       break;
     case T_TERM:
-      return VSCommand(on_mac, "tointerm");
+      //return VSCommand(on_mac, "tointerm");
+      cmd_shift_p(on_mac);
+      SEND_STRING("togit"SS_TAP(X_ENTER));
+      return false;
       break;
     case FIX_ALL:
       return VSCommand(on_mac, "fixauto");
