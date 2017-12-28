@@ -9,6 +9,7 @@ enum
   PLUS_6,
   STAR_8,
   DASH_7,
+  DOT_2,
   COMMENT
 };
 
@@ -38,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* LAYER 0
   * ,-----------------------.
-  * |  7//  | 8 / * |  9/-  |
+  * |  7//  | 8 / * |  9/-  |2
   * |-------+-------+-------|
   * |   4   | 5/ENT |  6/+  | Dbl Tap 5 for Enter
   * |-------+-------+-------|
@@ -48,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [NUMPAD] = KEYMAP(
       TD(DASH_7),    TD(STAR_8),    TD(DASH_9),
       KC_4,          TD(ENT_5),     TD(PLUS_6),
-      TD(ZERO_1),    KC_2,          LT(RAISE, KC_3)),
+      TD(ZERO_1),    TD(DOT_2),     LT(RAISE, KC_3)),
     /* LAYER 1
   * ,--------------------------------------------.
   * |    DEL    |  Ctr+SFT+P  |       ESC        |
@@ -59,9 +60,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * `--------------------------------------------'
   */
     [VSC] = KEYMAP(
-        KC_DEL,   CMD_SHIFT_P,   KC_ESC,
-        FIX_ALL,  T_TERM,             TD(COMMENT),
-        MAC_TGL,  TO(NUMPAD),         KC_TRNS),
+        KC_DEL,     CMD_SHIFT_P,        KC_ESC,
+        FIX_ALL,    T_TERM,             TD(COMMENT),
+        MAC_TGL,    TO(NUMPAD),         KC_TRNS),
     /* LAYER 2
   * ,-----------------------------------.
   * |   DEL   |   BKSPACE    |   ESC    |
@@ -72,9 +73,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * `-----------------------------------'
   */
     [RAISE] = KEYMAP(
-        KC_DEL,    KC_BSPC,   KC_ESC,
-        KC_HOME,   KC_F5,     KC_END,
-        DBL_0,  TO(VSC),   KC_TRNS)
+    KC_DEL,       KC_BSPC,       KC_ESC,
+    KC_HOME,      KC_F5,         KC_END,
+    DBL_0,        TO(VSC),       KC_TRNS)
 
 };
 
@@ -109,6 +110,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [PLUS_6] = ACTION_TAP_DANCE_DOUBLE(KC_6, KC_KP_PLUS),
     [STAR_8] = ACTION_TAP_DANCE_DOUBLE(KC_8, KC_KP_ASTERISK),
     [DASH_7] = ACTION_TAP_DANCE_DOUBLE(KC_7, KC_KP_SLASH),
+    [DOT_2] = ACTION_TAP_DANCE_DOUBLE(KC_2, KC_KP_DOT),
     [COMMENT] = ACTION_TAP_DANCE_FN(dance_comment_finished)
   };
 
