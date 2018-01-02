@@ -33,7 +33,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ONESHOT_TAP_TOGGLE 5  /* Tapping this number of times holds the key until tapped this number of times again. */
 #define ONESHOT_TIMEOUT 5000  /* Time (in ms) before the one shot key is released */
 
-#define TAPPING_TERM    200
 #define IGNORE_MOD_TAP_INTERRUPT
 
 /* Set 0 if debouncing isn't needed */
@@ -46,3 +45,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define IS_COMMAND() (keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)))
 
 #endif
+#define LSPO_KEY KC_9
+#define RSPC_KEY KC_0
+#define LEADER_TIMEOUT 900
+#define TAPPING_TERM 200
+#define GRAVE_ESC_CTRL_OVERRIDE
