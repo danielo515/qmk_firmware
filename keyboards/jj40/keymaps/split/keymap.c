@@ -66,6 +66,7 @@ enum tap_dance {
 #define FN_A LT(_A,KC_A)
 #define FN_K LT(_K,KC_K)
 #define FN_J LT(_J,KC_J)
+#define SFT_SPC SFT_T(KC_SPC)  // Tap for Space, hold for Shift
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //
@@ -84,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  KC_ESCAPE,       KC_Q,          KC_W,           KC_E,                   LT(_MOUSE,KC_R),   KC_T,           ES_PIPE,              KC_Y,           KC_U,           KC_I,      KC_O,        KC_P    ,  \
  KC_TAB,          FN_A,          FN_S,           FN_D,                   FN_F,              KC_G,           KC_ENT,               KC_H,           FN_J,           FN_K,      KC_L,        ES_ACUT ,  \
  TD(TD_LBRACES),  KC_Z,          KC_X,           KC_C,                   LT(_VSC, KC_V),    KC_B,           TD(TD_RBRACES),       KC_N,           KC_M,           KC_COMMA,  ES_APOS,     KC_SCLN ,  \
- OSM(MOD_RGUI),   OSM(MOD_LCTL), OSM(MOD_LALT),  LT(_RAISE, KC_KP_SLASH), SFT_T(KC_BSPC),   KC_DOT ,        SFT_T(KC_SPC),        OSL(_LOWER),    KC_LEFT,        KC_DOWN,   KC_UP,       KC_RGHT    \
+ OSM(MOD_RGUI),   OSM(MOD_LCTL), OSM(MOD_LALT),  LT(_RAISE, KC_KP_SLASH), SFT_T(KC_BSPC),   KC_DOT ,        OSL(_LOWER),          SFT_SPC,    KC_LEFT,        KC_DOWN,   KC_UP,       KC_RGHT    \
 ),
 /* Lower
  * ,-----------+-----------------------------------------------------------------------------------------------------------------------------------------.
@@ -178,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+----------+----------+----------+----------+--------------------------+-----------+----------+----------+----------+----------|
  * |         |          |          |          |          |               |          |     \     |     4    |     5    |     6    |    -     |
  * |---------+----------+----------+----------+----------+---------------|----------+-----------+----------+----------+----------+----------|
- * |         |          |          |          |          |               |          |      1    |     1    |     2    |     3    |    +     |
+ * |         |          |          |          |          |               |          |      .    |     1    |     2    |     3    |    +     |
  * |---------+----------+----------+----------+----------+---------------+----------+-----------+----------+----------+----------+----------|
  * |         |          |          |          |          |               |          |      0    |     0    |     /    |    *     |    .     |
  * `----------------------------------------------------------------------------------------------------------------------------------------'
