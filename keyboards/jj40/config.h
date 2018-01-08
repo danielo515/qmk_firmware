@@ -30,13 +30,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_COLS 15
 
 
-#define ONESHOT_TAP_TOGGLE 5  /* Tapping this number of times holds the key until tapped this number of times again. */
+#define ONESHOT_TAP_TOGGLE 3  /* Tapping this number of times holds the key until tapped this number of times again. */
 #define ONESHOT_TIMEOUT 5000  /* Time (in ms) before the one shot key is released */
 
 #define IGNORE_MOD_TAP_INTERRUPT
 
 /* Set 0 if debouncing isn't needed */
-#define DEBOUNCING_DELAY 1
+#define DEBOUNCING_DELAY 5
 
 #define NO_UART 1
 #define BOOTLOADHID_BOOTLOADER 1
@@ -48,5 +48,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LSPO_KEY KC_9
 #define RSPC_KEY KC_0
 #define LEADER_TIMEOUT 900
-#define TAPPING_TERM 200
+#define TAPPING_TERM 250
+/*
 #define GRAVE_ESC_CTRL_OVERRIDE
+#define BACKLIGHT_LEVELS 3
+#define BACKLIGHT_PIN B6 */
+#define PERMISSIVE_HOLD
+#define TAP_ROTATION_TIMEOUT 400
+#define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
+#define TAP_WITH_MOD(mod, key) \
+  register_code(mod); \
+  register_code(key); \
+  unregister_code(key); \
+  unregister_code(mod)
+
