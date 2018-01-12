@@ -48,12 +48,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LSPO_KEY KC_9
 #define RSPC_KEY KC_0
 #define LEADER_TIMEOUT 900
-#define TAPPING_TERM 250
+#define TAPPING_TERM 200
 /*
 #define GRAVE_ESC_CTRL_OVERRIDE
 #define BACKLIGHT_LEVELS 3
-#define BACKLIGHT_PIN B6 */
+#define BACKLIGHT_PIN B6
 #define PERMISSIVE_HOLD
+*/
 #define TAP_ROTATION_TIMEOUT 400
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 #define TAP_WITH_MOD(mod, key) \

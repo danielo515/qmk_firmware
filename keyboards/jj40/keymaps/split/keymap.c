@@ -65,6 +65,7 @@ enum tap_dance {
 #define FN_A LT(_A,KC_A)
 #define FN_K LT(_K,KC_K)
 #define FN_J LT(_J,KC_J)
+#define FN_V LT(_VSC,KC_V)
 #define FN_R LT(_MOUSE,KC_R)
 #define S_SPC SFT_T(KC_SPC)  // Tap for Space, hold for Shift
 #define S_BKSP SFT_T(KC_BSPC)  // Tap for Backspace, hold for Shift
@@ -91,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = KEYMAP( \
   KC_ESC,  KC_Q,    KC_W,    KC_E,     KC_R,      KC_T,    KC_Y,      KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,\
   KC_TAB,  FN_A,    FN_S,    FN_D,     FN_F,      KC_G,    KC_H,      FN_J,    KC_K,    KC_L,    KC_SCLN, ES_ACUT,\
-  OS_SFT ,  KC_Z,    KC_X,    KC_C,     KC_V,      KC_B,    KC_N,      KC_M,    KC_COMM, KC_DOT,  ES_APOS, KC_ENT,\
+  OS_SFT , KC_Z,    KC_X,    KC_C,     FN_V,      KC_B,    KC_N,      KC_M,    KC_COMM, KC_DOT,  ES_APOS, KC_ENT,\
   KC_RGUI, OS_CTL,  OS_ALT,  KC_UP,    OSRAISE,   S_BKSP,  S_SPC,   OSLOWER,   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT \
   ),
 
