@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #define ONESHOT_TAP_TOGGLE 3  /* Tapping this number of times holds the key until tapped this number of times again. */
-#define ONESHOT_TIMEOUT 5000  /* Time (in ms) before the one shot key is released */
+#define ONESHOT_TIMEOUT 4000  /* Time (in ms) before the one shot key is released */
 
 #define IGNORE_MOD_TAP_INTERRUPT
 
@@ -45,14 +45,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define IS_COMMAND() (keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)))
 
 #endif
-#define LSPO_KEY KC_9
-#define RSPC_KEY KC_0
 #define LEADER_TIMEOUT 900
 #define TAPPING_TERM 200
+/* RGB underglow */
+// The RGB_DI_PIN value seems to be shared between all PS2AVRGB boards.
+// The same pin is used on the JJ40, at least.
+#define RGBLED_NUM 5
+#define RGB_DI_PIN E2
+#define RGBLIGHT_ANIMATIONS
+
+#define BACKLIGHT_LEVELS 12
+#define BACKLIGHT_BREATHING
+
 /*
 #define GRAVE_ESC_CTRL_OVERRIDE
-#define BACKLIGHT_LEVELS 3
-#define BACKLIGHT_PIN B6
 #define PERMISSIVE_HOLD
 */
 #define TAP_ROTATION_TIMEOUT 400
