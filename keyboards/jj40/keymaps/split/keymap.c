@@ -108,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = KEYMAP( \
-  KC_TILD, ES_EURO, KC_EXLM, KC_AT,   ES_HASH, KC_PERC, ES_CIRC, ES_BSLS, ES_PLUS, ES_LPRN, ES_RPRN, _______,\
+  KC_TILD, KC_EXLM, KC_EXLM, KC_AT,   ES_HASH, KC_PERC, ES_CIRC, ES_BSLS, ES_PLUS, ES_LPRN, ES_EURO, _______,\
   KC_CAPS, ES_AT,   KC_PAST, KC_DLR,  ES_AMPR, ES_EQL, ES_MINS, ES_UNDS, ES_LCBR, ES_RCBR, KC_AMPR, ES_PIPE,\
   _______, _______, KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, _______, _______, _______, _______, _______,\
   RESET  , _______, KC_HOME, KC_END,  _______, KC_DEL,  KC_INS,  _______, KC_PGUP, KC_PGDN, _______, _______\
@@ -227,7 +227,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `----------------------------------------------------------------------------------------------------------------------------------------'
  */
 ,[_D] = KEYMAP( \
-  KC_GRV,     KC_1,       KC_2,       KC_3,       KC_4,       _______,     ES_BSLS,   KC_7,        KC_8,         KC_9,     KC_BSPC,      KC_6   ,  \
+  KC_GRV,     KC_1,       KC_2,       KC_3,       KC_4,       _______,     ES_BSLS,    KC_7,        KC_8,         KC_9,     _______,      _______   ,  \
   _______,    _______,    _______,    _______,    _______,    _______,     ES_SLSH,    KC_4,        KC_5,         KC_6,     ES_MINS,      _______,  \
   _______,    _______,    _______,    _______,    _______,    _______,     KC_DOT ,    KC_1,        KC_2,         KC_3,     KC_KP_PLUS,   _______,  \
   _______,    _______,    _______,    _______,    _______,    _______,     KC_0,       KC_0,        KC_SLASH,     KC_PAST,  KC_DOT    ,   _______  \
@@ -278,9 +278,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *`--------------------------------------------------------------------------------------------------------------------------------------------'
  */
   ,[_K] = KEYMAP( \
-  RGB_TOG  ,           RGB_VAI,    _______,    _______,    _______,    _______,    _______,    _______   ,     _______,     _______ ,      _______ ,    _______, \
-  RGB_MODE_RAINBOW,    RGB_VAD,    _______,    _______,    _______,    _______,    _______,    KC_LEAD   ,     _______,     _______ ,      _______ ,    _______, \
-  RGB_MODE_SNAKE,      RGB_SAI,    _______,    _______,    _______,    _______,    _______,    _______   ,     _______,     _______ ,      _______ ,    _______, \
+  RGB_TOG  ,           RGB_HUI,    _______,    _______,    _______,    _______,    _______,    _______   ,     _______,     _______ ,      _______ ,    _______, \
+  RGB_MODE_PLAIN,      RGB_HUD,    _______,    _______,    _______,    _______,    _______,    KC_LEAD   ,     _______,     _______ ,      _______ ,    _______, \
+  _______,             RGB_SAI,    _______,    _______,    _______,    _______,    _______,    _______   ,     _______,     _______ ,      _______ ,    _______, \
   RGB_MODE_KNIGHT,     RGB_SAD,    _______,    _______,    _______,    _______,    _______,    _______   ,     _______,     _______ ,      _______ ,    _______  \
   )
 /* TEMPLATE
@@ -428,6 +428,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 
     switch (keycode)
     {
+
+    case OS_CTL:
+      rgblight_setrgb(255,1,25);
+      return true;
+    case OS_ALT:
+      rgblight_setrgb(255,255,25);
+      return true;
+    case OSLOWER:
+      rgblight_setrgb(25,255,25);
+      return true;
+    case OSRAISE:
+      rgblight_setrgb(25,25,255);
+      return true;
     case TRIPE_TICKS:
       SEND_STRING("[[[ ");
       return false;
@@ -465,6 +478,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       on_mac = !on_mac;
       return false;
       break;
+    default:
+      rgblight_setrgb(255,255,255);
+      return true;
     }
   }
   return true;

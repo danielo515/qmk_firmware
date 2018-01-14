@@ -53,6 +53,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLED_NUM 5
 #define RGB_DI_PIN E2
 #define RGBLIGHT_ANIMATIONS
+#define RGBLIGHT_HUE_STEP 15
+#define RGBLIGHT_EFFECT_KNIGHT_LENGTH 1
 
 #define BACKLIGHT_LEVELS 12
 #define BACKLIGHT_BREATHING
