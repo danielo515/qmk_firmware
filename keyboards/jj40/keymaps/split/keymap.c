@@ -40,6 +40,7 @@ enum custom_keycodes {
   MAC_TGL,
   CMD_SHIFT_P,
   BRACES,
+  ARROW,
 };
 
 enum tap_dance {
@@ -76,6 +77,9 @@ enum tap_dance {
 #define OSRAISE OSL(_RAISE)
 #define R_NUB S(KC_NUBS)
 #define OS_SFT OSM(MOD_LSFT)
+#define TAP_LBRACE TAP_WITH_MOD(KC_RALT,KC_LBRACKET);
+#define TAP_LCBRACE TAP_WITH_MOD(KC_RALT,KC_QUOT);
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwerty
@@ -245,7 +249,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   ,[_S] = KEYMAP( \
   _______,    _______,     _______,   ES_QUOT,    _______,    _______,    ES_GRV,    ES_LBRC  ,  ES_RBRC    , ES_MINS ,     ALGR(KC_4)  ,  _______,   \
-  _______,    _______,    _______,    ES_APOS,     ES_EQL ,   _______,    KC_NUBS,     BRACES   ,  ES_RPRN    ,  R_NUB,       ES_SLSH ,      ES_PIPE,   \
+  _______,    _______,    _______,    ES_APOS,     ARROW ,    _______,    KC_NUBS,     BRACES   ,  ES_RPRN    ,  R_NUB,       ES_SLSH ,      ES_PIPE,   \
   _______,    _______,    _______,    _______,    _______,    TD(DOT_COMM),    ES_QUES,    ES_LCBR   ,  ES_RCBR    , KC_LCBR ,      _______ ,    _______, \
   RESET  ,    _______,    _______,    _______,    _______,    S(KC_DOT),  ES_SCLN,    _______   ,  _______    , _______ ,      _______ ,    _______  \
   )
@@ -453,7 +457,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
       }
       if(key_count==2){
         TAP(KC_BSPACE);
-        TAP_WITH_MOD(KC_RALT,KC_QUOT);
+        TAP_LCBRACE
+      }
+      return false;
+      break;
+    case ARROW:
+      if(key_count==0){
+        TAP(ES_EQL);
+      }
+      if(key_count==1){
+        TAP(R_NUB);
+      }
+      if(key_count==2){
+        TAP(KC_SPC);
+      }
+      if(key_count==3){
+        TAP_LCBRACE
+      }
+      if(key_count==4){
+        TAP(KC_SPC);
+        TAP_WITH_MOD(KC_RALT,KC_NUHS);
+        TAP(KC_LEFT);
       }
       return false;
       break;

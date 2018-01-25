@@ -63,7 +63,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define GRAVE_ESC_CTRL_OVERRIDE
 #define PERMISSIVE_HOLD
 */
-#define TAP_ROTATION_TIMEOUT 400
+#define TAP_ROTATION_TIMEOUT 500
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 #define TAP_WITH_MOD(mod, key) \
   register_code(mod); \
