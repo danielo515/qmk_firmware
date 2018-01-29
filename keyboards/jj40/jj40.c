@@ -67,21 +67,8 @@ void rgblight_set(void) {
 }
 
 bool rgb_init = false;
-<<<<<<< HEAD
-
-__attribute__ ((weak))
-void matrix_scan_user(void) {
-    // if LEDs were previously on before poweroff, turn them back on
-    if (rgb_init == false && rgblight_config.enable) {
-      i2c_init();
-      i2c_send(0xb0, (uint8_t*)led, 3 * RGBLED_NUM);
-      rgb_init = true;
-    }
-
-    rgblight_task();
-    /* Nothing else for now. */
-=======
-void matrix_scan_user(void) {
+// previously void matrix_scan_user(void)
+void matrix_scan_kb(void) {
   // if LEDs were previously on before poweroff, turn them back on
   if (rgb_init == false && rgblight_config.enable) {
     i2c_init();
@@ -90,6 +77,8 @@ void matrix_scan_user(void) {
   }
 
   rgblight_task();
+
+  matrix_scan_user(); // if not defined in keymap.c, will call the default implementation (do nothing)
+// otherwise will call your custom matrix scanning code in your own matrix_scan_user(void) definition
   /* Nothing else for now. */
->>>>>>> krusli/master
 }

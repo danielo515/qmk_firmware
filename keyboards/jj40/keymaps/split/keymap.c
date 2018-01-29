@@ -49,6 +49,7 @@ enum custom_keycodes {
 enum tap_dance {
   TD_LBRACES=0,
   TD_RBRACES,
+  TD_H_ENTER,
   DOT_COMM
 };
 
@@ -82,6 +83,8 @@ enum tap_dance {
 #define OS_SFT OSM(MOD_LSFT)
 #define TAP_LBRACE TAP_WITH_MOD(KC_RALT,KC_LBRACKET);
 #define TAP_LCBRACE TAP_WITH_MOD(KC_RALT,KC_QUOT);
+#define TD_COMM TD(DOT_COMM)
+#define TD_H_ENT TD(TD_H_ENTER)
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -89,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | TAB  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   Ñ  |  ´   |
+ * | TAB  |   A  |   S  |   D  |   F  |   G  | H/ENT|   J  |   K  |   L  |   Ñ  |  ´   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   '  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -98,8 +101,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = KEYMAP( \
   KC_ESC,  KC_Q,    KC_W,    KC_E,     FN_R,      KC_T,    KC_Y,      KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,\
-  KC_TAB,  FN_A,    FN_S,    FN_D,     FN_F,      KC_G,    KC_H,      FN_J,    FN_K,    KC_L,    KC_SCLN, ES_ACUT,\
-  OS_SFT , KC_Z,    KC_X,    KC_C,     FN_V,      KC_B,    KC_N,      KC_M,    KC_COMM, KC_DOT,  ES_APOS, KC_ENT,\
+  KC_TAB,  FN_A,    FN_S,    FN_D,     FN_F,      KC_G,    TD_H_ENT,  FN_J,    FN_K,    KC_L,    KC_SCLN, ES_ACUT,\
+  OS_SFT , KC_Z,    KC_X,    KC_C,     FN_V,      KC_B,    KC_N,      KC_M,    TD_COMM, KC_DOT,  ES_APOS, KC_ENT,\
   KC_RGUI, OS_CTL,  OS_ALT,  KC_UP,    OSRAISE,   S_BKSP,  S_SPC,   OSLOWER,   KC_LEFT, KC_UP,   KC_DOWN, KC_RIGHT \
   ),
 
@@ -245,7 +248,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *|---------+----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
  *|         |          |           |    '      |     =     |           |     <     |    ([{    |     )     |     >     |     /     |     |     |
  *|---------+----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
- *|         |          |           |           |           |           |     ?     |     {     |    }      |           |           |           |
+ *|         |          |           |           |           |     .,    |     ?     |     {     |    }      |           |           |           |
  *|---------+----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------+-----------|
  *|         |          |           |           |           |     :     |     ;     |           |           |           |           |           |
  *`--------------------------------------------------------------------------------------------------------------------------------------------'
@@ -345,9 +348,9 @@ dance_brace_reset(state,user_data,false);
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_LBRACES] = ACTION_TAP_DANCE_FN_ADVANCED_TIME (NULL , dance_left_brace_finished,dance_left_brace_reset,300),
     [TD_RBRACES] = ACTION_TAP_DANCE_FN_ADVANCED_TIME (NULL , dance_right_brace_finished,dance_right_brace_reset,500),
-    [DOT_COMM] = ACTION_TAP_DANCE_DOUBLE(KC_DOT,KC_COMM)
+    [DOT_COMM] = ACTION_TAP_DANCE_DOUBLE(KC_COMM,KC_DOT),
+    [TD_H_ENTER] = ACTION_TAP_DANCE_DOUBLE(KC_H,KC_ENT)
 };
-
 
 // VSCODE shortcuts
 
