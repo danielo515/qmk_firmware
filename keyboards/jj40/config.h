@@ -85,3 +85,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   unregister_code(key); \
   unregister_code(mod)
 
+#define TD_ARR_DBL(ONE,TWO) [_D_##ONE##_##TWO] = ACTION_TAP_DANCE_DOUBLE(KC_##ONE,TWO),

@@ -54,6 +54,9 @@ enum tap_dance {
   DOT_COMM,
   TD_FIVE_COMM,
   TD_N_QUES,
+  _TD_COPY,
+  _TD_PASTE,
+  _D_G_ES_EQL
 };
 
 
@@ -98,8 +101,16 @@ enum tap_dance {
 #define FIVE_COMM TD(TD_FIVE_COMM)
 #define N_QUES TD(TD_N_QUES)
 #define TD_LBRACES TD(_TD_LBRACES)
+#define TD_COPY TD(_TD_COPY)
+#define TD_PASTE TD(_TD_PASTE)
+#define TD_G_EQL TD(_D_G_ES_EQL)
 
+bool on_mac = false;
 
+bool CMD(uint16_t kc) {
+  if(on_mac){ TAP(LGUI(kc)); } else { TAP(LCTL(kc)); }
+  return false;
+  }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwerty
@@ -114,9 +125,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = KEYMAP( \
-  KC_ESC,  KC_Q,    KC_W,    KC_E,     FN_R,      KC_T,    KC_Y,      KC_U,    KC_I,    KC_O,    KC_P,    KC_LEAD,\
-  KC_TAB,  FN_A,    FN_S,    FN_D,     FN_F,      KC_G,    TD_H_ENT,  FN_J,    FN_K,    KC_L,    KC_SCLN, ES_ACUT,\
-  OS_SFT , KC_Z,    KC_X,    KC_C,     FN_V,      KC_B,    N_QUES,    KC_M,    TD_COMM, KC_DOT,  ES_APOS, KC_ENT,\
+  KC_ESC,  KC_Q,    KC_W,    KC_E,     FN_R,      KC_T,    KC_Y,      KC_U,    KC_I,    KC_O,    TD_PASTE,    KC_LEAD,\
+  KC_TAB,  FN_A,    FN_S,    FN_D,     FN_F,      TD_G_EQL,    TD_H_ENT,  FN_J,    FN_K,    KC_L,    KC_SCLN, ES_ACUT,\
+  OS_SFT , KC_Z,    KC_X,   TD_COPY,   FN_V,      KC_B,    N_QUES,    KC_M,    TD_COMM, KC_DOT,  ES_APOS, KC_ENT,\
   KC_RGUI, OS_CTL,  OS_ALT,  KC_UP,    OSRAISE,   S_BKSP,  S_SPC,   OSLOWER,   LEFT_ALT, KC_DOWN, KC_UP,   KC_RIGHT \
   ),
 
@@ -352,18 +363,39 @@ void dance_right_brace_reset (qk_tap_dance_state_t *state, void *user_data) {
 dance_brace_reset(state,user_data,false);
 }
 
+void dance_copy (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    TAP(KC_C);
+  }
+  else {
+    CMD(KC_C);
+  }
+  reset_tap_dance (state);
+}
+
+void dance_paste (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    TAP(KC_P);
+  }
+  else {
+    CMD(KC_V);
+  }
+  reset_tap_dance (state);
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
     [_TD_LBRACES] = ACTION_TAP_DANCE_FN_ADVANCED_TIME (NULL , dance_left_brace_finished,dance_left_brace_reset,300),
     [TD_RBRACES] = ACTION_TAP_DANCE_FN_ADVANCED_TIME (NULL , dance_right_brace_finished,dance_right_brace_reset,200),
     [TD_FIVE_COMM] = ACTION_TAP_DANCE_DOUBLE(KC_5,KC_COMM),
     [DOT_COMM] = ACTION_TAP_DANCE_DOUBLE(KC_COMM,KC_DOT),
     [TD_N_QUES] = ACTION_TAP_DANCE_DOUBLE(KC_N,ES_QUES),
-    [TD_H_ENTER] = ACTION_TAP_DANCE_DOUBLE(KC_H,KC_ENT)
+    [TD_H_ENTER] = ACTION_TAP_DANCE_DOUBLE(KC_H,KC_ENT),
+    [_TD_COPY] = ACTION_TAP_DANCE_FN(dance_copy),
+    [_TD_PASTE] = ACTION_TAP_DANCE_FN(dance_paste),
+    TD_ARR_DBL(G, ES_EQL)
 };
 
 // VSCODE shortcuts
-
-bool on_mac = false;
 
 bool cmd_shift_p (bool isMac) {
    isMac
@@ -379,11 +411,6 @@ bool VSCommand(bool isMac, char *cmd)
   SEND_STRING(SS_TAP(X_ENTER));
   return false;
 }
-
-bool CMD(uint16_t kc) {
-  if(on_mac){ TAP(LGUI(kc)); } else { TAP(LCTL(kc)); }
-  return false;
-  }
 
 LEADER_EXTERNS();
 
