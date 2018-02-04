@@ -82,3 +82,4 @@ void matrix_scan_kb(void) {
 // otherwise will call your custom matrix scanning code in your own matrix_scan_user(void) definition
   /* Nothing else for now. */
 }
+

@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define IS_COMMAND() (keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)))
 
 #endif
-#define LEADER_TIMEOUT 900
+// #define LEADER_TIMEOUT 900
 #define TAPPING_TERM 200
 /* RGB underglow */
 // The RGB_DI_PIN value seems to be shared between all PS2AVRGB boards.
@@ -77,7 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define GRAVE_ESC_CTRL_OVERRIDE
 #define PERMISSIVE_HOLD
 */
-#define TAP_ROTATION_TIMEOUT 500
+#define TAP_ROTATION_TIMEOUT 350
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 #define TAP_WITH_MOD(mod, key) \
   register_code(mod); \
@@ -85,4 +85,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   unregister_code(key); \
   unregister_code(mod)
 
-#define TD_ARR_DBL(ONE,TWO) [_D_##ONE##_##TWO] = ACTION_TAP_DANCE_DOUBLE(KC_##ONE,TWO),
+#define TD_DBL_ARR(ONE,TWO) [_D_##ONE##_##TWO] = ACTION_TAP_DANCE_DOUBLE(KC_##ONE,TWO),
+#define TD_DBL(ONE,TWO) _D_##ONE##_##TWO
+#define TD_DBL_NAM(ONE,TWO) TD(_D_##ONE##_##TWO)

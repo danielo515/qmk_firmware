@@ -56,9 +56,20 @@ enum tap_dance {
   TD_N_QUES,
   _TD_COPY,
   _TD_PASTE,
-  _D_G_ES_EQL
+  TD_DBL(G, ES_EQL),
+  TD_DBL(M, KC_ENT),
+  V_TAP_DANCE
 };
 
+#define rgblight_set_blue        rgblight_sethsv (0xFF,  0xFF, 0xFF);
+#define rgblight_set_red         rgblight_sethsv (0x00,  0xFF, 0xFF);
+#define rgblight_set_green       rgblight_sethsv (0x78,  0xFF, 0xFF);
+#define rgblight_set_orange      rgblight_sethsv (0x1E,  0xFF, 0xFF);
+#define rgblight_set_teal        rgblight_sethsv (0xB4,  0xFF, 0xFF);
+#define rgblight_set_magenta     rgblight_sethsv (0x12C, 0xFF, 0xFF);
+#define rgblight_set_yellow      rgblight_sethsv (0x3C,  0xFF, 0xFF);
+#define rgblight_set_purple      rgblight_sethsv (0x10E, 0xFF, 0xFF);
+#define rgblight_set_white       rgblight_sethsv (0x00,  0x00, 0xFF);
 
 #define MOUSE_UP KC_MS_UP
 #define MOUSE_DOWN KC_MS_DOWN
@@ -103,7 +114,10 @@ enum tap_dance {
 #define TD_LBRACES TD(_TD_LBRACES)
 #define TD_COPY TD(_TD_COPY)
 #define TD_PASTE TD(_TD_PASTE)
-#define TD_G_EQL TD(_D_G_ES_EQL)
+#define TD_G_EQL TD_DBL_NAM(G, ES_EQL)
+#define TD_M_CBR TD_DBL_NAM(M, KC_ENT)
+#define TD_V TD(V_TAP_DANCE)
+
 
 bool on_mac = false;
 
@@ -119,16 +133,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | TAB  |   A  |   S  |   D  |   F  |   G  | H/ENT|   J  |   K  |   L  |   Ñ  |  ´   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  | N/?  |   M  |   ,  |   .  |   '  |Enter |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  | N/?  |  M{  |   ,  |   .  |   '  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | GUI  | Ctrl | Alt  |  Up  |Raise | Bksp |Space |Lower |Left  |  Up  | Down |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = KEYMAP( \
-  KC_ESC,  KC_Q,    KC_W,    KC_E,     FN_R,      KC_T,    KC_Y,      KC_U,    KC_I,    KC_O,    TD_PASTE,    KC_LEAD,\
-  KC_TAB,  FN_A,    FN_S,    FN_D,     FN_F,      TD_G_EQL,    TD_H_ENT,  FN_J,    FN_K,    KC_L,    KC_SCLN, ES_ACUT,\
-  OS_SFT , KC_Z,    KC_X,   TD_COPY,   FN_V,      KC_B,    N_QUES,    KC_M,    TD_COMM, KC_DOT,  ES_APOS, KC_ENT,\
-  KC_RGUI, OS_CTL,  OS_ALT,  KC_UP,    OSRAISE,   S_BKSP,  S_SPC,   OSLOWER,   LEFT_ALT, KC_DOWN, KC_UP,   KC_RIGHT \
+  KC_ESC,  KC_Q,    KC_W,    KC_E,     FN_R,      KC_T,         KC_Y,      KC_U,    KC_I,    KC_O,    KC_P,    KC_LEAD,\
+  KC_TAB,  FN_A,    FN_S,    FN_D,     FN_F,      TD_G_EQL,     TD_H_ENT,  FN_J,    FN_K,    KC_L,    KC_SCLN, ES_ACUT,\
+  OS_SFT , KC_Z,    KC_X,   TD_COPY,   TD_V,      KC_B,         N_QUES,    TD_M_CBR,    TD_COMM, KC_DOT,  ES_APOS, KC_ENT,\
+  KC_RGUI, OS_CTL,  OS_ALT,  KC_UP,    OSRAISE,   S_BKSP,       S_SPC,   OSLOWER,   LEFT_ALT, KC_DOWN, KC_UP,   KC_RIGHT \
   ),
 
 /* Lower
@@ -178,7 +192,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_VSC] = KEYMAP( \
   _______ ,      _______,   _______,   _______,    _______    ,    T_TERM,    _______,   _______,     _______,     _______,      CMD_SHIFT_P ,  _______, \
-  _______ ,      _______,   _______,   _______    ,FIX_ALL    ,   _______,    _______,   _______,     KC_LSPO,     KC_RSPC,      LINE_COMMENT,  _______    , \
+  _______ ,      _______,   _______,   _______    ,FIX_ALL    ,   _______,    _______,   _______,     KC_LSPO,     LINE_COMMENT,      LINE_COMMENT,  _______    , \
   _______ ,      _______,   _______,   _______,    _______    , BLK_COMMENT, _______,   _______,     _______,     _______,      _______     ,  _______    , \
   MAC_TGL ,      _______,   _______,   _______,    _______    ,    _______,    _______,   _______,     _______,     _______,      _______     ,  _______ \
 ),
@@ -320,7 +334,79 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 )*/
 };
 
-// tap dance declarations
+
+void matrix_scan_user(void){};
+
+// ===================== TAP DANCE STUFF
+
+//**************** Definitions needed for quad function to work *********************//
+//Enums used to clearly convey the state of the tap dance
+enum {
+  SINGLE_TAP = 1,
+  SINGLE_HOLD = 2,
+  DOUBLE_TAP = 3,
+  DOUBLE_HOLD = 4,
+  DOUBLE_SINGLE_TAP = 5 //send SINGLE_TAP twice - NOT DOUBLE_TAP
+  // Add more enums here if you want for triple, quadruple, etc.
+};
+
+int cur_dance (qk_tap_dance_state_t *state) {
+  if (state->count == 1) {
+    //If count = 1, and it has been interrupted - it doesn't matter if it is pressed or not: Send SINGLE_TAP
+    if (state->interrupted || state->pressed==0) return SINGLE_TAP;
+    else return SINGLE_HOLD;
+  }
+  //If count = 2, and it has been interrupted - assume that user is trying to type the letter associated
+  //with single tap. In example below, that means to send `xx` instead of `Escape`.
+  else if (state->count == 2) {
+    if (state->interrupted) return DOUBLE_SINGLE_TAP;
+    else if (state->pressed) return DOUBLE_HOLD;
+    else return DOUBLE_TAP;
+  }
+  else return 6; //magic number. At some point this method will expand to work for more presses
+}
+
+//**************** Definitions needed for quad function to work *********************//
+
+
+typedef struct {
+  bool is_press_action;
+  int state;
+} tap;
+
+
+//instanalize an instance of 'tap' for the 'x' tap dance.
+static tap v_tap_state = {
+  .is_press_action = true,
+  .state = 0
+};
+
+void v_finished (qk_tap_dance_state_t *state, void *user_data) {
+  v_tap_state.state = cur_dance(state);
+  switch (v_tap_state.state) {
+    case SINGLE_TAP: register_code(KC_V); break;
+    case SINGLE_HOLD: layer_on(_VSC); break;
+    case DOUBLE_TAP: register_code16(LCTL(KC_V)); break;
+    case DOUBLE_HOLD: register_code(KC_LALT); break;
+    case DOUBLE_SINGLE_TAP: register_code(KC_V); unregister_code(KC_V); register_code(KC_V);
+    //Last case is for fast typing. Assuming your key is `f`:
+    //For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
+    //In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
+  }
+}
+
+void v_reset (qk_tap_dance_state_t *state, void *user_data) {
+  switch (v_tap_state.state) {
+    case SINGLE_TAP: unregister_code(KC_V); break;
+    case SINGLE_HOLD: layer_off(_VSC); break;
+    case DOUBLE_TAP: unregister_code16(LCTL(KC_V)); break;
+    case DOUBLE_HOLD: unregister_code(KC_LALT);
+    case DOUBLE_SINGLE_TAP: unregister_code(KC_V);
+  }
+  v_tap_state.state = 0;
+}
+
+
 void dance_brace_finished (qk_tap_dance_state_t *state, void *user_data, bool left) {
   if (state->count == 1) {
     register_code(KC_LSHIFT);
@@ -383,6 +469,8 @@ void dance_paste (qk_tap_dance_state_t *state, void *user_data) {
   reset_tap_dance (state);
 }
 
+// TAP DANCE ACTIONS ARRAY
+
 qk_tap_dance_action_t tap_dance_actions[] = {
     [_TD_LBRACES] = ACTION_TAP_DANCE_FN_ADVANCED_TIME (NULL , dance_left_brace_finished,dance_left_brace_reset,300),
     [TD_RBRACES] = ACTION_TAP_DANCE_FN_ADVANCED_TIME (NULL , dance_right_brace_finished,dance_right_brace_reset,200),
@@ -390,9 +478,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [DOT_COMM] = ACTION_TAP_DANCE_DOUBLE(KC_COMM,KC_DOT),
     [TD_N_QUES] = ACTION_TAP_DANCE_DOUBLE(KC_N,ES_QUES),
     [TD_H_ENTER] = ACTION_TAP_DANCE_DOUBLE(KC_H,KC_ENT),
-    [_TD_COPY] = ACTION_TAP_DANCE_FN(dance_copy),
+    [_TD_COPY] =  ACTION_TAP_DANCE_FN(dance_copy),
     [_TD_PASTE] = ACTION_TAP_DANCE_FN(dance_paste),
-    TD_ARR_DBL(G, ES_EQL)
+    [V_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, v_finished, v_reset),
+    TD_DBL_ARR(G, ES_EQL)
+    TD_DBL_ARR(M, KC_ENT)
 };
 
 // VSCODE shortcuts
@@ -412,137 +502,149 @@ bool VSCommand(bool isMac, char *cmd)
   return false;
 }
 
-LEADER_EXTERNS();
+bool one_shot_was_active = false;
 
-void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
+// Runs state check and changes underglow color and animation
+// on layer change, no matter where the change was initiated
+// Then runs keymap's layer change check
+uint32_t layer_state_set_user(uint32_t state)
+{
+  // uint8_t default_layer = eeconfig_read_default_layer();
+  switch (biton32(state))
+  {
+  case _QWERTY:
+    rgblight_set_blue;
+    rgblight_mode(1);
+    break;
+  case _LOWER:
+    rgblight_set_blue;
+    rgblight_mode(2);
+    break;
 
-    SEQ_ONE_KEY(KC_F) {
-      register_code(KC_S);
-      unregister_code(KC_S);
-    }
-    SEQ_TWO_KEYS(KC_A, KC_R) {
-      register_code(KC_LSHIFT);
-      register_code(KC_0);
-      unregister_code(KC_0);
-      register_code(KC_NUBS);
-      unregister_code(KC_NUBS);
-      unregister_code(KC_LSHIFT);
-    }
-    SEQ_THREE_KEYS(KC_A, KC_S, KC_D) {
-      register_code(KC_LGUI);
-      register_code(KC_S);
-      unregister_code(KC_S);
-      unregister_code(KC_LGUI);
-    }
+  case _RAISE:
+    rgblight_set_yellow;
+    rgblight_mode(1);
+    break;
+  case _VSC:
+    rgblight_set_orange;
+    rgblight_mode(17);
+    break;
+  case _MOUSE:
+    rgblight_set_green;
+    rgblight_mode(22);
+    break;
+  case _F:
+    rgblight_set_orange;
+    rgblight_mode(17);
+    break;
+  case _D:
+    rgblight_set_red;
+    rgblight_mode(5);
+    break;
+  case _A:
+    rgblight_set_yellow;
+    rgblight_mode(5);
+    break;
+  case _S:
+    rgblight_set_orange;
+    rgblight_mode(5);
+    break;
+  case _J:
+    rgblight_set_red;
+    rgblight_mode(23);
+    break;
+  case _K:
+    rgblight_set_green;
+    rgblight_mode(2);
+    break;
+  default:
+    /*       if (default_layer & (1UL << _COLEMAK)) {
+        rgblight_set_magenta;
+      }
+      else if (default_layer & (1UL << _DVORAK)) {
+        rgblight_set_green;
+      }
+      else if (default_layer & (1UL << _WORKMAN)) {
+        rgblight_set_purple;
+      }
+      else {
+        rgblight_set_teal;
+      } */
+    rgblight_mode(1);
+    break;
   }
+  return state;
 }
 
+  uint16_t latest_kc = 0;
+  uint16_t latest_rotation = 0;
+  char key_count = 0;
 
-uint16_t latest_kc = 0;
-uint16_t latest_rotation = 0;
-char key_count = 0;
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record)
-{
-  keyevent_t event = record->event;
-  if (event.pressed)
+  bool process_record_user(uint16_t keycode, keyrecord_t *record)
   {
-    if(keycode == latest_kc){
-      if(timer_elapsed(latest_rotation)>TAP_ROTATION_TIMEOUT)key_count=0;
-      else key_count++;
-    } else {
-      key_count=0;
-      latest_kc = keycode;
-    }
-
-    latest_rotation=timer_read();
-
-    switch (keycode)
+    keyevent_t event = record->event;
+    if (event.pressed)
     {
 
-    case OS_CTL:
-      rgblight_setrgb(255,1,25);
-      return true;
-    case OS_ALT:
-      rgblight_setrgb(255,255,25);
-      return true;
-    case OSLOWER:
-      rgblight_setrgb(25,255,25);
-      return true;
-    case OSRAISE:
-      rgblight_setrgb(25,25,255);
-      return true;
-    case TRIPE_TICKS:
-      SEND_STRING("[[[ ");
-      return false;
-      break;
-    case T_TERM:
-      return VSCommand(on_mac, "toit");
-      break;
-    case FIX_ALL:
-      return VSCommand(on_mac, "faap");
-      break;
-    case BLK_COMMENT:
-      return VSCommand(on_mac, "tbc");
-      break;
-    case LINE_COMMENT:
-      return VSCommand(on_mac, "tlic");
-      break;
-    case CMD_SHIFT_P:
-      return cmd_shift_p(on_mac);
-      break;
-/*     case BRACES:
-      if(key_count==0){
-        SEND_STRING("*");
+      if (keycode == latest_kc)
+      {
+        if (timer_elapsed(latest_rotation) > TAP_ROTATION_TIMEOUT) key_count = 0;
+        else key_count++;
+      } else {
+        key_count = 0;
+        latest_kc = keycode;
       }
-      if(key_count==1){
-        TAP(KC_BSPACE);
-        TAP_WITH_MOD(KC_RALT,KC_LBRACKET);
+
+      latest_rotation = timer_read();
+
+      switch (keycode)
+      {
+          case OS_CTL:
+            one_shot_was_active = true;
+            rgblight_setrgb(255, 1, 25);
+            break;
+          case OS_ALT:
+            one_shot_was_active = true;
+            rgblight_setrgb(255, 255, 25);
+            break;
+          case TRIPE_TICKS:
+            SEND_STRING("[[[ ");
+            return false;
+          case T_TERM: return VSCommand(on_mac, "toit");
+          case FIX_ALL: return VSCommand(on_mac, "faap");
+          case BLK_COMMENT: return VSCommand(on_mac, "tbc");
+          case LINE_COMMENT: return VSCommand(on_mac, "tlic");
+          case CMD_SHIFT_P: return cmd_shift_p(on_mac);
+          case ARROW:
+            if (key_count == 0)
+            { TAP(ES_EQL); }
+            if (key_count == 1)
+            { TAP(R_NUB); }
+            if (key_count == 2)
+            { TAP(KC_SPC); }
+            if (key_count == 3)
+            { TAP_LCBRACE }
+            if (key_count == 4)
+            {
+              TAP(KC_SPC);
+              TAP_WITH_MOD(KC_RALT, KC_NUHS);
+              TAP(KC_LEFT);
+            }
+            return false;
+          case MAC_TGL:
+            on_mac = !on_mac;
+            rgblight_setrgb(255, 255, 0);
+            return false;
+          case COPY: return CMD(KC_C);
+          case CUT: return CMD(KC_X);
+          case PASTE: return CMD(KC_V);
+          default:
+            if(one_shot_was_active){
+              rgblight_setrgb(255, 255, 255);
+              one_shot_was_active = false;
+            }
+            break;
       }
-      if(key_count==2){
-        TAP(KC_BSPACE);
-        TAP_LCBRACE
-      }
-      return false;
-      break; */
-    case ARROW:
-      if(key_count==0){
-        TAP(ES_EQL);
-      }
-      if(key_count==1){
-        TAP(R_NUB);
-      }
-      if(key_count==2){
-        TAP(KC_SPC);
-      }
-      if(key_count==3){
-        TAP_LCBRACE
-      }
-      if(key_count==4){
-        TAP(KC_SPC);
-        TAP_WITH_MOD(KC_RALT,KC_NUHS);
-        TAP(KC_LEFT);
-      }
-      return false;
-      break;
-    case MAC_TGL:
-      on_mac = !on_mac;
-      rgblight_setrgb(255,255,0);
-      return false;
-      break;
-    case COPY:
-      return CMD(KC_C);
-    case CUT:
-      return CMD(KC_X);
-    case PASTE:
-      return CMD(KC_V);
-    default:
-      rgblight_setrgb(255,255,255);
-      return true;
     }
+    return true;
   }
-  return true;
-}
