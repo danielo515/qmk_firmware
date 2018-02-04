@@ -42,6 +42,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
+
 #define BACKLIGHT_LEVELS 12
 // #define BACKLIGHT_BREATHING  // works, but BL_TOGG might not work
 
@@ -73,10 +74,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define BACKLIGHT_BREATHING
 
-/*
-#define GRAVE_ESC_CTRL_OVERRIDE
 #define PERMISSIVE_HOLD
-*/
+
 #define TAP_ROTATION_TIMEOUT 350
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 #define TAP_WITH_MOD(mod, key) \
@@ -85,6 +84,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   unregister_code(key); \
   unregister_code(mod)
 
-#define TD_DBL_ARR(ONE,TWO) [_D_##ONE##_##TWO] = ACTION_TAP_DANCE_DOUBLE(KC_##ONE,TWO),
+#define TD_DBL_ARR(ONE,TWO) [_D_##ONE##_##TWO] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_##ONE,TWO),
 #define TD_DBL(ONE,TWO) _D_##ONE##_##TWO
 #define TD_DBL_NAM(ONE,TWO) TD(_D_##ONE##_##TWO)

@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "jj40.h"
 #include "keymap_spanish.h"
+#include "danielo515.h"
 
 #define _QWERTY 0
 #define _LOWER  1
@@ -50,12 +51,12 @@ enum tap_dance {
   _TD_LBRACES=0,
   TD_RBRACES,
   TD_J_ENTER,
-  TD_H_ENTER,
+  _D_H_DASH,
   DOT_COMM,
   TD_FIVE_COMM,
   TD_N_QUES,
   _TD_COPY,
-  _TD_PASTE,
+  _TD_CUT,
   TD_DBL(G, ES_EQL),
   TD_DBL(M, KC_ENT),
   V_TAP_DANCE
@@ -107,7 +108,7 @@ enum tap_dance {
 #define TAP_LCBRACE TAP_WITH_MOD(KC_RALT,KC_QUOT);
 // Tap dance key codes
 #define TD_COMM TD(DOT_COMM)
-#define TD_H_ENT TD(TD_H_ENTER)
+#define TD_H_DASH TD(_D_H_DASH)
 #define TD_J_ENT TD(TD_J_ENTER)
 #define FIVE_COMM TD(TD_FIVE_COMM)
 #define N_QUES TD(TD_N_QUES)
@@ -117,6 +118,7 @@ enum tap_dance {
 #define TD_G_EQL TD_DBL_NAM(G, ES_EQL)
 #define TD_M_CBR TD_DBL_NAM(M, KC_ENT)
 #define TD_V TD(V_TAP_DANCE)
+#define TD_X TD(_TD_CUT)
 
 
 bool on_mac = false;
@@ -124,7 +126,7 @@ bool on_mac = false;
 bool CMD(uint16_t kc) {
   if(on_mac){ TAP(LGUI(kc)); } else { TAP(LCTL(kc)); }
   return false;
-  }
+}
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwerty
@@ -140,8 +142,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = KEYMAP( \
   KC_ESC,  KC_Q,    KC_W,    KC_E,     FN_R,      KC_T,         KC_Y,      KC_U,    KC_I,    KC_O,    KC_P,    KC_LEAD,\
-  KC_TAB,  FN_A,    FN_S,    FN_D,     FN_F,      TD_G_EQL,     TD_H_ENT,  FN_J,    FN_K,    KC_L,    KC_SCLN, ES_ACUT,\
-  OS_SFT , KC_Z,    KC_X,   TD_COPY,   TD_V,      KC_B,         N_QUES,    TD_M_CBR,    TD_COMM, KC_DOT,  ES_APOS, KC_ENT,\
+  KC_TAB,  FN_A,    FN_S,    FN_D,     FN_F,      TD_G_EQL,     TD_H_DASH,  FN_J,    FN_K,    KC_L,    KC_SCLN, ES_ACUT,\
+  OS_SFT , KC_Z,    TD_X,   TD_COPY,   TD_V,      KC_B,         N_QUES,    TD_M_CBR,    TD_COMM, KC_DOT,  ES_APOS, KC_ENT,\
   KC_RGUI, OS_CTL,  OS_ALT,  KC_UP,    OSRAISE,   S_BKSP,       S_SPC,   OSLOWER,   LEFT_ALT, KC_DOWN, KC_UP,   KC_RIGHT \
   ),
 
@@ -339,36 +341,6 @@ void matrix_scan_user(void){};
 
 // ===================== TAP DANCE STUFF
 
-//**************** Definitions needed for quad function to work *********************//
-//Enums used to clearly convey the state of the tap dance
-enum {
-  SINGLE_TAP = 1,
-  SINGLE_HOLD = 2,
-  DOUBLE_TAP = 3,
-  DOUBLE_HOLD = 4,
-  DOUBLE_SINGLE_TAP = 5 //send SINGLE_TAP twice - NOT DOUBLE_TAP
-  // Add more enums here if you want for triple, quadruple, etc.
-};
-
-int cur_dance (qk_tap_dance_state_t *state) {
-  if (state->count == 1) {
-    //If count = 1, and it has been interrupted - it doesn't matter if it is pressed or not: Send SINGLE_TAP
-    if (state->interrupted || state->pressed==0) return SINGLE_TAP;
-    else return SINGLE_HOLD;
-  }
-  //If count = 2, and it has been interrupted - assume that user is trying to type the letter associated
-  //with single tap. In example below, that means to send `xx` instead of `Escape`.
-  else if (state->count == 2) {
-    if (state->interrupted) return DOUBLE_SINGLE_TAP;
-    else if (state->pressed) return DOUBLE_HOLD;
-    else return DOUBLE_TAP;
-  }
-  else return 6; //magic number. At some point this method will expand to work for more presses
-}
-
-//**************** Definitions needed for quad function to work *********************//
-
-
 typedef struct {
   bool is_press_action;
   int state;
@@ -459,12 +431,12 @@ void dance_copy (qk_tap_dance_state_t *state, void *user_data) {
   reset_tap_dance (state);
 }
 
-void dance_paste (qk_tap_dance_state_t *state, void *user_data) {
+void dance_cut (qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
-    TAP(KC_P);
+    TAP(KC_X);
   }
   else {
-    CMD(KC_V);
+    CMD(KC_X);
   }
   reset_tap_dance (state);
 }
@@ -476,10 +448,10 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_RBRACES] = ACTION_TAP_DANCE_FN_ADVANCED_TIME (NULL , dance_right_brace_finished,dance_right_brace_reset,200),
     [TD_FIVE_COMM] = ACTION_TAP_DANCE_DOUBLE(KC_5,KC_COMM),
     [DOT_COMM] = ACTION_TAP_DANCE_DOUBLE(KC_COMM,KC_DOT),
-    [TD_N_QUES] = ACTION_TAP_DANCE_DOUBLE(KC_N,ES_QUES),
-    [TD_H_ENTER] = ACTION_TAP_DANCE_DOUBLE(KC_H,KC_ENT),
+    [TD_N_QUES] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_N,ES_QUES),
+    [_D_H_DASH] = ACTION_TAP_DANCE_DOUBLE(KC_H,ES_MINS),
     [_TD_COPY] =  ACTION_TAP_DANCE_FN(dance_copy),
-    [_TD_PASTE] = ACTION_TAP_DANCE_FN(dance_paste),
+    [_TD_CUT] = ACTION_TAP_DANCE_FN(dance_cut),
     [V_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, v_finished, v_reset),
     TD_DBL_ARR(G, ES_EQL)
     TD_DBL_ARR(M, KC_ENT)
