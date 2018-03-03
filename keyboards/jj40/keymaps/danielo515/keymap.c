@@ -50,7 +50,7 @@ enum custom_keycodes {
 enum tap_dance {
   _TD_LBRACES=0,
   TD_RBRACES,
-  TD_J_ENTER,
+  //TD_J_ENTER,
   _D_H_DASH,
   DOT_COMM,
   TD_FIVE_COMM,
@@ -109,7 +109,7 @@ enum tap_dance {
 // Tap dance key codes
 #define TD_COMM TD(DOT_COMM)
 #define TD_H_DASH TD(_D_H_DASH)
-#define TD_J_ENT TD(TD_J_ENTER)
+//#define TD_J_ENT TD(TD_J_ENTER)
 #define FIVE_COMM TD(TD_FIVE_COMM)
 #define N_QUES TD(TD_N_QUES)
 #define TD_LBRACES TD(_TD_LBRACES)
@@ -358,7 +358,7 @@ void v_finished (qk_tap_dance_state_t *state, void *user_data) {
   switch (v_tap_state.state) {
     case SINGLE_TAP: register_code(KC_V); break;
     case SINGLE_HOLD: layer_on(_VSC); break;
-    case DOUBLE_TAP: register_code16(LCTL(KC_V)); break;
+    case DOUBLE_TAP: register_code16(on_mac ? LGUI(KC_V) : LCTL(KC_V)); break;
     case DOUBLE_HOLD: register_code(KC_LALT); break;
     case DOUBLE_SINGLE_TAP: register_code(KC_V); unregister_code(KC_V); register_code(KC_V);
     //Last case is for fast typing. Assuming your key is `f`:
@@ -371,7 +371,7 @@ void v_reset (qk_tap_dance_state_t *state, void *user_data) {
   switch (v_tap_state.state) {
     case SINGLE_TAP: unregister_code(KC_V); break;
     case SINGLE_HOLD: layer_off(_VSC); break;
-    case DOUBLE_TAP: unregister_code16(LCTL(KC_V)); break;
+    case DOUBLE_TAP: unregister_code16(on_mac ? LGUI(KC_V) : LCTL(KC_V)); break;
     case DOUBLE_HOLD: unregister_code(KC_LALT);
     case DOUBLE_SINGLE_TAP: unregister_code(KC_V);
   }
@@ -424,10 +424,10 @@ dance_brace_reset(state,user_data,false);
 void dance_copy (qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     TAP(KC_C);
-  }
-  else {
-    CMD(KC_C);
-  }
+  } else if (state->interrupted)
+        { TAP(KC_C);TAP(KC_C);}
+         else CMD(KC_C);
+
   reset_tap_dance (state);
 }
 
