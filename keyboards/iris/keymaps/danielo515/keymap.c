@@ -1,6 +1,7 @@
 #include "iris.h"
 #include "action_layer.h"
 #include "eeconfig.h"
+#include "danielo515.h"
 #include "keymap_spanish.h"
 
 extern keymap_config_t keymap_config;
@@ -26,10 +27,9 @@ enum custom_keycodes {
 #define KC_BL_S BL_STEP
 #define KC_ALT OSM(MOD_LALT)
 #define KC_CTL OSM(MOD_LCTL)
-#undef KC_SCLN
 #undef KC_AT
 #undef KC_PIPE
-#define KC_SCLN ES_SCLN
+#define KC_E_SCLN ES_SCLN
 #define KC_AT ES_AT
 #define KC_EQUO ES_QUOT
 #define KC_PIPE ES_PIPE
@@ -62,22 +62,23 @@ enum custom_keycodes {
 #define KC_T_LEFT TD(LEFT_HOME)
 #define KC_T_RIGHT TD(RIGHT_END)
 #define KC_T_J TD(J_ENT)
+#define KC_T_H TD(H_MINS)
 #define KC_T_RGT TD(RGT_HOME)
 #undef KC_APOS
 #define KC_APOS ES_APOS
 //Tap Dance Declarations
 enum td_enum {
   LEFT_HOME = 0,
-  UP_ALT,
   J_ENT,
+  H_MINS,
   RGT_HOME,
 };
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
   [LEFT_HOME] = ACTION_TAP_DANCE_DOUBLE(KC_LEFT, KC_HOME),
-  [RGT_HOME] = ACTION_TAP_DANCE_DOUBLE(KC_RGHT, KC_END),
-  [UP_ALT] = ACTION_TAP_DANCE_DOUBLE(KC_UP, RALT(KC_UP)), // Tap once for 2tap twice for 5
-  [J_ENT] = ACTION_TAP_DANCE_DOUBLE(KC_J,KC_ENT), // Tap once for 3 tap twice for 6
+  [RGT_HOME] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_RGHT, KC_END),
+  [J_ENT] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_J,KC_ENT),
+  [H_MINS] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_H,KC_SLASH),
 }; // Fillers to make layering more clear
 
 
@@ -85,42 +86,42 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = KC_KEYMAP(
-  //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
+  //,----+----+----+----+----+----.              ,----+----+----+----+----+-----.
      ESC , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,SLSH,
-  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     TAB , Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  ,SCLN,
-  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     LGUI, A  , S  , D  , F  , G  ,                H  ,T_J , K  , L  ,ACUT,APOS,
-  //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
+  //|----+----+----+----+----+----|              |----+----+----+----+----+-----|
+     GUI, Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  ,E_SCLN,
+  //|----+----+----+----+----+----|              |----+----+----+----+----+-----|
+     TAB , A  , S  , D  , F  , G  ,               T_H ,T_J , K  , L  ,ACUT,APOS,
+  //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+-----|
      SFT, Z  , X  , C  , V  , B  ,ESC ,      LENT, N  , M   ,COMM,DOT ,ESLS,BSLS,
-  //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
+  //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+-----'
                        CTL,LOWR,BKSP ,         SPC ,RASE,ALT
   //                  `----+----+----'        `----+----+----'
   ),
   [_LOWER] = KC_KEYMAP(
-  //,----+----+----+----+----+----.               ,-----+----+----+-----+----+----.
+  //,----+----+----+----+----+----.               ,-----+-----+-----+------+----+----.
      TILD,EXLM, AT ,HASH,DLR ,PERC,                CIRC, AMPR,ASTR, LPRN,RPRN,BSPC,
-  //|----+----+----+----+----+----|               |-----+----+----+-----+----+----|
-     RST , 1  , 2  , 3  , 4  , 5  ,                E_AST,ELBR,ERBR,     , 0  ,    ,
-  //|----+----+----+----+----+----|               |-----+----+----+-----+----+----|
-     DEL ,MUTE,LEFT,RGHT, UP ,ELBR,                E_AMP,LPRN,RPRN,COMM ,EPLUS,PIPE,
-  //|----+----+----+----+----+----+----.    ,-----|-----+----+----+-----+----+----|
+  //|----+----+----+----+----+----|               |-----+-----+-----+------+----+----|
+      0  , 1  , 2  , 3  , 4  , 5  ,                E_AST,ELBR, ERBR ,      , 0  ,    ,
+  //|----+----+----+----+----+----|               |-----+-----+-----+------+----+----|
+     DEL ,MUTE,LEFT,RGHT, UP ,ELBR,                E_AMP,LPRN,RPRN,E_COLN,EPLUS,PIPE,
+  //|----+----+----+----+----+----+----.    ,-----|-----+-----+-----+------+----+----|
      BL_S,    ,    ,    ,DOWN,    ,LPRN,    E_IQUE,E_QUES,LCBR,RCBR,DOT ,EMINS,    ,
-  //`----+----+----+--+-+----+----+----/    \-----+-----+----+----+-----+----+----'
+  //`----+----+----+--+-+----+----+----/    \-----+-----+-----+-----+------+----+----'
                            ,    ,DEL ,         DEL ,DOT, P0
   //                  `----+----+----'        `----+----+----'
   ),
 
   [_RAISE] = KC_KEYMAP(
-  //,----+----+----+----+----+----.                ,-----+----+----+----+----+----.
+  //,----+----+----+-----+----+----.                ,-----+----+----+----+----+----.
      F12 , F1 , F2 , F3 , F4 , F5 ,                 F6 , F7 , F8 , F9 ,F10 ,F11 ,
-  //|----+----+----+----+----+----|                |-----+----+----+----+----+----|
-         ,EXLM,EQUO,HASH,PERC,UNDS,                 ECIRC,AMPR,ASTR,LPRN,RPRN,    ,
-  //|----+----+----+----+----+----|                |-----+----+----+----+----+----|
-         , AT ,DLR,VOLU, EQL ,TILD,                 T_LEFT,DOWN, UP ,RGHT,    ,BSLS,
+  //|----+----+----+-----+----+----|                |-----+----+----+----+----+----|
+         ,EXLM,EQUO,HASH,PERC,ECIRC,                 ECIRC,AMPR,ASTR,LPRN,RPRN,    ,
+  //|----+----+----+-----+----+----|                |-----+----+----+----+----+----|
+         , AT ,DLR ,E_AST,E_EQL,TILD,                 T_LEFT,DOWN, UP ,RGHT,    ,BSLS,
   //|----+----+----+----+----+----+----.    ,------|-----+----+----+----+----+----|
-     MUTE,MSTP,MPLY,VOLD,PGDN,EMINS,    ,   E_IQUE ,E_QUES,END ,    ,    ,    ,    ,
-  //`----+----+----+--+-+----+----+----/    \------+-----+----+----+----+----+----'
+     MUTE,VOLU,VOLD,PGDN,EMINS,    ,   ,    E_IQUE ,E_QUES,END ,    ,    ,    ,    ,
+  //`----+----+----+----+----+----+----/    \------+-----+----+----+----+----+----'
                            ,    ,    ,             ,    ,
   //                  `----+----+----'        `----+----+----'
   ),

@@ -77,7 +77,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PERMISSIVE_HOLD
 
 #define TAP_ROTATION_TIMEOUT 350
-#define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 #define TAP_WITH_MOD(mod, key) \
   register_code(mod); \
   register_code(key); \

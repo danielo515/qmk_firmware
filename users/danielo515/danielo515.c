@@ -23,23 +23,26 @@ int cur_dance (qk_tap_dance_state_t *state) {
 
 void qk_tap_dance_pair_finished_safe(qk_tap_dance_state_t *state, void *user_data) {
   qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
-
-  if (state->count == 1) {
-    register_code16 (pair->kc1);
-  } else if (state->count == 2) {
+  int count = state->count;
+  if (state->count == 2) {
     if (state->interrupted){
       TAP(pair->kc1);register_code16 (pair->kc1);
       state->count = 1; // Reset the counter as we are using the first key
     } else register_code16 (pair->kc2);
+    return;
+  }
+  register_code16 (pair->kc1);
+  while(--count){
+    unregister_code16(pair->kc1);
+    register_code16 (pair->kc1);
   }
 }
 
 void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data) {
   qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
-
-  if (state->count == 1) {
-    unregister_code16 (pair->kc1);
-  } else if (state->count == 2) {
+  if (state->count == 2) {
     unregister_code16 (pair->kc2);
+    return;
   }
+  unregister_code16(pair->kc1);
 }

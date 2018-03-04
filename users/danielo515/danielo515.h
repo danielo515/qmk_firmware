@@ -3,6 +3,12 @@
 
 #include "quantum.h"
 
+#define KC_E_COLN LSFT(KC_DOT)
+#define KC_E_EQL ES_EQL
+#define KC_GUI OSM(MOD_RGUI)
+
+#define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
+
 #define ACTION_TAP_DANCE_DOUBLE_SAFE(kc1, kc2) { \
     .fn = { NULL, qk_tap_dance_pair_finished_safe, qk_tap_dance_pair_reset_safe }, \
     .user_data = (void *)&((qk_tap_dance_pair_t) { kc1, kc2 }),  \
