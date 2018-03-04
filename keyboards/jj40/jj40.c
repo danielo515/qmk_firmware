@@ -34,7 +34,7 @@ extern rgblight_config_t rgblight_config;
 // @Override
 void matrix_init_kb(void) {
   // call user level keymaps, if any
-  // matrix_init_user();
+  matrix_init_user();
 }
 
 #ifdef BACKLIGHT_ENABLE
@@ -78,8 +78,17 @@ void matrix_scan_kb(void) {
 
   rgblight_task();
 
-  matrix_scan_user(); // if not defined in keymap.c, will call the default implementation (do nothing)
-// otherwise will call your custom matrix scanning code in your own matrix_scan_user(void) definition
+  matrix_scan_user();
   /* Nothing else for now. */
 }
 
+__attribute__((weak)) // overridable
+void matrix_init_user(void) {
+
+}
+
+
+__attribute__((weak)) // overridable
+void matrix_scan_user(void) {
+
+}
