@@ -67,6 +67,6 @@ void matrix_init_user(void);  // TODO port this to other PS2AVRGB boards
   { K312, K311, K310, K39, K35, K36, K3X, KC_NO, K34, K33, K32, K31 }  \
 }
 
-#define KEYMAP KEYMAP_MIT
+#define KEYMAP KEYMAP_GRID
 
 #endif

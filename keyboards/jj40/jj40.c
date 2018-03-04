@@ -67,7 +67,7 @@ void rgblight_set(void) {
 }
 
 bool rgb_init = false;
-
+// previously void matrix_scan_user(void)
 void matrix_scan_kb(void) {
   // if LEDs were previously on before poweroff, turn them back on
   if (rgb_init == false && rgblight_config.enable) {
