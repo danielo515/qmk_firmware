@@ -39,7 +39,7 @@ enum custom_keycodes {
 #define KC_BKSP MT(MOD_LSFT,KC_BSPC)
 #define KC_ACUT ES_ACUT
 #undef KC_BSLS
-#define KC_BSLS ES_BSLS
+#define KC_BSLS LALT(KC_GRAVE)
 #undef KC_LPRN
 #define KC_LPRN ES_LPRN
 #undef KC_RPRN
@@ -51,9 +51,8 @@ enum custom_keycodes {
 #undef KC_HASH
 #define KC_HASH ES_HASH
 #define KC_EPLUS ES_PLUS
-#define KC_EMINS ES_MINS
-#define KC_ELBR ES_LBRC
-#define KC_ERBR ES_RBRC
+#define KC_E_LBR ES_LBRC
+#define KC_E_RBR ES_RBRC
 #define KC_ECIRC ES_CIRC
 #define KC_E_QUES ES_QUES
 #define KC_E_IQUE ES_IQUE
@@ -87,40 +86,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = KC_KEYMAP(
   //,----+----+----+----+----+----.              ,----+----+----+----+----+-----.
-     ESC , 1  , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,SLSH,
+     ESC , 1 , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,E_TILD,
   //|----+----+----+----+----+----|              |----+----+----+----+----+-----|
      GUI, Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  ,E_SCLN,
   //|----+----+----+----+----+----|              |----+----+----+----+----+-----|
      TAB , A  , S  , D  , F  , G  ,               T_H ,T_J , K  , L  ,ACUT,APOS,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+-----|
-     SFT, Z  , X  , C  , V  , B  ,ESC ,      LENT, N  , M   ,COMM,DOT ,ESLS,BSLS,
+     SFT, Z  , X  , C  , V  , B  ,ESC ,      LENT, N  , M  ,COMM,DOT ,ESLS,BSLS,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+-----'
-                       CTL,LOWR,BKSP ,         SPC ,RASE,ALT
+                       CTL,LOWR,BKSP ,       S_SPC,RASE,ALT
   //                  `----+----+----'        `----+----+----'
   ),
   [_LOWER] = KC_KEYMAP(
   //,----+----+----+----+----+----.               ,-----+-----+-----+------+----+----.
-     TILD,EXLM, AT ,HASH,DLR ,PERC,                CIRC, AMPR,ASTR, LPRN,RPRN,BSPC,
+         ,EXLM, AT ,HASH,DLR ,PERC,                CIRC ,     ,ASTR , LPRN ,RPRN,BSPC,
   //|----+----+----+----+----+----|               |-----+-----+-----+------+----+----|
-      0  , 1  , 2  , 3  , 4  , 5  ,                E_AST,ELBR, ERBR ,      , 0  ,    ,
+      0  , 1  , 2  , 3  , 4  , 5  ,                     ,E_LBR,E_RBR,      ,    ,    ,
   //|----+----+----+----+----+----|               |-----+-----+-----+------+----+----|
-     DEL ,MUTE,LEFT,RGHT, UP ,ELBR,                E_AMP,LPRN,RPRN,E_COLN,EPLUS,PIPE,
+     DEL ,  6 , 7  , 8  , 9  , 0  ,                E_AMP,LPRN ,RPRN ,E_COLN,EPLUS,PIPE,
   //|----+----+----+----+----+----+----.    ,-----|-----+-----+-----+------+----+----|
-     BL_S,    ,    ,    ,DOWN,    ,LPRN,    E_IQUE,E_QUES,LCBR,RCBR,DOT ,EMINS,    ,
+     BL_S,    ,    ,    ,    ,    ,    ,    E_IQUE,E_QUES,LCBR,RCBR ,      ,    ,    ,
   //`----+----+----+--+-+----+----+----/    \-----+-----+-----+-----+------+----+----'
-                           ,    ,DEL ,         DEL ,DOT, P0
+                           ,    ,DEL ,         DEL ,DOT,
   //                  `----+----+----'        `----+----+----'
   ),
 
   [_RAISE] = KC_KEYMAP(
   //,----+----+----+-----+----+----.                ,-----+----+----+----+----+----.
-     F12 , F1 , F2 , F3 , F4 , F5 ,                 F6 , F7 , F8 , F9 ,F10 ,F11 ,
+     F12 , F1 , F2 , F3 , F4 , F5 ,                   F6  , F7 , F8 , F9 ,F10 ,F11 ,
   //|----+----+----+-----+----+----|                |-----+----+----+----+----+----|
-         ,EXLM,EQUO,HASH,PERC,ECIRC,                 ECIRC,AMPR,ASTR,LPRN,RPRN,    ,
-  //|----+----+----+-----+----+----|                |-----+----+----+----+----+----|
-         , AT ,DLR ,E_AST,E_EQL,TILD,                 T_LEFT,DOWN, UP ,RGHT,    ,BSLS,
-  //|----+----+----+----+----+----+----.    ,------|-----+----+----+----+----+----|
-     MUTE,VOLU,VOLD,PGDN,EMINS,    ,   ,    E_IQUE ,E_QUES,END ,    ,    ,    ,    ,
+         ,EXLM,EQUO,HASH ,PERC,ECIRC,                 PGDN,HOME,END ,LPRN,RPRN,    ,
+  //|----+----+----+-----+-----+----|               |-----+----+----+----+----+----|
+         , AT ,DLR ,E_AST,E_EQL,E_GT,                LEFT ,DOWN, UP ,RGHT,SCLN,DEL,
+  //|----+----+----+----+------+----+----.   ,------|------+----+----+----+----+----|
+     MUTE,VOLU,VOLD,    ,E_MINS,E_LT ,   ,    E_IQUE ,E_QUES,END ,    ,    ,    ,    ,
   //`----+----+----+----+----+----+----/    \------+-----+----+----+----+----+----'
                            ,    ,    ,             ,    ,
   //                  `----+----+----'        `----+----+----'
@@ -145,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|              |-----+----+----+-----+----+----|
      RST , 1  , 2  , 3  , 4  , 5  ,                 6  , 7  , 8  , 9   , 0  ,    ,
   //|----+----+----+----+----+----|              |-----+----+----+-----+----+----|
-     DEL ,MUTE,LEFT,RGHT, UP ,ELBR,               ERBR , P4 , P5 , P6  ,EPLUS,PIPE,
+     DEL ,MUTE,LEFT,RGHT, UP ,E_LBR,               E_RBR , P4 , P5 , P6  ,EPLUS,PIPE,
   //|----+----+----+----+----+----+----.    ,----|-----+----+----+-----+----+----|
      BL_S,    ,    ,    ,DOWN,LCBR,LPRN,     RPRN,RCBR, P1 , P2 ,  P3 , EMINS,    ,
   //`----+----+----+--+-+----+----+----/    \----+-----+----+----+-----+----+----'

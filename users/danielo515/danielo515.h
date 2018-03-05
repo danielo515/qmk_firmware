@@ -6,6 +6,12 @@
 #define KC_E_COLN LSFT(KC_DOT)
 #define KC_E_EQL ES_EQL
 #define KC_GUI OSM(MOD_RGUI)
+#define KC_R_NUB S(KC_NUBS)
+#define KC_E_LT KC_NUBS
+#define KC_E_GT S(KC_NUBS)
+#define KC_E_TILD ES_TILD
+#define KC_E_MINS ES_MINS
+#define KC_S_SPC SFT_T(KC_SPC)  // Tap for Space, hold for Shift
 
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 
