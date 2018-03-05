@@ -18,7 +18,7 @@
 #define IS_TAPPING_PRESSED()    (IS_TAPPING() && tapping_key.event.pressed)
 #define IS_TAPPING_RELEASED()   (IS_TAPPING() && !tapping_key.event.pressed)
 #define IS_TAPPING_KEY(k)       (IS_TAPPING() && KEYEQ(tapping_key.event.key, (k)))
-#define WITHIN_TAPPING_TERM(e)  (TIMER_DIFF_16(e.time, tapping_key.event.time) < TAPPING_TERM)
+#define WITHIN_TAPPING_TERM(e)  (TIMER_DIFF_16(e.time, tapping_key.event.time) < get_tapping_term(&e))
 
 
 static keyrecord_t tapping_key = {};
@@ -35,6 +35,11 @@ static void waiting_buffer_scan_tap(void);
 static void debug_tapping_key(void);
 static void debug_waiting_buffer(void);
 
+// Overridable tapping term
+__attribute__ ((weak))
+uint16_t get_tapping_term(keyevent_t* event) {
+    return TAPPING_TERM;
+}
 
 void action_tapping_process(keyrecord_t record)
 {
