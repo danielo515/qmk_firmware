@@ -13,6 +13,30 @@
 #define KC_E_MINS ES_MINS
 #define KC_S_SPC SFT_T(KC_SPC)  // Tap for Space, hold for Shift
 
+enum layers {
+  _QWERTY = 0,
+  _LOWER,
+  _RAISE,
+  _F,
+  _D,
+  _A,
+  _S,
+  _J,
+  _K,
+  _ADJUST = 16,
+  _SAFE_LAYER
+};
+
+
+// Function letters
+#define FN_F LT(_F,KC_F)
+#define FN_D LT(_D,KC_D)
+#define KC_FN_D LT(_D,KC_D)
+#define FN_S LT(_S,KC_S)
+#define FN_A LT(_A,KC_A)
+#define FN_K LT(_K,KC_K)
+#define FN_J LT(_J,KC_J)
+
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 
 #define ACTION_TAP_DANCE_DOUBLE_SAFE(kc1, kc2) { \
