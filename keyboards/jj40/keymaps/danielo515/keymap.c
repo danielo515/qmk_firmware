@@ -120,14 +120,6 @@ enum tap_dance {
 #define TD_V TD(V_TAP_DANCE)
 #define TD_X TD(_TD_CUT)
 
-
-bool on_mac = false;
-
-bool CMD(uint16_t kc) {
-  if(on_mac){ TAP(LGUI(kc)); } else { TAP(LCTL(kc)); }
-  return false;
-}
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
@@ -419,26 +411,6 @@ void dance_right_brace_finished (qk_tap_dance_state_t *state, void *user_data) {
 }
 void dance_right_brace_reset (qk_tap_dance_state_t *state, void *user_data) {
 dance_brace_reset(state,user_data,false);
-}
-
-void dance_copy (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    TAP(KC_C);
-  } else if (state->interrupted)
-        { TAP(KC_C);TAP(KC_C);}
-         else CMD(KC_C);
-
-  reset_tap_dance (state);
-}
-
-void dance_cut (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    TAP(KC_X);
-  }
-  else {
-    CMD(KC_X);
-  }
-  reset_tap_dance (state);
 }
 
 // TAP DANCE ACTIONS ARRAY

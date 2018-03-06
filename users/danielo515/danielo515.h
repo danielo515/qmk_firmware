@@ -12,6 +12,11 @@
 #define KC_E_TILD ES_TILD
 #define KC_E_MINS ES_MINS
 #define KC_S_SPC SFT_T(KC_SPC)  // Tap for Space, hold for Shift
+// TAP DANCE KEYS
+#define TD_COPY TD(_TD_COPY)
+#define TD_CUT TD(_TD_CUT)
+#define KC_TD_COPY TD(_TD_COPY) // Declarations for macros that add KC_
+#define KC_TD_CUT TD(_TD_CUT)
 
 enum layers {
   _QWERTY = 0,
@@ -31,11 +36,12 @@ enum layers {
 // Function letters
 #define FN_F LT(_F,KC_F)
 #define FN_D LT(_D,KC_D)
-#define KC_FN_D LT(_D,KC_D)
 #define FN_S LT(_S,KC_S)
 #define FN_A LT(_A,KC_A)
 #define FN_K LT(_K,KC_K)
 #define FN_J LT(_J,KC_J)
+#define KC_FN_D FN_D
+#define KC_FN_S FN_S
 
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 
@@ -59,5 +65,6 @@ int cur_dance (qk_tap_dance_state_t *state);
 
 void qk_tap_dance_pair_finished_safe(qk_tap_dance_state_t *state, void *user_data);
 void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data);
-
+void dance_cut (qk_tap_dance_state_t *state, void *user_data);
+void dance_copy (qk_tap_dance_state_t *state, void *user_data);
 #endif

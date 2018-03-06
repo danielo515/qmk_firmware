@@ -1,6 +1,11 @@
 #include "danielo515.h"
 
-
+bool on_mac = false;
+// Send control or GUI depending if we are on windows or mac
+bool CMD(uint16_t kc) {
+  if(on_mac){ TAP(LGUI(kc)); } else { TAP(LCTL(kc)); }
+  return false;
+}
 //**************** Definitions needed for quad function to work *********************//
 
 int cur_dance (qk_tap_dance_state_t *state) {
@@ -20,6 +25,29 @@ int cur_dance (qk_tap_dance_state_t *state) {
 }
 
 //**************** END Definitions needed for quad function to work *********************//
+
+//===== The awesome tap dance for CUT and COPY
+void dance_copy (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    TAP(KC_C);
+  } else if (state->interrupted)
+        { TAP(KC_C);TAP(KC_C);}
+         else CMD(KC_C);
+
+  reset_tap_dance (state);
+}
+
+void dance_cut (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    TAP(KC_X);
+  }
+  else {
+    CMD(KC_X);
+  }
+  reset_tap_dance (state);
+}
+
+
 // Specific tapping term for certain keys (like space)
 uint16_t get_tapping_term(keyevent_t* event) {
     uint16_t keycode = keymap_key_to_keycode(layer_switch_get_layer(event->key), event->key);

@@ -5,12 +5,14 @@
 #include "keymap_spanish.h"
 
 extern keymap_config_t keymap_config;
+extern bool on_mac;
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
   ADJUST,
+  MAC_TGL
 };
 
 #define KC_ KC_TRNS
@@ -31,7 +33,7 @@ enum custom_keycodes {
 #define KC_ESLS ES_SLSH
 #define KC_SFT OSM(MOD_LSFT)
 #define KC_LENT LT(_RAISE,KC_ENT)
-#define KC_BKSP LT(_RAISE,KC_BSPC)
+#define KC_BKSP SFT_T(KC_BSPC)
 #define KC_ACUT ES_ACUT
 #undef KC_BSLS
 #define KC_BSLS LALT(KC_GRAVE)
@@ -60,12 +62,15 @@ enum custom_keycodes {
 #define KC_T_RGT TD(RGT_HOME)
 #undef KC_APOS
 #define KC_APOS ES_APOS
+#define KC_MAC_TGL MAC_TGL
 //Tap Dance Declarations
 enum td_enum {
   LEFT_HOME = 0,
   J_ENT,
   H_MINS,
   RGT_HOME,
+  _TD_COPY,
+  _TD_CUT,
 };
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
@@ -73,6 +78,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [RGT_HOME] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_RGHT, KC_END),
   [J_ENT] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_J,KC_ENT),
   [H_MINS] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_H,KC_SLASH),
+  [_TD_COPY] =  ACTION_TAP_DANCE_FN(dance_copy),
+  [_TD_CUT] = ACTION_TAP_DANCE_FN(dance_cut),
 }; // Fillers to make layering more clear
 
 
@@ -80,21 +87,35 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = KC_KEYMAP(
-  //,----+----+----+----+----+----.              ,----+----+----+----+----+-----.
-     ESC , 1 , 2  , 3  , 4  , 5  ,                6  , 7  , 8  , 9  , 0  ,E_TILD,
-  //|----+----+----+----+----+----|              |----+----+----+----+----+-----|
-     GUI, Q  , W  , E  , R  , T  ,                Y  , U  , I  , O  , P  ,E_SCLN,
-  //|----+----+----+----+----+----|              |----+----+----+----+----+-----|
-     TAB , A  , S  ,FN_D, F  , G  ,               T_H ,T_J , K  , L  ,APOS,ACUT,
-  //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+-----|
-     SFT, Z  , X  , C  , V  , B  ,ESC ,      LENT, N  , M  ,COMM,DOT ,ESLS,BSLS,
-  //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+-----'
-                       CTL,LOWR,BKSP ,       S_SPC,RASE,ALT
-  //                  `----+----+----'        `----+----+----'
+  //,------+------+------+-----+-----+----.                      ,------+-----+-----+------+----+----.
+     ESC   , 1   , 2    , 3    , 4    , 5   ,                     6    , 7    , 8  , 9    , 0   ,E_TILD,
+  //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
+     GUI   , Q    , W    , E    , R   , T  ,                      Y    , U    , I  , O    , P  ,E_SCLN  ,
+  //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
+     TAB   , A    , S    , FN_D , F   , G   ,                     T_H  , T_J  , K   , L   , APOS ,ACUT ,
+  //|-----+-------+------+------+-----+-----+-----.   ,---------|------+------+-----+------+----+----|
+     SFT  , Z     ,TD_CUT,TD_COPY, V  , B   ,ESC  ,       LENT  , N    , M    ,COMM ,DOT   ,ESLS,BSLS,
+  //|-----+-------+------+------+-----+-----+----/     \--------|------+-----+-----+------+----+----|
+                                 CTL,LOWR, BKSP ,         S_SPC , RASE ,ALT
+  //                           `----+----+-----'         `------+------+----'
   ),
+  [_S] = KC_KEYMAP(
+  //,------+------+------+-----+-----+----.                     ,------+-----+-----+------+----+----.
+    MAC_TGL,      ,      ,     ,     ,     ,                      CIRC ,      ,ASTR,      ,    ,BSPC,
+  //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
+           , EXLM , EQUO , HASH , PERC,ECIRC,                     DLR  ,E_LBR ,E_RBR,     ,     ,    ,
+  //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
+     DEL   , AT   ,      , E_AST,E_EQL,E_GT,                      E_AMP ,LPRN ,RPRN ,E_COLN,EPLUS,PIPE,
+  //|-----+-------+------+------+-----+-----+-----.   ,---------|------+------+-----+------+----+----|
+     BL_S,        ,      ,      ,     ,     ,    ,      E_IQUE  ,E_QUES,LCBR ,RCBR ,      ,    ,    ,
+  //|-----+-------+------+------+-----+-----+----/     \--------|------+-----+-----+------+----+----|
+                                      ,    ,DEL ,         DEL   ,      ,
+  //                           `----+----+-----'         `------+------+----'
+  ),
+
   [_LOWER] = KC_KEYMAP(
   //,------+------+------+-----+-----+----.                     ,------+-----+-----+------+----+----.
-           ,      ,      ,     ,     ,     ,                      CIRC ,     ,ASTR , LPRN ,RPRN,BSPC,
+    MAC_TGL,      ,      ,     ,     ,     ,                      CIRC ,     ,ASTR , LPRN ,RPRN,BSPC,
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
            , EXLM , EQUO , HASH , PERC,ECIRC,                          ,E_LBR ,E_RBR,     ,     ,    ,
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
@@ -102,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-----+-------+------+------+-----+-----+-----.   ,---------|------+------+-----+------+----+----|
      BL_S,        ,      ,      ,     ,     ,    ,      E_IQUE  ,E_QUES,LCBR ,RCBR ,      ,    ,    ,
   //|-----+-------+------+------+-----+-----+----/     \--------|------+-----+-----+------+----+----|
-                                      ,    ,DEL ,         DEL   ,DOT,
+                                      ,    ,DEL ,         DEL   ,      ,
   //                           `----+----+-----'         `------+------+----'
   ),
 
@@ -128,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
       RESET  , DEBUG  , RGB_HUD, RGB_SAD, RGB_VAD, _______,                            _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------.        ,--------|--------+--------+--------+--------+--------+--------|
-      BL_STEP, _______, _______, _______, _______, _______, _______,         _______ , _______, _______, _______, _______, _______, _______,
+      BL_STEP, _______, _______, _______, _______, _______, _______,         _______ , _______, MAC_TGL, _______, _______, _______, _______,
   //`--------+--------+--------+----+---+--------+--------+--------/        \--------+--------+--------+---+----+--------+--------+--------'
                                       _______, _______, _______,                  _______, _______, _______
   //                                `--------+--------+--------'                `--------+--------+--------'
@@ -161,6 +182,10 @@ void persistent_default_layer_set(uint16_t default_layer) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case MAC_TGL:
+      on_mac = !on_mac;
+      on_mac ? SEND_STRING("On mac") : SEND_STRING("Not on MAC");
+      return false;
     case QWERTY:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
