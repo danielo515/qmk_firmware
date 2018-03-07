@@ -12,11 +12,15 @@
 #define KC_E_TILD ES_TILD
 #define KC_E_MINS ES_MINS
 #define KC_S_SPC SFT_T(KC_SPC)  // Tap for Space, hold for Shift
+#define KC_E_OVRR ES_OVRR 
+#define KC_E_APOS ES_APOS	
+#define KC_E_IEXL ES_IEXL	
 // TAP DANCE KEYS
 #define TD_COPY TD(_TD_COPY)
 #define TD_CUT TD(_TD_CUT)
 #define KC_TD_COPY TD(_TD_COPY) // Declarations for macros that add KC_
 #define KC_TD_CUT TD(_TD_CUT)
+#define KC_E_GRV ES_GRV	
 
 enum layers {
   _QWERTY = 0,
