@@ -63,6 +63,7 @@ enum custom_keycodes {
 #undef KC_APOS
 #define KC_APOS ES_APOS
 #define KC_MAC_TGL MAC_TGL
+#define KC_BL_TOGG BL_TOGG
 //Tap Dance Declarations
 enum td_enum {
   LEFT_HOME = 0,
@@ -92,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
      GUI   , Q    , W    , E    , R   , T  ,                      Y    , U    , I  , O    , P  ,E_SCLN  ,
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
-     TAB   , A    , S    , FN_D , F   , G   ,                     T_H  , T_J  , K   , L   , APOS ,ACUT ,
+     TAB   , A    , FN_S , FN_D , F   , G   ,                     T_H  , T_J  , K   , L   , APOS ,ACUT ,
   //|-----+-------+------+------+-----+-----+-----.   ,---------|------+------+-----+------+----+----|
      SFT  , Z     ,TD_CUT,TD_COPY, V  , B   ,ESC  ,       LENT  , N    , M    ,COMM ,DOT   ,ESLS,BSLS,
   //|-----+-------+------+------+-----+-----+----/     \--------|------+-----+-----+------+----+----|
@@ -101,13 +102,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [_S] = KC_KEYMAP(
   //,------+------+------+-----+-----+----.                     ,------+-----+-----+------+----+----.
-    MAC_TGL,      ,      ,     ,     ,     ,                      CIRC ,      ,ASTR,      ,    ,BSPC,
+    ,      ,      ,      ,     ,     ,                                 ,      ,ASTR,      ,    ,BSPC,
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
-           , EXLM , EQUO , HASH , PERC,ECIRC,                     DLR  ,E_LBR ,E_RBR,     ,     ,    ,
+           , EXLM ,      , EQUO , PERC,ECIRC,                     DLR  ,E_LBR ,E_RBR,     ,     ,    ,
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
      DEL   , AT   ,      , E_AST,E_EQL,E_GT,                      E_AMP ,LPRN ,RPRN ,E_COLN,EPLUS,PIPE,
   //|-----+-------+------+------+-----+-----+-----.   ,---------|------+------+-----+------+----+----|
-     BL_S,        ,      ,      ,     ,     ,    ,      E_IQUE  ,E_QUES,LCBR ,RCBR ,      ,    ,    ,
+     BL_S,        ,      ,      ,     ,HASH ,    ,      E_IQUE  ,E_QUES,LCBR ,RCBR ,      ,    ,    ,
   //|-----+-------+------+------+-----+-----+----/     \--------|------+-----+-----+------+----+----|
                                       ,    ,DEL ,         DEL   ,      ,
   //                           `----+----+-----'         `------+------+----'
@@ -115,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_LOWER] = KC_KEYMAP(
   //,------+------+------+-----+-----+----.                     ,------+-----+-----+------+----+----.
-    MAC_TGL,      ,      ,     ,     ,     ,                      CIRC ,     ,ASTR , LPRN ,RPRN,BSPC,
+    MAC_TGL,BL_TOGG,      ,     ,     ,     ,                      CIRC ,     ,ASTR , LPRN ,RPRN,BSPC,
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
            , EXLM , EQUO , HASH , PERC,ECIRC,                          ,E_LBR ,E_RBR,     ,     ,    ,
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
@@ -164,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----+----.    ,----|-----+----+----+-----+----+----|
      BL_S,    ,    ,    ,DOWN,LCBR,LPRN,     LPRN,LCBR,  1  , 2  ,  3  ,RPRN,RCBR,
   //`----+----+----+--+-+----+----+----/    \----+-----+----+----+-----+----+----'
-                           ,    ,DEL ,         DEL ,DOT, P0
+                           ,    ,DEL ,         DEL ,DOT,
   //                  `----+----+----'        `----+----+----'
   ),
 
@@ -181,11 +182,16 @@ void persistent_default_layer_set(uint16_t default_layer) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  bool pressed = record->event.pressed;
+  if(pressed){
+    switch (keycode) {
+      case MAC_TGL:
+        on_mac = !on_mac;
+        on_mac ? SEND_STRING("On mac") : SEND_STRING("Not on MAC");
+        return false;
+      }
+  }
   switch (keycode) {
-    case MAC_TGL:
-      on_mac = !on_mac;
-      on_mac ? SEND_STRING("On mac") : SEND_STRING("Not on MAC");
-      return false;
     case QWERTY:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
@@ -194,7 +200,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         persistent_default_layer_set(1UL<<_QWERTY);
       }
       return false;
-      break;
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
@@ -204,7 +209,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
-      break;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
@@ -214,7 +218,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
-      break;
     case ADJUST:
       if (record->event.pressed) {
         layer_on(_ADJUST);
@@ -222,7 +225,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_ADJUST);
       }
       return false;
-      break;
   }
   return true;
 }
