@@ -33,10 +33,25 @@ enum layers {
   _S,
   _J,
   _K,
+  _MACROS,
   _ADJUST = 16,
   _SAFE_LAYER
 };
 
+enum custom_keycodes {
+  QWERTY = SAFE_RANGE,
+  LOWER,
+  RAISE,
+  ADJUST,
+  MAC_TGL,
+  VSC_START,  // START OF VSC DECLARATIONS
+  T_TERM,
+  FIX_ALL,
+  BLK_COMMENT,
+  LN_COMMENT,
+  CMD_SHIFT_P,
+  VSC_END,  // END OF VSC DECLARATIONS
+};
 
 // Function letters
 #define FN_F LT(_F,KC_F)
@@ -48,6 +63,8 @@ enum layers {
 #define KC_FN_D FN_D
 #define KC_FN_S FN_S
 #define KC_FN_F FN_F
+
+#define KC_MACROS OSL(_MACROS)
 
 
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
@@ -75,5 +92,7 @@ void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data);
 void dance_cut (qk_tap_dance_state_t *state, void *user_data);
 void dance_copy (qk_tap_dance_state_t *state, void *user_data);
 void dance_paste (qk_tap_dance_state_t *state, void *user_data);
+bool handle_vsc(uint16_t kc);
+bool is_vsc_command (uint16_t kc);
 
 #endif

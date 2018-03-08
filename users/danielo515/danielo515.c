@@ -83,3 +83,39 @@ void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data) 
   }
   unregister_code16(pair->kc1);
 }
+
+
+
+// ======== VISUAL STUDIO CODE SHORTCUTS STUFF
+
+bool is_vsc_command (uint16_t kc){
+  return kc > VSC_START && kc < VSC_END;
+};
+
+bool cmd_shift_p (bool isMac) {
+   isMac
+   ? SEND_STRING(SS_DOWN(X_LSHIFT)SS_LGUI("p")SS_UP(X_LSHIFT))
+   : SEND_STRING(SS_DOWN(X_LSHIFT)SS_LCTRL("p")SS_UP(X_LSHIFT));
+   return false;
+};
+
+bool VSCommand(bool isMac, char *cmd)
+{
+  cmd_shift_p(isMac);
+  send_string(cmd);
+  SEND_STRING(SS_TAP(X_ENTER));
+  return false;
+};
+
+bool handle_vsc(uint16_t kc)
+{
+  switch (kc)
+  {
+    case T_TERM: return VSCommand(on_mac, "toit");
+    case FIX_ALL: return VSCommand(on_mac, "faap");
+    case BLK_COMMENT: return VSCommand(on_mac, "tbc");
+    case LN_COMMENT: return VSCommand(on_mac, "tlic");
+    case CMD_SHIFT_P: return cmd_shift_p(on_mac);
+  }
+  return false;
+};
