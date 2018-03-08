@@ -44,13 +44,14 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   MAC_TGL,
-  VSC_START,  // START OF VSC DECLARATIONS
+  MACRO_START,  // START OF VSC DECLARATIONS
   T_TERM,
   FIX_ALL,
-  BLK_COMMENT,
-  LN_COMMENT,
-  CMD_SHIFT_P,
-  VSC_END,  // END OF VSC DECLARATIONS
+  BLK_CMNT,
+  LN_CMNT,
+  CMD_S_P,
+  TRI_TICKS,
+  MACRO_END,  // END OF VSC DECLARATIONS
 };
 
 // Function letters
@@ -92,7 +93,7 @@ void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data);
 void dance_cut (qk_tap_dance_state_t *state, void *user_data);
 void dance_copy (qk_tap_dance_state_t *state, void *user_data);
 void dance_paste (qk_tap_dance_state_t *state, void *user_data);
-bool handle_vsc(uint16_t kc);
-bool is_vsc_command (uint16_t kc);
+bool handle_macro(uint16_t kc);
+bool is_macro (uint16_t kc);
 
 #endif
