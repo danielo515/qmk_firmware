@@ -46,6 +46,8 @@ enum layers {
 #define FN_J LT(_J,KC_J)
 #define KC_FN_D FN_D
 #define KC_FN_S FN_S
+#define KC_FN_F FN_F
+
 
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 
