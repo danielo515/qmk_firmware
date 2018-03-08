@@ -24,6 +24,7 @@ enum custom_keycodes {
 #define KC_BL_S BL_STEP
 #define KC_ALT OSM(MOD_LALT)
 #define KC_CTL OSM(MOD_LCTL)
+#define KC_SFT OSM(MOD_LSFT)
 #undef KC_AT
 #undef KC_PIPE
 #define KC_E_SCLN ES_SCLN
@@ -31,7 +32,6 @@ enum custom_keycodes {
 #define KC_EQUO ES_QUOT
 #define KC_PIPE ES_PIPE
 #define KC_ESLS ES_SLSH
-#define KC_SFT OSM(MOD_LSFT)
 #define KC_LENT LT(_RAISE,KC_ENT)
 #define KC_BKSP SFT_T(KC_BSPC)
 #define KC_ACUT ES_ACUT
@@ -72,6 +72,8 @@ enum td_enum {
   RGT_HOME,
   _TD_COPY,
   _TD_CUT,
+  _TD_PASTE,
+  
 };
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
@@ -81,6 +83,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [H_MINS] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_H,KC_SLASH),
   [_TD_COPY] =  ACTION_TAP_DANCE_FN(dance_copy),
   [_TD_CUT] = ACTION_TAP_DANCE_FN(dance_cut),
+  [_TD_PASTE] = ACTION_TAP_DANCE_FN(dance_paste),
 }; // Fillers to make layering more clear
 
 
@@ -89,22 +92,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = KC_KEYMAP(
   //,-------+-------+-------+-------+-------+-------.                          ,-------+-------+-------+-------+-------+------.
-      ESC   ,   1   ,   2   ,  3    ,  4    ,   5  ,                              6    ,  7    ,   8   ,  9    ,  0    ,E_TILD,
+      ESC   ,   1   ,   2   ,  3    ,  4    ,   5  ,                              6    ,  7    ,   8   ,  9    ,  0    , LOCK ,
   //|-------+-------+-------+-------+-------+------|                           |-------+-------+-------+-------+-------+------|
       GUI   ,  Q    ,  W    ,  E    ,   R   ,   T  ,                              Y    ,  U    ,    I  ,  O    ,  P    ,E_SCLN,
   //|-------+-------+-------+-------+-------+------|                           |-------+-------+-------+-------+-------+------|
       TAB   ,  A    , FN_S  , FN_D  ,  FN_F ,  G   ,                              T_H  ,  T_J  ,  K    ,   L   , APOS  , ACUT ,
   //|-------+-------+-------+-------+-------+------+---------.       ,---------|-------+-------+-------+-------+-------+------|
-      SFT   , Z     ,TD_CUT ,TD_COPY,   V   ,  B   ,  ESC    ,          LENT   ,  N    ,  M    ,  COMM , DOT   , ESLS  , BSLS,
+      SFT   , Z     ,TD_CUT ,TD_COPY,TD_PASTE,  B  ,  ESC    ,          LENT   ,  N    ,  M    ,  COMM , DOT   , ESLS  , BSLS,
   //|-------+-------+-------+-------+-------+------+--------/         \--------|--------+-------+------+-------+-------+------|
                                         CTL , LOWR , BKSP ,               SPC  , RASE ,ALT
   //                                  `------+------+----'              `------+------+----'
   ),
   [_S] = KC_KEYMAP(
   //,-------+-------+-------+-------+-------+-------.                           ,-------+-------+-------+-------+-------+------.
-            ,       ,       ,       ,       ,       ,                                   ,       ,       ,       ,  BSPC ,      ,
+            ,       ,       ,       ,       ,       ,                                   ,       ,       ,       ,       ,      ,
   //|-------+-------+-------+-------+-------+-------|                           |-------+-------+-------+-------+-------+------|
-            ,       ,       , EQUO ,  PERC  , E_CIRC ,                            DLR   , E_LBR , E_RBR , E_AST ,       ,      ,
+            ,       ,       , EQUO ,  PERC  , E_CIRC ,                            DLR   , E_LBR , E_RBR , E_AST , E_TILD,      ,
   //|-------+-------+-------+-------+-------+-------|                           |-------+-------+-------+-------+-------+------|
             ,       ,       , E_AST , E_EQL ,  E_GT ,                             E_AMP ,  LPRN , RPRN  ,E_COLN , EPLUS , PIPE ,
   //|-------+-------+-------+-------+-------+-------+---------.       ,---------|-------+-------+-------+-------+-------+------|

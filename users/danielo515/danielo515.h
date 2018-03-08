@@ -20,6 +20,7 @@
 #define TD_CUT TD(_TD_CUT)
 #define KC_TD_COPY TD(_TD_COPY) // Declarations for macros that add KC_
 #define KC_TD_CUT TD(_TD_CUT)
+#define KC_TD_PASTE TD(_TD_PASTE)
 #define KC_E_GRV ES_GRV	
 
 enum layers {
@@ -73,4 +74,6 @@ void qk_tap_dance_pair_finished_safe(qk_tap_dance_state_t *state, void *user_dat
 void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data);
 void dance_cut (qk_tap_dance_state_t *state, void *user_data);
 void dance_copy (qk_tap_dance_state_t *state, void *user_data);
+void dance_paste (qk_tap_dance_state_t *state, void *user_data);
+
 #endif

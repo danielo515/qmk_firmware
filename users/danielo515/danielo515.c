@@ -26,7 +26,7 @@ int cur_dance (qk_tap_dance_state_t *state) {
 
 //**************** END Definitions needed for quad function to work *********************//
 
-//===== The awesome tap dance for CUT and COPY
+//===== The awesome tap dance for CUT, COPY and PASTE
 void dance_copy (qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     TAP(KC_C);
@@ -43,6 +43,16 @@ void dance_cut (qk_tap_dance_state_t *state, void *user_data) {
   }
   else {
     CMD(KC_X);
+  }
+  reset_tap_dance (state);
+}  
+
+void dance_paste (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    TAP(KC_V);
+  }
+  else {
+    CMD(KC_V);
   }
   reset_tap_dance (state);
 }
