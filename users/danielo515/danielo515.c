@@ -47,16 +47,6 @@ void dance_cut (qk_tap_dance_state_t *state, void *user_data) {
   reset_tap_dance (state);
 }
 
-
-// Specific tapping term for certain keys (like space)
-uint16_t get_tapping_term(keyevent_t* event) {
-    uint16_t keycode = keymap_key_to_keycode(layer_switch_get_layer(event->key), event->key);
-    if (keycode == FN_D ) {
-        return 5000;
-    }
-    return TAPPING_TERM;
-}
-
 // Slightly better tap dance double: interruption sends double single and any number over double sends the single that number of times
 void qk_tap_dance_pair_finished_safe(qk_tap_dance_state_t *state, void *user_data) {
   qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
