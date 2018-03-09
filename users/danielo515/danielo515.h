@@ -52,6 +52,9 @@ enum custom_keycodes {
   CMD_S_P,
   TRI_TICKS,
   MACRO_END,  // END OF VSC DECLARATIONS
+  INC_MACROS_START,
+  ARROW,
+  INC_MACROS_END,
 };
 
 // Function letters
@@ -95,5 +98,7 @@ void dance_copy (qk_tap_dance_state_t *state, void *user_data);
 void dance_paste (qk_tap_dance_state_t *state, void *user_data);
 bool handle_macro(uint16_t kc);
 bool is_macro (uint16_t kc);
+bool process_incremental_macro (uint16_t);
+void refresh_incremental_macros (uint16_t);
 
 #endif

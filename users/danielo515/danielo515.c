@@ -84,6 +84,49 @@ void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data) 
   unregister_code16(pair->kc1);
 }
 
+// ======== INCREMENTAL MACROS STUFF =============
+
+#define MAX_INCREMENTAL_MACRO 20
+#define TAP_ROTATION_TIMEOUT 400
+
+uint16_t latest_kc = 0;
+uint16_t latest_rotation = 0;
+int key_count = 0;
+
+const char incremental_macros[][MAX_INCREMENTAL_MACRO] = { "String1"SS_TAP(X_HOME)"X-", "String2"SS_TAP(X_HOME) };
+
+bool process_incremental_macro (uint16_t kc) {
+
+  if( kc < INC_MACROS_START || kc > INC_MACROS_END ){
+    return false;
+  }
+  int macro_idx = (int) (kc - INC_MACROS_START) - 1;
+  char tempstring[3] = {0};
+  tempstring[0] = incremental_macros[macro_idx][key_count];
+  // Special cases of SS_TAP SS_UP and SS_DOWN, they require two characters so get both once and skip on next iteration
+  if( tempstring[0] == '\1' || tempstring[0] == '\2' || tempstring[0] == '\3'){
+    tempstring[1] = incremental_macros[macro_idx][++key_count];
+  }
+  if( tempstring[0] == '\0'){
+    key_count = 0;
+  }
+  send_string(tempstring);
+
+  return true;
+};
+
+void refresh_incremental_macros (uint16_t kc) {
+  if (kc == latest_kc)
+    {
+      if ( (timer_elapsed(latest_rotation) > TAP_ROTATION_TIMEOUT) || (key_count >= MAX_INCREMENTAL_MACRO) ) key_count = 0;
+      else key_count++;
+    } else {
+      key_count = 0;
+      latest_kc = kc;
+    }
+
+  latest_rotation = timer_read();
+}
 
 
 // ======== VISUAL STUDIO CODE SHORTCUTS STUFF
