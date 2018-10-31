@@ -31,8 +31,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS 8
 #define MATRIX_COLS 15
 
+
+#define ONESHOT_TAP_TOGGLE 3  /* Tapping this number of times holds the key until tapped this number of times again. */
+#define ONESHOT_TIMEOUT 4000  /* Time (in ms) before the one shot key is released */
+
+#define IGNORE_MOD_TAP_INTERRUPT
+
+/* Set 0 if debouncing isn't needed */
+#define DEBOUNCING_DELAY 5
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
+
 
 #define BACKLIGHT_LEVELS 12
 // #define BACKLIGHT_BREATHING  // works, but BL_TOGG might not work
@@ -52,3 +61,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define IS_COMMAND() (keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)))
 
 #endif
+// #define LEADER_TIMEOUT 900
+#define TAPPING_TERM 200
+/* RGB underglow */
+// The RGB_DI_PIN value seems to be shared between all PS2AVRGB boards.
+// The same pin is used on the JJ40, at least.
+#define RGBLED_NUM 5
+#define RGB_DI_PIN E2
+#define RGBLIGHT_ANIMATIONS
+#define RGBLIGHT_HUE_STEP 15
+#define RGBLIGHT_EFFECT_KNIGHT_LENGTH 1
+
+#define BACKLIGHT_BREATHING
+
+#define PERMISSIVE_HOLD
+
+#define TAP_ROTATION_TIMEOUT 350
+#define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
+#define TAP_WITH_MOD(mod, key) \
+  register_code(mod); \
+  register_code(key); \
+  unregister_code(key); \
+  unregister_code(mod)
+
+#define TD_DBL_ARR(ONE,TWO) [_D_##ONE##_##TWO] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_##ONE,TWO),
+#define TD_DBL(ONE,TWO) _D_##ONE##_##TWO
+#define TD_DBL_NAM(ONE,TWO) TD(_D_##ONE##_##TWO)

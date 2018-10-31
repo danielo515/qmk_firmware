@@ -18,6 +18,9 @@ When adding your keymap to this list, keep it organised alphabetically (select l
      * **folder_name** description
 
 # List of keymaps
+
+
+* **default** default Planck layout
 - **default** default layout from KBDFans
 - **mason**
 - **planck** Planck default layout
