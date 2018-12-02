@@ -17,7 +17,7 @@ int cur_dance (qk_tap_dance_state_t *state) {
     else return DOUBLE_TAP;
   }
   else return 6; //magic number. At some point this method will expand to work for more presses
-}
+};
 
 //**************** Definitions needed for quad function to work *********************//
 
@@ -32,7 +32,7 @@ void qk_tap_dance_pair_finished_safe(qk_tap_dance_state_t *state, void *user_dat
       state->count = 1; // Reset the counter as we are using the first key
     } else register_code16 (pair->kc2);
   }
-}
+};
 
 void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data) {
   qk_tap_dance_pair_t *pair = (qk_tap_dance_pair_t *)user_data;
@@ -42,4 +42,16 @@ void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data) 
   } else if (state->count == 2) {
     unregister_code16 (pair->kc2);
   }
-}
+};
+
+//**************** Tap dance functions *********************//
+
+void td_copy_paste (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 2) {
+    SEND_STRING(SS_LCTRL("v"));
+  }
+  else {
+    SEND_STRING(SS_LCTRL("c"));
+  }
+  reset_tap_dance (state);
+};
