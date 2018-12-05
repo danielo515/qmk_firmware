@@ -14,5 +14,6 @@
     "*.hpp": "cpp",
     "xstddef": "c"
   },
-  "editor.formatOnSave": false
+  "editor.formatOnSave": false,
+  "align.by.regex.templates": {"comma":",\\s*(?![^()]*\\))"}
 }

@@ -13,8 +13,44 @@ enum custom_keycodes
   ALT_TAB,
 };
 
+/* STUPID JS code to split by ergodox rows. Call the format function with the unformatted array
+sliceBy = groups => items => groups.reduce(({start, acc},size) => ({
+    acc: (acc.push(items.slice(start,start+size)),acc ),
+    start: start + size
+}), {acc:[],start:0}).acc
+findMaxLen = items => items.reduce((max,curr) => max < curr.length ? curr.length : max,0)
+setLen = len => strings => strings.map(str => str.padEnd(len, " "));
+const format = string => {
+  const items = string.split(/,\s*(?![^()]*\))/)
+  const group = sliceBy([7,7,6,7,5,2,1,3])
+  const resize = setLen(findMaxLen(items));
+  const joinstr = ',\n'
+  const leftItems = group(items.slice(0,items.length/2))
+  const rightItems = group(items.slice(items.length/2))
+  const [left,right] = [leftItems.map(resize).join(joinstr),rightItems.map(resize).join(joinstr)]
+  return `\n${left},\n\n${right}\n`
+}
+*/
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [0] = LAYOUT_ergodox(KC_ESCAPE, KC_1, KC_2, KC_3, KC_4, KC_5, LCTL(KC_X), KC_DELETE, KC_Q, KC_W, KC_E, KC_R, KC_T, LCTL(KC_V), KC_COLN, KC_A, LT(3, KC_S), LT(2, KC_D), LT(4, KC_F), KC_G, KC_PIPE, KC_Z, KC_X, KC_C, KC_V, KC_B, LCTL(KC_C), LSFT(KC_LALT), OSM(MOD_LCTL), OSM(MOD_LALT), KC_LEFT, KC_RIGHT, ALT_T(KC_INSERT), KC_LGUI, KC_HOME, OSM(MOD_LSFT), LT(2, KC_BSPACE), KC_PLUS, TO(1), KC_6, KC_7, KC_8, KC_9, LT(3, KC_0), KC_DQUO, KC_UNDS, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_MINUS, KC_H, ALT_T(KC_J), RCTL_T(KC_K), LT(6, KC_L), KC_SCOLON, GUI_T(KC_QUOTE), KC_TAB, KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, LT(4, KC_KP_ASTERISK), LT(4, KC_ENTER), KC_DOWN, KC_LBRACKET, KC_RBRACKET, OSL(2), KC_AUDIO_MUTE, KC_ESCAPE, KC_END, KC_COLN, LT(3, KC_BSPACE), LT(4, KC_SPACE)),
+  [0] = LAYOUT_ergodox(
+    KC_ESCAPE       , KC_1            , KC_2         , KC_3       , KC_4       , KC_5, LCTL(KC_X),
+    KC_DELETE       , KC_Q            , KC_W         , KC_E       , KC_R       , KC_T, LCTL(KC_V),
+    KC_COLN         , KC_A            , LT(3, KC_S)  , LT(2, KC_D), LT(4, KC_F), KC_G,
+    KC_PIPE         , KC_Z            , KC_X         , KC_C       , KC_V       , KC_B, LCTL(KC_C),
+    LSFT(KC_LALT)   , OSM(MOD_LCTL)   , OSM(MOD_LALT), KC_LEFT    , KC_RIGHT   ,
+    ALT_T(KC_INSERT), KC_LGUI         ,
+    KC_HOME         ,
+    OSM(MOD_LSFT)   , LT(2, KC_BSPACE), KC_PLUS      ,
+
+    TO(1)          , KC_6            , KC_7            , KC_8       , KC_9     , LT(3, KC_0)    , KC_DQUO              ,
+    KC_UNDS        , KC_Y            , KC_U            , KC_I       , KC_O     , KC_P           , KC_MINUS             ,
+    KC_H           , ALT_T(KC_J)     , RCTL_T(KC_K)    , LT(6, KC_L), KC_SCOLON, GUI_T(KC_QUOTE),
+    KC_TAB         , KC_N            , KC_M            , KC_COMMA   , KC_DOT   , KC_SLASH       , LT(4, KC_KP_ASTERISK),
+    LT(4, KC_ENTER), KC_DOWN         , KC_LBRACKET     , KC_RBRACKET, OSL(2)   ,
+    KC_AUDIO_MUTE  , KC_ESCAPE       ,
+    KC_END         ,
+    KC_COLN        , LT(3, KC_BSPACE), LT(4, KC_SPACE)),
 
   [1] = LAYOUT_ergodox(
     TD(COPY_PASTE)   , KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
