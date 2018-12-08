@@ -21,13 +21,13 @@ enum {
 };
 
 enum tap_dance {
-  COPY_PASTE=0
+  COPY_CUT=0
 };
 
 int cur_dance (qk_tap_dance_state_t *state);
 
 void qk_tap_dance_pair_finished_safe(qk_tap_dance_state_t *state, void *user_data);
 void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data);
-void td_copy_paste (qk_tap_dance_state_t *state, void *user_data);
+void td_copy_cut (qk_tap_dance_state_t *state, void *user_data);
 
 #endif

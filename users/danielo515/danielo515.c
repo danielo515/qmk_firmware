@@ -46,9 +46,13 @@ void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data) 
 
 //**************** Tap dance functions *********************//
 
-void td_copy_paste (qk_tap_dance_state_t *state, void *user_data) {
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [COPY_CUT] = ACTION_TAP_DANCE_FN(td_copy_cut),
+};
+
+void td_copy_cut (qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 2) {
-    SEND_STRING(SS_LCTRL("v"));
+    SEND_STRING(SS_LCTRL("x"));
   }
   else {
     SEND_STRING(SS_LCTRL("c"));
