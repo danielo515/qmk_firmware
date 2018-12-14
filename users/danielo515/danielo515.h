@@ -21,8 +21,33 @@ enum {
 };
 
 enum tap_dance {
-  COPY_CUT=0
+  COPY_CUT=0,
+  _TD_F1,
+  _TD_F2,
+  _TD_F3,
+  _TD_F4,
+  _TD_F5,
+  _TD_F6,
+  _TD_F7,
+  _TD_F8,
+  _TD_F9,
+  _TD_F10,
+  _TD_F11,
+  _TD_F12,
 };
+ // Ready to use Tap dance definitions, just put them on your layout
+  # define TD_F1 TD(_TD_F1)
+  # define TD_F2 TD(_TD_F2)
+  # define TD_F3 TD(_TD_F3)
+  # define TD_F4 TD(_TD_F4)
+  # define TD_F5 TD(_TD_F5)
+  # define TD_F6 TD(_TD_F6)
+  # define TD_F7 TD(_TD_F7)
+  # define TD_F8 TD(_TD_F8)
+  # define TD_F9 TD(_TD_F9)
+  # define TD_F0 TD(_TD_F10)
+  # define TD_F11 TD(_TD_F11)
+  # define TD_F12 TD(_TD_F12)
 
 int cur_dance (qk_tap_dance_state_t *state);
 
