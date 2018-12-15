@@ -72,3 +72,60 @@ void td_copy_cut (qk_tap_dance_state_t *state, void *user_data) {
   }
   reset_tap_dance (state);
 };
+
+//**************** Handle keys function *********************//
+bool altPressed = false;
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record)
+{
+  switch (keycode)
+  {
+    // dynamically generate these.
+    case EPRM:
+      if (record->event.pressed)
+      {
+        eeconfig_init();
+      }
+      return false;
+      break;
+    case RGB_SLD:
+      if (record->event.pressed)
+      {
+        rgblight_mode(1);
+      }
+      return false;
+      break;
+      //First time alt + tab, and alt stays sticky. Next press we just send tab. Any other key releases the alt
+    case ALT_TAB:
+      if (record->event.pressed)
+      {
+        if (altPressed)
+        {
+          tap_code(KC_TAB);
+        }
+        else
+        {
+          altPressed = true;
+          layer_on(7); // go to movement layer
+          register_code(KC_LALT);
+          tap_code(KC_TAB);
+        }
+      }
+      return false;
+    // avoid alt releasing if the key is of movement
+    case KC_RIGHT ... KC_UP:
+      if (altPressed)
+      {
+        return true; // yes QMK, do your stuff
+      }
+  }
+  // Reset sticky alt tab
+  if (altPressed)
+  {
+    unregister_code(KC_LALT);
+    altPressed = false;
+    layer_off(7);
+    return false;
+  }
+  return true;
+}

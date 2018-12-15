@@ -3,6 +3,18 @@
 
 #include "quantum.h"
 
+//**************** KEYCODES *********************//
+
+enum custom_keycodes
+{
+  PLACEHOLDER = SAFE_RANGE, // can always be here
+  EPRM,
+  RGB_SLD,
+  ALT_TAB,
+};
+
+//**************** TAP DANCE *********************//
+
 #define ACTION_TAP_DANCE_DOUBLE_SAFE(kc1, kc2) { \
     .fn = { NULL, qk_tap_dance_pair_finished_safe, qk_tap_dance_pair_reset_safe }, \
     .user_data = (void *)&((qk_tap_dance_pair_t) { kc1, kc2 }),  \

@@ -3,3 +3,4 @@
 
 AUTO_SHIFT_ENABLE = yes
 TAP_DANCE_ENABLE = yes # Enable the tap dance feature.
+LEADER_ENABLE = yes

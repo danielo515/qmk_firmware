@@ -4,15 +4,6 @@
 #include "version.h"
 #include "danielo515.h"
 
-
-enum custom_keycodes
-{
-  PLACEHOLDER = SAFE_RANGE, // can always be here
-  EPRM,
-  RGB_SLD,
-  ALT_TAB,
-};
-
 /* STUPID JS code to split by ergodox rows. Call the format function with the unformatted array
 sliceBy = groups => items => groups.reduce(({start, acc},size) => ({
     acc: (acc.push(items.slice(start,start+size)),acc ),
@@ -87,61 +78,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
   return MACRO_NONE;
 };
 
-bool altPressed = false;
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record)
-{
-  switch (keycode)
-  {
-    // dynamically generate these.
-    case EPRM:
-      if (record->event.pressed)
-      {
-        eeconfig_init();
-      }
-      return false;
-      break;
-    case RGB_SLD:
-      if (record->event.pressed)
-      {
-        rgblight_mode(1);
-      }
-      return false;
-      break;
-      //First time alt + tab, and alt stays sticky. Next press we just send tab. Any other key releases the alt
-    case ALT_TAB:
-      if (record->event.pressed)
-      {
-        if (altPressed)
-        {
-          tap_code(KC_TAB);
-        }
-        else
-        {
-          altPressed = true;
-          layer_on(7); // go to movement layer
-          register_code(KC_LALT);
-          tap_code(KC_TAB);
-        }
-      }
-      return false;
-    // avoid alt releasing if the key is of movement
-    case KC_RIGHT ... KC_UP:
-      if (altPressed)
-      {
-        return true; // yes QMK, do your stuff
-      }
-  }
-  // Reset sticky alt tab
-  if (altPressed)
-  {
-    unregister_code(KC_LALT);
-    altPressed = false;
-    layer_off(7);
-    return false;
-  }
-  return true;
-}
 
 uint32_t layer_state_set_user(uint32_t state)
 {
