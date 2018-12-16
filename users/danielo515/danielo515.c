@@ -141,13 +141,13 @@ void matrix_scan_user(void) {
     leader_end();
     SEQ_ONE_KEY(KC_Y) {
       // Anything you can do in a macro.
-      SEND_STRING("QMK is awesome.");
+      register_code(KC_LCTL);
+      register_code(KC_C);
+      unregister_code(KC_C);
+      unregister_code(KC_LCTL);
     }
     SEQ_TWO_KEYS(KC_Y, KC_U) {
       SEND_STRING(SS_LCTRL("a")SS_LCTRL("c"));
-    }
-    SEQ_TWO_KEYS(LT(3,KC_S),LT(2,KC_D)) {
-      SEND_STRING("https://start.duckduckgo.com"SS_TAP(X_ENTER));
     }
     // Triple ticks
     SEQ_TWO_KEYS(KC_T, KC_T) {
