@@ -151,7 +151,7 @@ void matrix_scan_user(void) {
     }
     // Triple ticks
     SEQ_TWO_KEYS(KC_T, KC_T) {
-     SEND_STRING("```"SS_TAP(X_ENTER)SS_TAP(X_ENTER)"```"SS_TAP(X_LEFT)SS_TAP(X_LEFT)SS_TAP(X_LEFT));
+     SEND_STRING("```"SS_TAP(X_ENTER)SS_TAP(X_ENTER)"```"SS_TAP(X_UP));
     }
   }
 }
