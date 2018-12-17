@@ -139,12 +139,8 @@ void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
     leading = false;
     leader_end();
-    SEQ_ONE_KEY(KC_Y) {
-      // Anything you can do in a macro.
-      register_code(KC_LCTL);
-      register_code(KC_C);
-      unregister_code(KC_C);
-      unregister_code(KC_LCTL);
+    SEQ_ONE_KEY(KC_T) {
+     SEND_STRING("``"SS_TAP(X_LEFT));
     }
     SEQ_TWO_KEYS(KC_Y, KC_U) {
       SEND_STRING(SS_LCTRL("a")SS_LCTRL("c"));
