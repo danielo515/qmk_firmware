@@ -46,7 +46,8 @@ enum tap_dance {
   _TD_F10,
   _TD_F11,
   _TD_F12,
-  _TD_H_ENTER
+  _TD_H_ENTER,
+  _TD_CLN
 };
  // Ready to use Tap dance definitions, just put them on your layout
   # define TD_F1 TD(_TD_F1)
@@ -62,6 +63,7 @@ enum tap_dance {
   # define TD_F11 TD(_TD_F11)
   # define TD_F12 TD(_TD_F12)
   # define H_ENTER TD(_TD_H_ENTER)
+  # define TD_CLN TD(_TD_CLN)
 
 int cur_dance (qk_tap_dance_state_t *state);
 

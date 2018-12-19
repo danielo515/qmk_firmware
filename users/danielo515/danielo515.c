@@ -61,6 +61,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [_TD_F11] = ACTION_TAP_DANCE_DOUBLE(KC_MINS, KC_F11),
   [_TD_F12] = ACTION_TAP_DANCE_DOUBLE(KC_EQL, KC_F12),
   [_TD_H_ENTER] = ACTION_TAP_DANCE_DOUBLE(KC_H, KC_ENT),
+  [_TD_CLN] = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
 };
 
 void td_copy_cut (qk_tap_dance_state_t *state, void *user_data) {
@@ -141,6 +142,9 @@ void matrix_scan_user(void) {
     leader_end();
     SEQ_ONE_KEY(KC_T) {
      SEND_STRING("``"SS_TAP(X_LEFT));
+    }
+    SEQ_ONE_KEY(KC_SPACE) {
+     SEND_STRING(": ");
     }
     SEQ_TWO_KEYS(KC_Y, KC_U) {
       SEND_STRING(SS_LCTRL("a")SS_LCTRL("c"));
