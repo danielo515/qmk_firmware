@@ -3,7 +3,7 @@
   See config.h options at https://docs.qmk.fm/#/config_options?id=the-configh-file
 */
 #undef TAPPING_TERM
-#define TAPPING_TERM 240
+#define TAPPING_TERM 200
 
 #define ONESHOT_TAP_TOGGLE 2
 
@@ -20,5 +20,5 @@
 
 
 #undef  LEADER_TIMEOUT
-#define LEADER_TIMEOUT 500
+#define LEADER_TIMEOUT 300
 #define LEADER_PER_KEY_TIMING
