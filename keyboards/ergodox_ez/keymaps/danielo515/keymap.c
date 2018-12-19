@@ -36,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     OSM(MOD_LSFT)       ,LT(2,KC_BSPACE)     ,KC_PLUS             ,
 
 
-    TO(1)               ,KC_6                ,KC_7                ,KC_8                ,KC_9                ,LT(3,KC_0)          ,KC_DQUO             ,
+    TO(1)               ,KC_6                ,KC_7                ,KC_8                ,TD_F9               ,LT(3,KC_0)          ,KC_DQUO             ,
     KC_UNDS             ,KC_Y                ,KC_U                ,KC_I                ,KC_O                ,KC_P                ,KC_MINUS            ,
     H_ENTER             ,ALT_T(KC_J)         ,RCTL_T(KC_K)        ,LT(6,KC_L)          ,TD_CLN              ,GUI_T(KC_QUOTE)     ,
     ALT_TAB             ,KC_N                ,KC_M                ,KC_COMMA            ,KC_DOT              ,KC_SLASH            ,LT(4,KC_KP_ASTERISK),
