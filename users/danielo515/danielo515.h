@@ -13,6 +13,11 @@ enum custom_keycodes
   ALT_TAB,
 };
 
+// Pre-made key codes
+#define COPY  LCTL(KC_C)
+#define CUT   LCTL(KC_X)
+#define PASTE LCTL(KC_V)
+
 //**************** TAP DANCE *********************//
 
 #define ACTION_TAP_DANCE_DOUBLE_SAFE(kc1, kc2) { \
@@ -47,7 +52,7 @@ enum tap_dance {
   _TD_F11,
   _TD_F12,
   _TD_H_ENTER,
-  _TD_CLN
+  _TD_CLN,
 };
  // Ready to use Tap dance definitions, just put them on your layout
   # define TD_F1 TD(_TD_F1)
@@ -59,7 +64,7 @@ enum tap_dance {
   # define TD_F7 TD(_TD_F7)
   # define TD_F8 TD(_TD_F8)
   # define TD_F9 TD(_TD_F9)
-  # define TD_F0 TD(_TD_F10)
+  # define TD_F10 TD(_TD_F10)
   # define TD_F11 TD(_TD_F11)
   # define TD_F12 TD(_TD_F12)
   # define H_ENTER TD(_TD_H_ENTER)
