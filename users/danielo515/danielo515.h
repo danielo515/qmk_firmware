@@ -11,12 +11,15 @@ enum custom_keycodes
   EPRM,
   RGB_SLD,
   ALT_TAB,
+  CUT,
+  COPY,
+  PASTE
 };
 
 // Pre-made key codes
-#define COPY  LCTL(KC_C)
-#define CUT   LCTL(KC_X)
-#define PASTE LCTL(KC_V)
+// #define COPY  LCTL(KC_C)
+// #define CUT   LCTL(KC_X)
+// #define PASTE LCTL(KC_V)
 
 //**************** TAP DANCE *********************//
 

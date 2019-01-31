@@ -26,10 +26,10 @@ const format = string => {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [0] = LAYOUT_ergodox(
-    KC_LEAD             ,TD_F1               ,KC_2                ,KC_3                ,KC_4                ,TD_F5               ,LCTL(KC_X)          ,
-    KC_TAB              ,KC_Q                ,KC_W                ,KC_E                ,KC_R                ,KC_T                ,LCTL(KC_V)          ,
+    KC_LEAD             ,TD_F1               ,KC_2                ,KC_3                ,KC_4                ,TD_F5               ,CUT          ,
+    KC_TAB              ,KC_Q                ,KC_W                ,KC_E                ,KC_R                ,KC_T                ,PASTE          ,
     KC_DELETE           ,KC_A                ,LT(3,KC_S)          ,LT(2,KC_D)          ,LT(4,KC_F)          ,KC_G                ,
-    KC_PIPE             ,KC_Z                ,KC_X                ,KC_C                ,KC_V                ,KC_B                ,LCTL(KC_C)          ,
+    KC_PIPE             ,KC_Z                ,KC_X                ,KC_C                ,KC_V                ,KC_B                ,COPY          ,
     LSFT(KC_LALT)       ,OSM(MOD_LCTL)       ,OSM(MOD_LALT)       ,KC_LEFT             ,KC_RIGHT            ,
     ALT_T(KC_INSERT)    ,KC_LGUI             ,
     KC_HOME             ,
