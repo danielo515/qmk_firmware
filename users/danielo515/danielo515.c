@@ -130,6 +130,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
      onMac ?  SEND_STRING(SS_LGUI("v")) : SEND_STRING(SS_LCTRL("v"));
     }
     return false;
+  case SAVE:
+    if (record->event.pressed) {
+     onMac ?  SEND_STRING(SS_LGUI("s")) : SEND_STRING(SS_LCTRL("s"));
+    }
+    return false;
+  case UNDO:
+    if (record->event.pressed) {
+     onMac ?  SEND_STRING(SS_LGUI("z")) : SEND_STRING(SS_LCTRL("z"));
+    }
+    return false;
   case RGB_SLD:
     if (record->event.pressed)
     {
@@ -188,6 +198,31 @@ void matrix_scan_user(void)
     {
       SEND_STRING("``" SS_TAP(X_LEFT));
     }
+    // International spanish accent vovels
+    SEQ_ONE_KEY(KC_A)
+    {
+      SEND_STRING(SS_LALT("e") "a");
+    }
+    SEQ_ONE_KEY(KC_E)
+    {
+      SEND_STRING(SS_LALT("e") "e");
+    }
+    SEQ_ONE_KEY(KC_I)
+    {
+      SEND_STRING(SS_LALT("e") "i");
+    }
+    SEQ_ONE_KEY(KC_O)
+    {
+      SEND_STRING(SS_LALT("e") "o");
+    }
+    SEQ_ONE_KEY(KC_U)
+    {
+      SEND_STRING(SS_LALT("e") "u");
+    }
+    SEQ_ONE_KEY(KC_N) // ñ
+    {
+      SEND_STRING(SS_LALT("n") "n");
+    }
     SEQ_ONE_KEY(KC_P)
     {
       register_code(KC_LGUI);
@@ -206,7 +241,7 @@ void matrix_scan_user(void)
       rgblight_setrgb(255, 255, 0);
     }
     /*  TWO KEYS */
-    SEQ_TWO_KEYS(KC_Y,KC_U)
+    SEQ_ONE_KEY(KC_Y)
     {
       if(onMac){
         SEND_STRING(SS_LGUI("a") SS_LGUI("c"));

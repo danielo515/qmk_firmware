@@ -11,9 +11,12 @@ enum custom_keycodes
   EPRM,
   RGB_SLD,
   ALT_TAB,
+  // Custom multi-os key-codes
   CUT,
   COPY,
-  PASTE
+  PASTE,
+  SAVE,
+  UNDO
 };
 
 // Pre-made key codes
