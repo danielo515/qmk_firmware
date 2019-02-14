@@ -16,7 +16,8 @@ enum custom_keycodes
   COPY,
   PASTE,
   SAVE,
-  UNDO
+  UNDO,
+  FIND
 };
 
 // Pre-made key codes

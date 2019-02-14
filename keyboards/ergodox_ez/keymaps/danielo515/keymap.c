@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_DELETE           ,KC_A                ,LT(3,KC_S)          ,LT(2,KC_D)          ,LT(4,KC_F)          ,KC_G                ,
     KC_PIPE             ,KC_Z                ,KC_X                ,KC_C                ,KC_V                ,KC_B                ,TD(COPY_CUT) ,
     LSFT(KC_LALT)       ,OSM(MOD_LCTL)       ,OSM(MOD_LALT)       ,KC_LEFT             ,KC_RIGHT            ,
-    ALT_T(KC_INSERT)    ,KC_LGUI             ,
+    ALT_T(KC_INSERT)    ,OSM(KC_LGUI)             ,
     KC_HOME             ,
     OSM(MOD_LSFT)       ,LT(2,KC_BSPACE)     ,KC_PLUS             ,
 
@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT     ,KC_F1              ,KC_F2              ,KC_F3              ,KC_F4              ,KC_F5              ,KC_TRANSPARENT     ,
     KC_TRANSPARENT     ,LCTL(KC_Q)         ,LCTL(KC_W)         ,LGUI(KC_DOWN)      ,LGUI(KC_UP)        ,LGUI(KC_LEFT)      ,LALT(LSFT(KC_UP))  ,
     LCTL(LSFT(KC_P))   ,LCTL(KC_A)         ,SAVE               ,LCTL(KC_D)         ,KC_TRANSPARENT     ,RGUI(KC_R)         ,
-    LCTL(LSFT(KC_F))   ,UNDO               ,LCTL(KC_X)         ,KC_PSCREEN         ,KC_TRANSPARENT     ,LGUI(KC_RIGHT)     ,LALT(LSFT(KC_DOWN)),
+    LCTL(LSFT(KC_F))   ,UNDO               ,CUT                ,KC_PSCREEN         ,KC_TRANSPARENT     ,LGUI(KC_RIGHT)     ,LALT(LSFT(KC_DOWN)),
     KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
     KC_TRANSPARENT     ,KC_TRANSPARENT     ,
     KC_TRANSPARENT     ,

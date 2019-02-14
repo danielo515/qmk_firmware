@@ -140,6 +140,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
      onMac ?  SEND_STRING(SS_LGUI("z")) : SEND_STRING(SS_LCTRL("z"));
     }
     return false;
+  case FIND:
+    if (record->event.pressed) {
+     onMac ?  SEND_STRING(SS_LGUI("f")) : SEND_STRING(SS_LCTRL("f"));
+    }
+    return false;
   case RGB_SLD:
     if (record->event.pressed)
     {
@@ -223,11 +228,14 @@ void matrix_scan_user(void)
     {
       SEND_STRING(SS_LALT("n") "n");
     }
+    // paste all
     SEQ_ONE_KEY(KC_P)
     {
-      register_code(KC_LGUI);
-      tap_code(KC_DOWN);
-      unregister_code(KC_LGUI);
+      if(onMac){
+        SEND_STRING(SS_LGUI("a") SS_LGUI("v"));
+      } else {
+        SEND_STRING(SS_LCTRL("a") SS_LCTRL("v"));
+      }
     }
     SEQ_THREE_KEYS(KC_M, KC_A, KC_C)
     {
@@ -240,7 +248,7 @@ void matrix_scan_user(void)
       onMac = false;
       rgblight_setrgb(255, 255, 0);
     }
-    /*  TWO KEYS */
+    /*  Copy all */
     SEQ_ONE_KEY(KC_Y)
     {
       if(onMac){
@@ -248,6 +256,11 @@ void matrix_scan_user(void)
       } else {
         SEND_STRING(SS_LCTRL("a") SS_LCTRL("c"));
       }
+    }
+    //emoji bar
+    SEQ_TWO_KEYS(KC_E, KC_E)
+    {
+      SEND_STRING(SS_DOWN(X_LGUI) SS_LCTRL(" ") SS_UP(X_LGUI));
     }
     // Triple ticks
     SEQ_TWO_KEYS(KC_T, KC_T)
