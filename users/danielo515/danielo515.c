@@ -180,7 +180,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   if (altPressed)
   {
     onMac ?  unregister_code(KC_LGUI) : unregister_code(KC_LALT);
-    unregister_code(KC_LALT);
     altPressed = false;
     layer_off(7);
     return false;
@@ -228,6 +227,10 @@ void matrix_scan_user(void)
     {
       SEND_STRING(SS_LALT("n") "n");
     }
+    SEQ_ONE_KEY(KC_H) // control enter, because yes
+    {
+      SEND_STRING(SS_LCTRL(X_ENTER));
+    }
     // paste all
     SEQ_ONE_KEY(KC_P)
     {
@@ -261,6 +264,11 @@ void matrix_scan_user(void)
     SEQ_TWO_KEYS(KC_E, KC_E)
     {
       SEND_STRING(SS_DOWN(X_LGUI) SS_LCTRL(" ") SS_UP(X_LGUI));
+    }
+
+    SEQ_TWO_KEYS(KC_F, KC_F)
+    {
+      SEND_STRING("ps -ef | grep ");
     }
     // Triple ticks
     SEQ_TWO_KEYS(KC_T, KC_T)
