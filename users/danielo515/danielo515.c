@@ -229,7 +229,7 @@ void matrix_scan_user(void)
     }
     SEQ_ONE_KEY(KC_H) // control enter, because yes
     {
-      SEND_STRING(SS_LCTRL(X_ENTER));
+      SEND_STRING(SS_DOWN(X_LCTRL) SS_TAP(X_ENTER) SS_UP(X_LCTRL));
     }
     // paste all
     SEQ_ONE_KEY(KC_P)
