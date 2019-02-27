@@ -11,6 +11,9 @@ enum custom_keycodes
   EPRM,
   RGB_SLD,
   ALT_TAB,
+  // Macros
+  ARROW,
+  F_ARROW,
   // Custom multi-os key-codes
   CUT,
   COPY,

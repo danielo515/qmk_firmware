@@ -115,6 +115,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     }
     return false;
     break;
+  case ARROW:
+    if (record->event.pressed) SEND_STRING("->");
+    return false;
+  case F_ARROW:
+    if (record->event.pressed) SEND_STRING("=>");
+    return false;
   case CUT:
     if (record->event.pressed) {
      onMac ?  SEND_STRING(SS_LGUI("x")) : SEND_STRING(SS_LCTRL("x"));
