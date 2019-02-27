@@ -23,11 +23,6 @@ enum custom_keycodes
   FIND
 };
 
-// Pre-made key codes
-// #define COPY  LCTL(KC_C)
-// #define CUT   LCTL(KC_X)
-// #define PASTE LCTL(KC_V)
-
 //**************** TAP DANCE *********************//
 
 #define ACTION_TAP_DANCE_DOUBLE_SAFE(kc1, kc2) { \
