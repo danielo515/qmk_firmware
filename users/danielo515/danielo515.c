@@ -197,6 +197,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 #ifdef LEADER_ENABLE
 LEADER_EXTERNS();
 
+void leader_start() {
+  rgblight_setrgb_range(5, 100, 199, 10,15);
+};
+
+void leader_end(){
+  rgblight_setrgb_range(200, 200, 255, 10,15);
+};
+
 void matrix_scan_user(void)
 {
   LEADER_DICTIONARY()
@@ -232,6 +240,11 @@ void matrix_scan_user(void)
     SEQ_ONE_KEY(KC_N) // ñ
     {
       SEND_STRING(SS_LALT("n") "n");
+    }
+    // ### LAYER CHANGE
+    SEQ_ONE_KEY(KC_1)
+    {
+      layer_on(1);
     }
     SEQ_ONE_KEY(KC_H) // control enter, because yes
     {
@@ -285,6 +298,8 @@ void matrix_scan_user(void)
     {
       SEND_STRING("https://");
     }
+
+    leader_end();
   }
 }
 #endif // LEADER
