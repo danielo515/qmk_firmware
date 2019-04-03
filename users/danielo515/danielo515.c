@@ -241,6 +241,14 @@ void matrix_scan_user(void)
     {
       SEND_STRING(SS_LALT("n") "n");
     }
+    SEQ_ONE_KEY(KC_G) // grep
+    {
+      SEND_STRING(" | grep ");
+    }
+    SEQ_TWO_KEYS(KC_F, KC_T)
+    {
+      SEND_STRING("feat():" SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+    }
     // ### LAYER CHANGE
     SEQ_ONE_KEY(KC_1)
     {
