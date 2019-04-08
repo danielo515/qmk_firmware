@@ -45,13 +45,20 @@ TAP_DANCE_ENABLE = yes
 KEY_LOCK_ENABLE = yes
 
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
-SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
+SLEEP_LED_ENABLE = no       # Breathing sleep LED during USB suspend
+# if this doesn't work, see here: https://github.com/tmk/tmk_keyboard/wiki/FAQ#nkro-doesnt-work
+NKRO_ENABLE = no            # USB Nkey Rollover
+BACKLIGHT_ENABLE = yes      # Enable keyboard backlight functionality on B7 by default
+RGBLIGHT_ENABLE = yes       # Enable keyboard RGB underglow
+RGBLIGHT_CUSTOM_DRIVER = yes
+MIDI_ENABLE = no            # MIDI support (+2400 to 4200, depending on config)
+UNICODE_ENABLE = no         # Unicode
+BLUETOOTH_ENABLE = no       # Enable Bluetooth with the Adafruit EZ-Key HID
+AUDIO_ENABLE = no           # Audio output on port C6
+FAUXCLICKY_ENABLE = no      # Use buzzer to emulate clicky switches
+HD44780_ENABLE = no 		# Enable support for HD44780 based LCDs (+400)
 
-OPT_DEFS = -DDEBUG_LEVEL=0
-
-# custom matrix setup
-CUSTOM_MATRIX = yes
-SRC = matrix.c i2c.c backlight.c
+SRC += i2c_master.c
 
 # programming options
 PROGRAM_CMD = ./util/atmega32a_program.py $(TARGET).hex

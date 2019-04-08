@@ -18,15 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "jj40.h"
 
-#include <avr/pgmspace.h>
+#ifdef RGBLIGHT_ENABLE
 
-#include "action_layer.h"
-#include "quantum.h"
+#include <string.h>
+#include "i2c_master.h"
+#include "rgblight.h"
 
-#include "i2c.h"
-
-#include "backlight.h"
-#include "backlight_custom.h"
+extern rgblight_config_t rgblight_config;
 
 // for keyboard subdirectory level init functions
 // @Override
@@ -79,10 +77,8 @@ bool rgb_init = false;
 void matrix_scan_kb(void)
 {
   // if LEDs were previously on before poweroff, turn them back on
-  if (rgb_init == false && rgblight_config.enable)
-  {
-    i2c_init();
-    i2c_send(0xb0, (uint8_t *)led, 3 * RGBLED_NUM);
+  if (rgb_init == false && rgblight_config.enable) {
+    i2c_transmit(0xb0, (uint8_t*)led, 3 * RGBLED_NUM, 100);
     rgb_init = true;
   }
 
@@ -106,3 +102,4 @@ void
 matrix_scan_user(void)
 {
 }
+
