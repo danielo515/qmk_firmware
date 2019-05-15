@@ -32,6 +32,7 @@ enum custom_keycodes
 
 #define TAP(keycode) register_code16(keycode); unregister_code16(keycode)
 
+#ifdef QUAD_DANCE
 //Enums used to clearly convey the state of the tap dance
 enum {
   SINGLE_TAP = 1,
@@ -41,6 +42,8 @@ enum {
   DOUBLE_SINGLE_TAP = 5 //send SINGLE_TAP twice - NOT DOUBLE_TAP
   // Add more enums here if you want for triple, quadruple, etc.
 };
+int cur_dance (qk_tap_dance_state_t *state);
+# endif
 
 enum tap_dance {
   COPY_CUT=0,
@@ -77,7 +80,10 @@ enum tap_dance {
   # define TD_CLN TD(_TD_CLN)
   # define TD_SLASH TD(_TD_SLASH)
 
-int cur_dance (qk_tap_dance_state_t *state);
+// Short hand for complex key combinations
+# define WIN_LEFT_HALF LALT(LGUI(KC_LEFT))
+# define WIN_RIGHT_HALF LALT(LGUI(KC_RIGHT))
+
 
 void qk_tap_dance_pair_finished_safe(qk_tap_dance_state_t *state, void *user_data);
 void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data);

@@ -3,7 +3,7 @@
 bool onMac = true;
 
 //**************** Definitions needed for quad function to work *********************//
-
+#ifdef QUAD_DANCE
 int cur_dance(qk_tap_dance_state_t *state)
 {
   if (state->count == 1)
@@ -30,6 +30,7 @@ int cur_dance(qk_tap_dance_state_t *state)
 };
 
 //**************** Definitions needed for quad function to work *********************//
+# endif
 
 void qk_tap_dance_pair_finished_safe(qk_tap_dance_state_t *state, void *user_data)
 {
