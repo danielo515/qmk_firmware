@@ -20,6 +20,7 @@ enum custom_keycodes
   PASTE,
   SAVE,
   UNDO,
+  CHG_LAYOUT,
   FIND
 };
 

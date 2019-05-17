@@ -152,6 +152,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
      onMac ?  SEND_STRING(SS_LGUI("f")) : SEND_STRING(SS_LCTRL("f"));
     }
     return false;
+  case CHG_LAYOUT:
+    if (record->event.pressed) {
+     onMac ?  SEND_STRING(SS_LCTRL(" ")) : SEND_STRING(SS_LCTRL("f"));
+    }
+    return false;
   case RGB_SLD:
     if (record->event.pressed)
     {
@@ -245,6 +250,14 @@ void matrix_scan_user(void)
     SEQ_ONE_KEY(KC_G) // grep
     {
       SEND_STRING(" | grep ");
+    }
+    SEQ_TWO_KEYS(KC_D, KC_G) // vim delete all
+    {
+      if(onMac){
+        SEND_STRING(SS_LGUI("a") SS_TAP(X_D));
+      } else {
+        SEND_STRING(SS_LCTRL("a") SS_TAP(X_D));
+      }
     }
     SEQ_TWO_KEYS(KC_F, KC_T)
     {
