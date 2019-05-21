@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT,KC_TRANSPARENT,RGB_HUD       ,
     KC_DELETE     ,KC_A          ,KC_B          ,KC_C          ,KC_D          ,KC_E          ,KC_BSPACE     ,
     KC_ENTER      ,KC_F          ,KC_7          ,KC_8          ,KC_9          ,KC_PERC       ,KC_TRANSPARENT,
-    KC_HASH       ,KC_4          ,KC_5          ,KC_6          ,KC_PLUS       ,KC_KP_ASTERISK,
+                   KC_HASH       ,KC_4          ,KC_5          ,KC_6          ,KC_PLUS       ,KC_KP_ASTERISK,
     KC_KP_ENTER   ,KC_AMPR       ,KC_1          ,KC_2          ,KC_3          ,KC_SLASH      ,KC_BSLASH     ,
     KC_0          ,KC_COMMA      ,KC_DOT        ,KC_EQUAL      ,KC_TRANSPARENT,
     RGB_MOD       ,RGB_SLD       ,
@@ -83,9 +83,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [3] = LAYOUT_ergodox(
-    RESET              ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
-    KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_LCBR            ,KC_RCBR            ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
-    KC_TRANSPARENT     ,KC_AT              ,KC_TRANSPARENT     ,KC_LPRN            ,KC_RPRN            ,KC_TRANSPARENT     ,
+    KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
+    KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_LABK            ,KC_RABK            ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
+    KC_TRANSPARENT     ,KC_AT              ,KC_TRANSPARENT     ,KC_EQL             ,F_ARROW            ,KC_TRANSPARENT     ,
     KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_LBRACKET        ,KC_RBRACKET        ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
     KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
     KC_TRANSPARENT     ,KC_TRANSPARENT     ,
@@ -93,8 +93,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // Right hand
     KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
     KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
-    LALT(LSFT(KC_UP))  ,KC_HASH            ,KC_LABK            ,KC_RABK            ,KC_KP_ASTERISK     ,KC_PERC            ,KC_DLR             ,
-    KC_AMPR            ,KC_EQL             ,F_ARROW            ,KC_CIRC            ,KC_KP_PLUS         ,KC_PIPE            ,
+    LALT(LSFT(KC_UP))  ,KC_HASH            ,KC_LCBR            ,KC_RCBR            ,KC_KP_ASTERISK     ,KC_PERC            ,KC_DLR             ,
+                        KC_AMPR            ,KC_LPRN            ,KC_RPRN            ,KC_CIRC            ,KC_KP_PLUS         ,KC_PIPE            ,
     LALT(LSFT(KC_DOWN)),KC_EXLM            ,KC_TILD            ,KC_CIRC            ,ARROW              ,KC_QUES            ,KC_BSLASH          ,
     KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,KC_TRANSPARENT     ,
     RESET              ,KC_TRANSPARENT     ,
