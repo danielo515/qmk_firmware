@@ -3,7 +3,7 @@
   See config.h options at https://docs.qmk.fm/#/config_options?id=the-configh-file
 */
 #undef TAPPING_TERM
-#define TAPPING_TERM 250
+#define TAPPING_TERM 200
 
 #define ONESHOT_TAP_TOGGLE 2
 
@@ -16,7 +16,7 @@
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 60
 
 #undef  LEADER_TIMEOUT
-#define LEADER_TIMEOUT 250
+#define LEADER_TIMEOUT 350
 #define LEADER_PER_KEY_TIMING
 
 #undef NO_DEBUG
