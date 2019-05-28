@@ -71,6 +71,7 @@ void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data)
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [COPY_CUT] = ACTION_TAP_DANCE_FN(td_copy_cut),
+    [PASTE_DANCE] = ACTION_TAP_DANCE_FN(td_paste),
     [_TD_F1] = ACTION_TAP_DANCE_DOUBLE(KC_1, KC_F1),
     [_TD_F2] = ACTION_TAP_DANCE_DOUBLE(KC_2, KC_F2),
     [_TD_F3] = ACTION_TAP_DANCE_DOUBLE(KC_3, KC_F3),
@@ -101,6 +102,19 @@ void td_copy_cut(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 };
 
+void td_paste(qk_tap_dance_state_t *state, void *user_data)
+{
+  if (state->count == 2)
+  {
+    onMac ?  SEND_STRING(SS_DOWN(X_RSHIFT) SS_LGUI("v") SS_UP(X_RSHIFT)) :   SEND_STRING(SS_DOWN(X_RSHIFT) SS_LCTRL("v") SS_UP(X_RSHIFT));
+  }
+  else
+  {
+    onMac ?  SEND_STRING(SS_LGUI("v")) : SEND_STRING(SS_LCTRL("v"));
+  }
+  reset_tap_dance(state);
+};
+
 //**************** Handle keys function *********************//
 bool altPressed = false;
 
@@ -122,6 +136,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
   case F_ARROW:
     if (record->event.pressed) SEND_STRING("=>");
     return false;
+  case GREP:
+    if (record->event.pressed) SEND_STRING(" | grep "); return false;
+  case AC_A:// Accent á
+    if (record->event.pressed) SEND_STRING(SS_LALT("e") "a"); return false;
+  case AC_E:// Accent é
+    if (record->event.pressed) SEND_STRING(SS_LALT("e") "e"); return false;
+  case AC_I:// Accent í
+    if (record->event.pressed) SEND_STRING(SS_LALT("e") "i"); return false;
+  case AC_O:// Accent ó
+    if (record->event.pressed) SEND_STRING(SS_LALT("e") "o"); return false;
   case CUT:
     if (record->event.pressed) {
      onMac ?  SEND_STRING(SS_LGUI("x")) : SEND_STRING(SS_LCTRL("x"));

@@ -14,6 +14,12 @@ enum custom_keycodes
   // Macros
   ARROW,
   F_ARROW,
+  GREP,
+  // Accented characters
+  AC_A,
+  AC_E,
+  AC_I,
+  AC_O,
   // Custom multi-os key-codes
   CUT,
   COPY,
@@ -48,6 +54,7 @@ int cur_dance (qk_tap_dance_state_t *state);
 
 enum tap_dance {
   COPY_CUT=0,
+  PASTE_DANCE,
   _TD_F1,
   _TD_F2,
   _TD_F3,
@@ -89,5 +96,6 @@ enum tap_dance {
 void qk_tap_dance_pair_finished_safe(qk_tap_dance_state_t *state, void *user_data);
 void qk_tap_dance_pair_reset_safe(qk_tap_dance_state_t *state, void *user_data);
 void td_copy_cut (qk_tap_dance_state_t *state, void *user_data);
+void td_paste(qk_tap_dance_state_t *state, void *user_data);
 
 #endif
