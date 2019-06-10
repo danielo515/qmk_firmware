@@ -5,7 +5,7 @@
 #undef TAPPING_TERM
 #define TAPPING_TERM 200
 
-#define ONESHOT_TAP_TOGGLE 2
+#define ONESHOT_TAP_TOGGLE 3
 
 #define RGBLIGHT_SLEEP
 
