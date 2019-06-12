@@ -26,7 +26,7 @@ const format = string => {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [0] = LAYOUT_ergodox(
-    KC_ESC              ,TD_F1               ,KC_2                ,KC_3                ,KC_4                ,TD_F5               ,CUT          ,
+    KC_ESC              ,TD_F1               ,KC_2                ,KC_3                ,KC_4                ,TD_F5               ,OSM(MOD_HYPR)    ,
     KC_TAB              ,KC_Q                ,KC_W                ,KC_E                ,KC_R                ,KC_T                ,TD(PASTE_DANCE) ,
     KC_GRAVE            ,KC_A                ,LT(3,KC_S)          ,LT(2,KC_D)          ,LT(4,KC_F)          ,KC_G                ,
     KC_DELETE           ,KC_Z                ,KC_X                ,KC_C                ,KC_V                ,KC_B                ,TD(COPY_CUT) ,
@@ -38,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     TO(1)               ,KC_6                ,KC_7                ,KC_8                ,TD_F9               ,LT(3,KC_0)          ,KC_DQUO             ,
     KC_UNDS             ,KC_Y                ,KC_U                ,KC_I                ,KC_O                ,KC_P                ,RSFT_T(KC_MINUS)            ,
-    KC_H                ,ALT_T(KC_J)         ,RCTL_T(KC_K)        ,LT(6,KC_L)          ,TD_CLN              ,GUI_T(KC_QUOTE)     ,
+    HYPR_T(KC_H)       ,ALT_T(KC_J)         ,RCTL_T(KC_K)        ,LT(6,KC_L)          ,TD_CLN              ,GUI_T(KC_QUOTE)     ,
     ALT_TAB             ,KC_N                ,KC_M                ,KC_COMMA            ,KC_DOT              ,KC_SLASH            ,LT(4,KC_KP_ASTERISK),
     LT(4,KC_ENTER)      ,KC_DOWN             ,KC_LBRACKET         ,KC_RBRACKET         ,OSL(2)              ,
     KC_AUDIO_MUTE       ,KC_ESCAPE           ,
@@ -203,3 +203,24 @@ uint32_t layer_state_set_user(uint32_t state)
   }
   return state;
 };
+
+// use leds to indicate when a one shot mod is on
+void oneshot_mods_changed_user(uint8_t mods) {
+  ergodox_board_led_off();
+  ergodox_right_led_1_off();
+  ergodox_right_led_2_off();
+  ergodox_right_led_3_off();
+  if (mods & MOD_MASK_SHIFT) {
+    ergodox_right_led_1_on(); // One shot shift activated
+  }
+  if (mods & MOD_MASK_CTRL) { // oneshot control
+    ergodox_right_led_2_on();  }
+  if (mods & MOD_MASK_ALT) {// one shot alt
+    ergodox_right_led_3_on();  }
+  // if (mods & MOD_MASK_GUI) { // one shot gui
+  //   println("Oneshot mods GUI");
+  // }
+  if (!mods) {
+    rgblight_setrgb(250, 250, 80);
+  }
+}
