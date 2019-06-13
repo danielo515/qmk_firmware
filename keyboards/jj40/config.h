@@ -29,12 +29,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROW_PINS { B0, B1, B3, B4 }
 #define MATRIX_COL_PINS { C4, C5, C6, C7, A4, A5, A6, A7, A3, A2, A1, A0 }
 
-
-#define ONESHOT_TAP_TOGGLE 3  /* Tapping this number of times holds the key until tapped this number of times again. */
-#define ONESHOT_TIMEOUT 4000  /* Time (in ms) before the one shot key is released */
-
-#define IGNORE_MOD_TAP_INTERRUPT
-
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCING_DELAY 5
 /* COL2ROW or ROW2COL */
@@ -44,18 +38,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BACKLIGHT_LEVELS 12
 // #define BACKLIGHT_BREATHING  // Requires #4324 to enable hardware pwm for atmega32a
 
-/* RGB underglow */
-// NOTE: for PS2AVRGB boards, underglow commands are sent via I2C to 0xB0.
-#define RGBLED_NUM 5
-#define RGBLIGHT_ANIMATIONS
-
 // #define LEADER_TIMEOUT 900
 #define TAPPING_TERM 200
 /* RGB underglow */
-// The RGB_DI_PIN value seems to be shared between all PS2AVRGB boards.
-// The same pin is used on the JJ40, at least.
+// NOTE: for PS2AVRGB boards, underglow commands are sent via I2C to 0xB0.
 #define RGBLED_NUM 5
-#define RGB_DI_PIN E2
 #define RGBLIGHT_ANIMATIONS
 #define RGBLIGHT_HUE_STEP 15
 #define RGBLIGHT_EFFECT_KNIGHT_LENGTH 1
@@ -76,3 +63,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TD_DBL(ONE,TWO) _D_##ONE##_##TWO
 #define TD_DBL_NAM(ONE,TWO) TD(_D_##ONE##_##TWO)
 
+/* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
+#define DEBOUNCE 5
+
+#define NO_UART 1
+
+/* key combination for magic key command */
+/* defined by default; to change, uncomment and set to the combination you want */
+// #define IS_COMMAND() (get_mods() == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)))
+
+/* Bootmagic Lite key configuration */
+// #define BOOTMAGIC_LITE_ROW 0
+// #define BOOTMAGIC_LITE_COLUMN 0
