@@ -210,17 +210,21 @@ void oneshot_mods_changed_user(uint8_t mods) {
   ergodox_right_led_1_off();
   ergodox_right_led_2_off();
   ergodox_right_led_3_off();
+  // One shot checks
   if (mods & MOD_MASK_SHIFT) {
-    ergodox_right_led_1_on(); // One shot shift activated
+    ergodox_right_led_1_on();
   }
-  if (mods & MOD_MASK_CTRL) { // oneshot control
-    ergodox_right_led_2_on();  }
-  if (mods & MOD_MASK_ALT) {// one shot alt
-    ergodox_right_led_3_on();  }
-  // if (mods & MOD_MASK_GUI) { // one shot gui
+  if (mods & MOD_MASK_CTRL) {
+    ergodox_right_led_2_on();
+  }
+  if (mods & MOD_MASK_ALT) {
+    ergodox_right_led_3_on();
+  }
+  // if (mods & MOD_MASK_GUI) {
   //   println("Oneshot mods GUI");
   // }
-  if (!mods) {
-    rgblight_setrgb(250, 250, 80);
   }
+
+void oneshot_locked_mods_changed_user(uint8_t mods) {
+    oneshot_mods_changed_user(mods);
 }
