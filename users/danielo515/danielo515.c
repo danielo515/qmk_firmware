@@ -283,6 +283,10 @@ void matrix_scan_user(void)
         SEND_STRING(SS_LCTRL("a") SS_TAP(X_D));
       }
     }
+    SEQ_TWO_KEYS(KC_P, KC_G)
+    {
+      SEND_STRING("ps -ef | grep ");
+    }
     SEQ_TWO_KEYS(KC_F, KC_T)
     {
       SEND_STRING("feat():" SS_TAP(X_LEFT) SS_TAP(X_LEFT));
