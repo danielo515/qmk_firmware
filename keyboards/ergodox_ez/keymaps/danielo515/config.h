@@ -14,11 +14,15 @@
 
 #undef MOUSEKEY_WHEEL_TIME_TO_MAX
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 60
-
+// Timeout settings for leader key
 #undef  LEADER_TIMEOUT
 #define LEADER_TIMEOUT 350
 #define LEADER_PER_KEY_TIMING
 
+// Default is 5
+#undef  DEBOUNCE
+#define DEBOUNCE 11
+// Memory saving
 #undef NO_DEBUG
 #define NO_DEBUG
 #undef NO_PRINT

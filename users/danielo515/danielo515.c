@@ -194,6 +194,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
      onMac ?  SEND_STRING(SS_LCTRL(" ")) : SEND_STRING(SS_LCTRL("f"));
     }
     return false;
+ // == Multi Os END ===
+
   case RGB_SLD:
     if (record->event.pressed)
     {
