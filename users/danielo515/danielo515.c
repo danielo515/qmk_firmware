@@ -130,6 +130,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     }
     return false;
     break;
+ // == Macros START ===
   case ARROW:
     if (record->event.pressed) SEND_STRING("->");
     return false;
@@ -138,6 +139,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     return false;
   case GREP:
     if (record->event.pressed) SEND_STRING(" | grep "); return false;
+ // == Macros END ===
+ // == Multi Os START ===
+  case KC_HOME:// make the home behave the same on OSX
+    if (record->event.pressed && onMac) {
+        SEND_STRING(SS_LCTRL("a"));
+        return false;
+    }
+  case KC_END:// make the end behave the same on OSX
+    if (record->event.pressed && onMac) {
+        SEND_STRING(SS_LCTRL("e"));
+        return false;
+    }
   case AC_A:// Accent á
     if (record->event.pressed) SEND_STRING(SS_LALT("e") "a"); return false;
   case AC_E:// Accent é
