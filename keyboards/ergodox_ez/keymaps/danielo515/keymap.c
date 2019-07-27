@@ -147,6 +147,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [8] = LAYOUT_ergodox(KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_W,KC_E,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_ENTER,KC_A,KC_S,KC_D,KC_F,KC_TRANSPARENT,KC_TRANSPARENT,KC_Z,KC_X,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_SPACE,KC_LSHIFT,KC_TRANSPARENT,TO(0),KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_PGDOWN,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_ENTER,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT,KC_TRANSPARENT),
 };
+// Used for blinking leds on layers higher than 7
+uint16_t blink_timer = 0;
+uint16_t blink_elapsed = 0;
+bool blink_led_1 = false;
+bool blink_led_2 = false;
+bool blink_led_3 = false;
+
+void matrix_scan_kb(void){
+    // first 7 layers do not need to blink
+    if(blink_led_1 || blink_led_2 || blink_led_3){
+        ergodox_board_led_off();
+        ergodox_right_led_1_off();
+        ergodox_right_led_2_off();
+        ergodox_right_led_3_off();
+        blink_elapsed = timer_elapsed(blink_timer);
+        if(blink_elapsed > 2000) { blink_timer = timer_read();}
+        if(blink_elapsed < 1000) {
+            if(blink_led_1) ergodox_right_led_1_on();
+            if(blink_led_2) ergodox_right_led_2_on();
+            if(blink_led_3) ergodox_right_led_3_on();
+        }
+    }
+    matrix_scan_user();
+};
 
 uint32_t layer_state_set_user(uint32_t state)
 {
@@ -157,6 +181,10 @@ uint32_t layer_state_set_user(uint32_t state)
   ergodox_right_led_1_off();
   ergodox_right_led_2_off();
   ergodox_right_led_3_off();
+  blink_led_1=false;
+  blink_led_2=false;
+  blink_led_3=false;
+
   switch (layer)
   {
   case 0:
@@ -196,7 +224,8 @@ uint32_t layer_state_set_user(uint32_t state)
     rgblight_setrgb(90, 150, 90);
     break;
   case 8:
-    rgblight_setrgb(200, 0, 200);
+    blink_led_1=true;
+    rgblight_setrgb(100, 0, 100);
     break;
   case 9:
     rgblight_setrgb(200, 150, 90);

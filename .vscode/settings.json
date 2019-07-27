@@ -8,11 +8,13 @@
     "**/*.hex": true
   },
   "files.associations": {
+    "*.js": "javascript",
     "*.h": "c",
     "*.c": "c",
     "*.cpp": "cpp",
     "*.hpp": "cpp",
-    "xstddef": "c"
+    "xstddef": "c",
+    "sstream": "c"
   },
   "editor.formatOnSave": false,
   "align.by.regex.templates": {
