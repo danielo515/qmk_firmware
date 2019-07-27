@@ -5,3 +5,4 @@ AUTO_SHIFT_ENABLE = no
 TAP_DANCE_ENABLE = yes # Enable the tap dance feature.
 LEADER_ENABLE = yes
 CONSOLE_ENABLE = no
+RGBLIGHT_ENABLE = yes

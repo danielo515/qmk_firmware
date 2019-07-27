@@ -197,10 +197,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
  // == Multi Os END ===
 
   case RGB_SLD:
-    if (record->event.pressed)
-    {
-      rgblight_mode(1);
-    }
+    if (record->event.pressed) { rgblight_mode(1); }
     return false;
     break;
     //First time alt + tab, and alt stays sticky. Next press we just send tab. Any other key releases the alt

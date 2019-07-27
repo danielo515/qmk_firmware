@@ -77,8 +77,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ENTER      ,KC_F          ,KC_7          ,KC_8          ,KC_9          ,KC_PERC       ,KC_TRANSPARENT,
                    KC_HASH       ,KC_4          ,KC_5          ,KC_6          ,KC_PLUS       ,KC_KP_ASTERISK,
     KC_KP_ENTER   ,KC_COLON      ,KC_1          ,KC_2          ,KC_3          ,KC_SLASH      ,KC_BSLASH     ,
-    KC_0          ,KC_COMMA      ,KC_DOT        ,KC_EQUAL      ,KC_TRANSPARENT,
-    RGB_MOD       ,RGB_SLD       ,
+                                  KC_0          ,KC_COMMA      ,KC_DOT        ,KC_EQUAL      ,KC_TRANSPARENT,
+    RGB_TOG       ,RGB_SLD       ,
     RGB_VAI       ,
     RGB_VAD       ,KC_BSPACE     ,KC_SPACE
   ),
@@ -159,9 +159,12 @@ uint32_t layer_state_set_user(uint32_t state)
   ergodox_right_led_3_off();
   switch (layer)
   {
+  case 0:
+    rgblight_setrgb(0, 200, 200);
+    break;
   case 1:
     ergodox_right_led_1_on();
-    rgblight_setrgb(0, 255, 0); // green
+    rgblight_setrgb(0, 200, 0); // green
     break;
   case 2:
     ergodox_right_led_2_on();
@@ -193,14 +196,14 @@ uint32_t layer_state_set_user(uint32_t state)
     rgblight_setrgb(90, 150, 90);
     break;
   case 8:
-    rgblight_setrgb(255, 0, 255);
+    rgblight_setrgb(200, 0, 200);
     break;
   case 9:
     rgblight_setrgb(200, 150, 90);
     break;
-  default:
-    rgblight_setrgb(0x00, 0xFF, 0xFF);
-    break;
+//   default:
+//     rgblight_setrgb(0, 200, 200);
+//     break;
   }
   return state;
 };
