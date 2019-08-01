@@ -53,28 +53,6 @@ extern bool on_mac;
 #define KC_APOS ES_APOS
 #define KC_MAC_TGL MAC_TGL
 #define KC_BL_TOGG BL_TOGG
-//Tap Dance Declarations
-enum td_enum {
-  LEFT_HOME = 0,
-  J_ENT,
-  H_MINS,
-  RGT_HOME,
-  _TD_COPY,
-  _TD_CUT,
-  _TD_PASTE,
-  
-};
-//Tap Dance Definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-  [LEFT_HOME] = ACTION_TAP_DANCE_DOUBLE(KC_LEFT, KC_HOME),
-  [RGT_HOME] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_RGHT, KC_END),
-  [J_ENT] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_J,KC_ENT),
-  [H_MINS] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_H,KC_SLASH),
-  [_TD_COPY] =  ACTION_TAP_DANCE_FN(dance_copy),
-  [_TD_CUT] = ACTION_TAP_DANCE_FN(dance_cut),
-  [_TD_PASTE] = ACTION_TAP_DANCE_FN(dance_paste),
-}; // Fillers to make layering more clear
-
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -116,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------+-------+-------+-------+-------+-------+---------.       ,---------|-------+-------+-------+-------+-------+------|
             ,       ,       ,       ,       ,       ,         ,                 ,       ,       ,       ,       ,       ,      ,
   //|-------+-------+-------+-------+-------+-------+--------/         \--------|--------+-------+------+-------+-------+------|
-                                            ,      ,       ,                     ,       ,  
+                                            ,      ,       ,                     ,       ,
   //                                   ------+------+----'               ------+------+----'
   ),
 
@@ -147,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                            ,    ,    ,             ,    ,
   //                  `----+----+----'        `----+----+----'
   ),
-  
+
     [_MACROS] = LAYOUT(
   //,--------+--------+--------+--------+--------+--------.                          ,--------+--------+--------+--------+--------+--------.
       _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
@@ -200,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------+-------+-------+-------+-------+-------+---------.       ,---------|-------+-------+-------+-------+-------+------|
             ,       ,       ,       ,       ,       ,         ,                 ,       ,       ,       ,       ,       ,      ,
   //|-------+-------+-------+-------+-------+-------+--------/         \--------|--------+-------+------+-------+-------+------|
-                                            ,      ,       ,                     ,       ,  
+                                            ,      ,       ,                     ,       ,
   //                                   ------+------+----'               ------+------+----'
   ),
  */
@@ -214,59 +192,4 @@ float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  bool pressed = record->event.pressed;
-  if(pressed){
-    refresh_incremental_macros(keycode);
-    if(process_incremental_macro(keycode)){
-      return false;
-    }
-    if(is_macro(keycode)){
-      return handle_macro(keycode);
-    }
-    switch (keycode) {
-      case MAC_TGL:
-        on_mac = !on_mac;
-        on_mac ? SEND_STRING("On mac") : SEND_STRING("Not on MAC");
-        return false;
-      }
-  }
-  switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_qwerty);
-        #endif
-        persistent_default_layer_set(1UL<<_QWERTY);
-      }
-      return false;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-    case RAISE:
-      if (record->event.pressed) {
-        layer_on(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-    case ADJUST:
-      if (record->event.pressed) {
-        layer_on(_ADJUST);
-      } else {
-        layer_off(_ADJUST);
-      }
-      return false;
-  }
-  return true;
-}
+};

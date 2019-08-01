@@ -14,6 +14,7 @@ enum custom_keycodes
   // Macros
   ARROW,
   F_ARROW,
+  QWERTY,
   GREP,
   // Accented characters
   AC_A,
@@ -42,7 +43,6 @@ enum custom_keycodes
   TRI_TICKS,
   MACRO_END,  // END OF VSC DECLARATIONS
   INC_MACROS_START,
-  ARROW,
   INC_MACROS_END,
 };
 
@@ -135,7 +135,15 @@ enum tap_dance {
   _TD_F12,
   _TD_H_ENTER,
   _TD_CLN,
-  _TD_SLASH
+  _TD_SLASH,
+  // old ones
+  LEFT_HOME,
+  J_ENT,
+  H_MINS,
+  RGT_HOME,
+  _TD_COPY,
+  _TD_CUT,
+  _TD_PASTE,
 };
  // Ready to use Tap dance definitions, just put them on your layout
   # define TD_F1 TD(_TD_F1)

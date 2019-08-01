@@ -1,7 +1,11 @@
 #include "danielo515.h"
 
 bool onMac = true;
-
+// Send control or GUI depending if we are on windows or mac
+bool CMD(uint16_t kc) {
+  if(onMac){ TAP(LGUI(kc)); } else { TAP(LCTL(kc)); }
+  return false;
+}
 //**************** Definitions needed for quad function to work *********************//
 #ifdef QUAD_DANCE
 int cur_dance(qk_tap_dance_state_t *state)
@@ -79,6 +83,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [_TD_H_ENTER] = ACTION_TAP_DANCE_DOUBLE(KC_H, KC_ENT),
     [_TD_CLN] = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
     [_TD_SLASH] = ACTION_TAP_DANCE_DOUBLE(KC_SLASH, KC_BSLASH),
+    // OLD ONES
+    [LEFT_HOME] = ACTION_TAP_DANCE_DOUBLE(KC_LEFT, KC_HOME),
+    [RGT_HOME] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_RGHT, KC_END),
+    [J_ENT] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_J,KC_ENT),
+    [H_MINS] = ACTION_TAP_DANCE_DOUBLE_SAFE(KC_H,KC_SLASH),
+    [_TD_COPY] =  ACTION_TAP_DANCE_FN(dance_copy),
+    [_TD_CUT] = ACTION_TAP_DANCE_FN(dance_cut),
+    [_TD_PASTE] = ACTION_TAP_DANCE_FN(dance_paste)
 };
 
 void td_copy_cut(qk_tap_dance_state_t *state, void *user_data)
@@ -107,21 +119,75 @@ void td_paste(qk_tap_dance_state_t *state, void *user_data)
   reset_tap_dance(state);
 };
 
+//===== The awesome tap dance for CUT, COPY and PASTE letters
+void dance_copy (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) { TAP(KC_C); }
+  else
+  if (state->interrupted) { TAP(KC_C);TAP(KC_C);}
+  else CMD(KC_C);
+
+  reset_tap_dance (state);
+}
+
+void dance_cut (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) { TAP(KC_X); }
+  else { CMD(KC_X); }
+  reset_tap_dance (state);
+}
+
+void dance_paste (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    TAP(KC_V);
+  }
+  else {
+    CMD(KC_V);
+  }
+  reset_tap_dance (state);
+}
+
 //**************** Handle keys function *********************//
 bool altPressed = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
+  bool pressed = record->event.pressed;
+  if(pressed){
+    refresh_incremental_macros(keycode);
+    if(process_incremental_macro(keycode)){
+      return false;
+    }
+    if(is_macro(keycode)){
+      return handle_macro(keycode);
+    }
+  }
+
   switch (keycode)
   {
-  // dynamically generate these.
-  case EPRM:
-    if (record->event.pressed)
-    {
-      eeconfig_init();
-    }
-    return false;
-    break;
+    case LOWER:
+        if (record->event.pressed) {
+        layer_on(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        } else {
+        layer_off(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        }
+        return false;
+    case RAISE:
+        if (record->event.pressed) {
+        layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        } else {
+        layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        }
+        return false;
+    case ADJUST:
+    if (record->event.pressed) {
+        layer_on(_ADJUST);
+        } else {
+        layer_off(_ADJUST);
+        }
+        return false;
  // == Macros START ===
   case ARROW:
     if (record->event.pressed) SEND_STRING("->");
@@ -361,62 +427,6 @@ void matrix_scan_user(void)
   }
 }
 #endif // LEADER
-// Send control or GUI depending if we are on windows or mac
-bool CMD(uint16_t kc) {
-  if(on_mac){ TAP(LGUI(kc)); } else { TAP(LCTL(kc)); }
-  return false;
-}
-//**************** Definitions needed for quad function to work *********************//
-
-int cur_dance (qk_tap_dance_state_t *state) {
-  if (state->count == 1) {
-    //If count = 1, and it has been interrupted - it doesn't matter if it is pressed or not: Send SINGLE_TAP
-    if (state->interrupted || state->pressed==0) return SINGLE_TAP;
-    else return SINGLE_HOLD;
-  }
-  //If count = 2, and it has been interrupted - assume that user is trying to type the letter associated
-  //with single tap. In example below, that means to send `xx` instead of `Escape`.
-  else if (state->count == 2) {
-    if (state->interrupted) return DOUBLE_SINGLE_TAP;
-    else if (state->pressed) return DOUBLE_HOLD;
-    else return DOUBLE_TAP;
-  }
-  else return 6; //magic number. At some point this method will expand to work for more presses
-}
-
-//**************** END Definitions needed for quad function to work *********************//
-
-//===== The awesome tap dance for CUT, COPY and PASTE
-void dance_copy (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    TAP(KC_C);
-  } else if (state->interrupted)
-        { TAP(KC_C);TAP(KC_C);}
-         else CMD(KC_C);
-
-  reset_tap_dance (state);
-}
-
-void dance_cut (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    TAP(KC_X);
-  }
-  else {
-    CMD(KC_X);
-  }
-  reset_tap_dance (state);
-}  
-
-void dance_paste (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    TAP(KC_V);
-  }
-  else {
-    CMD(KC_V);
-  }
-  reset_tap_dance (state);
-}
-
 
 // ======== INCREMENTAL MACROS STUFF =============
 
@@ -488,11 +498,11 @@ bool handle_macro(uint16_t kc)
 {
   switch (kc)
   {
-    case T_TERM: return VSCommand(on_mac, "toit");
-    case FIX_ALL: return VSCommand(on_mac, "faap");
-    case BLK_CMNT: return VSCommand(on_mac, "tbc");
-    case LN_CMNT: return VSCommand(on_mac, "tlic");
-    case CMD_S_P: return command_shift_p(on_mac);
+    case T_TERM: return VSCommand(onMac, "toit");
+    case FIX_ALL: return VSCommand(onMac, "faap");
+    case BLK_CMNT: return VSCommand(onMac, "tbc");
+    case LN_CMNT: return VSCommand(onMac, "tlic");
+    case CMD_S_P: return command_shift_p(onMac);
     case TRI_TICKS: SEND_STRING("[[[ "); break;
   }
   return false;
