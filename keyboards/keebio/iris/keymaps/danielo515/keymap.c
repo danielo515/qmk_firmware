@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "danielo515.h"
-#include "keymap_spanish.h"
 
 extern keymap_config_t keymap_config;
 extern bool on_mac;
@@ -14,43 +13,15 @@ extern bool on_mac;
 #define KC_ALT OSM(MOD_LALT)
 #define KC_CTL OSM(MOD_LCTL)
 #define KC_SFT OSM(MOD_LSFT)
-#undef KC_AT
-#undef KC_PIPE
-#define KC_E_SCLN ES_SCLN
-#define KC_AT ES_AT
-#define KC_EQUO ES_QUOT
-#define KC_PIPE ES_PIPE
-#define KC_ESLS ES_SLSH
-#define KC_LENT LT(_RAISE,KC_ENT)
-#define KC_BKSP SFT_T(KC_BSPC)
-#define KC_ACUT ES_ACUT
-#undef KC_BSLS
-#define KC_BSLS LALT(KC_GRAVE)
-#undef KC_LPRN
-#define KC_LPRN ES_LPRN
-#undef KC_RPRN
-#define KC_RPRN ES_RPRN
-#undef KC_LCBR
-#define KC_LCBR ES_LCBR
-#undef KC_RCBR
-#define KC_RCBR ES_RCBR
-#undef KC_HASH
-#define KC_HASH ES_HASH
-#define KC_EPLUS ES_PLUS
-#define KC_E_LBR ES_LBRC
-#define KC_E_RBR ES_RBRC
-#define KC_E_CIRC ES_CIRC
-#define KC_E_QUES ES_QUES
-#define KC_E_IQUE ES_IQUE
-#define KC_E_AST ES_ASTR
-#define KC_E_AMP ES_AMPR
-#define KC_T_LEFT TD(LEFT_HOME)
-#define KC_T_RIGHT TD(RIGHT_END)
+
+#define LENT LT(_RAISE,ENT)
+// #define KC_SBSPC SFT_T(KC_BSPACE)
+
+#define T_LEFT TD(LEFT_HOME)
+#define T_RIGHT TD(RIGHT_END)
 #define KC_T_J TD(J_ENT)
 #define KC_T_H TD(H_MINS)
 #define KC_T_RGT TD(RGT_HOME)
-#undef KC_APOS
-#define KC_APOS ES_APOS
 #define KC_MAC_TGL MAC_TGL
 #define KC_BL_TOGG BL_TOGG
 
@@ -61,24 +32,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-------+-------+-------+-------+-------+-------.                          ,-------+-------+-------+-------+-------+------.
       ESC   ,   1   ,   2   ,  3    ,  4    ,   5  ,                              6    ,  7    ,   8   ,  9    ,  0    , LOCK ,
   //|-------+-------+-------+-------+-------+------|                           |-------+-------+-------+-------+-------+------|
-      GUI   ,  Q    ,  W    ,  E    ,   R   ,   T  ,                              Y    ,  U    ,    I  ,  O    ,  P    ,E_SCLN,
+      GUI   ,  Q    ,  W    ,  E    ,   R   ,   T  ,                              Y    ,  U    ,    I  ,  O    ,  P    ,SCLN,
   //|-------+-------+-------+-------+-------+------|                           |-------+-------+-------+-------+-------+------|
-      TAB   ,  A    , FN_S  , FN_D  ,  FN_F ,  G   ,                              T_H  ,  T_J  ,  K    ,   L   , APOS  , ACUT ,
+      TAB   ,  A    , FN_S  , FN_D  ,  FN_F ,  G   ,                              T_H  ,  T_J  ,  K    ,   L   , COLN  , QUOT ,
   //|-------+-------+-------+-------+-------+------+---------.       ,---------|-------+-------+-------+-------+-------+------|
-      SFT   , Z     ,TD_CUT ,TD_COPY,TD_PASTE,  B  ,  ESC    ,          MACROS ,  N    ,  M    ,  COMM , DOT   , ESLS  , BSLS,
+      SFT   , Z     ,TD_CUT ,TD_COPY,TD_PASTE,  B  ,  ESC    ,          MACROS ,  N    ,  M    ,  COMM , DOT   , SLSH  , BSLS,
   //|-------+-------+-------+-------+-------+------+--------/         \--------|--------+-------+------+-------+-------+------|
-                                        CTL , LOWR , BKSP ,               SPC  , RASE ,ALT
+                                        CTL , LOWR , BSPC ,               SPC  , RASE, ALT
   //                                  `------+------+----'              `------+------+----'
   ),
   [_S] = LAYOUT_kc(
   //,-------+-------+-------+-------+-------+-------.                           ,-------+-------+-------+-------+-------+------.
             ,       ,       ,       ,       ,       ,                                   ,       ,       ,       ,       ,      ,
   //|-------+-------+-------+-------+-------+-------|                           |-------+-------+-------+-------+-------+------|
-            ,       ,       , EQUO ,  PERC  , E_CIRC ,                            DLR   , E_LBR , E_RBR , E_AST , E_TILD,      ,
+            ,       ,       , QUOT , PERC  , CIRC ,                               DLR   , LBRC  ,  RBRC , ASTR  ,  TILD ,      ,
   //|-------+-------+-------+-------+-------+-------|                           |-------+-------+-------+-------+-------+------|
-            ,       ,       , E_AST , E_EQL ,  E_GT ,                             E_AMP ,  LPRN , RPRN  ,E_COLN , EPLUS , PIPE ,
+            ,       ,       ,ASTR ,EQL , GT ,                              AMPR ,  LPRN , RPRN  ,COLN ,PLUS , PIPE ,
   //|-------+-------+-------+-------+-------+-------+---------.       ,---------|-------+-------+-------+-------+-------+------|
-           ,        ,       ,       , E_GRV , E_LT  ,  E_IEXL ,         E_IQUE  , E_QUES,  LCBR ,  RCBR , E_OVRR,       ,      ,
+           ,        ,       ,       ,GRV ,LT  ,INSERT ,         0  , QUES,  LCBR ,RCBR ,EXLM,       ,      ,
   //|-------+-------+-------+-------+-------+-------+--------/         \--------|--------+-------+------+-------+-------+------|
                                             ,       ,  DEL ,                     ,       ,
   //                                   `----+------+-------'              `------+------+----'
@@ -90,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------+-------+-------+-------+-------+-------|                           |-------+-------+-------+-------+-------+------|
             ,       ,       ,  ESC  ,       ,       ,                              F12  ,  F2   ,  F5   ,       ,       ,      ,
   //|-------+-------+-------+-------+-------+-------|                           |-------+-------+-------+-------+-------+------|
-            ,  TAB  ,  ALT  ,  CTL  ,       ,       ,                              LEFT ,  DOWN ,  UP   ,  RGHT ,       ,      ,
+            ,  TAB  ,  ALT  ,  CTL  ,       ,       ,                              LEFT ,  DOWN ,  UP   , RGHT ,       ,      ,
   //|-------+-------+-------+-------+-------+-------+---------.       ,---------|-------+-------+-------+-------+-------+------|
             ,       ,       ,       ,       ,       ,         ,                 ,       ,       ,       ,       ,       ,      ,
   //|-------+-------+-------+-------+-------+-------+--------/         \--------|--------+-------+------+-------+-------+------|
@@ -102,11 +73,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,------+------+------+-----+-----+----.                     ,------+-----+-----+------+----+----.
     MAC_TGL,BL_TOGG,      ,     ,     ,     ,                      CIRC ,     ,ASTR , LPRN ,RPRN,BSPC,
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
-           , EXLM , EQUO , HASH , PERC,E_CIRC,                          ,E_LBR ,E_RBR,     ,     ,    ,
+           , EXLM , QUOT , HASH , PERC,CIRC,                          ,LBRC ,  RBRC,     ,     ,    ,
   //|------+------+------+------+-----+----|                    |------+------+----+------+-----+----|
-     DEL   , AT   ,  DLR , E_AST,E_EQL,E_GT,                      E_AMP ,LPRN ,RPRN ,E_COLN,EPLUS,PIPE,
+     DEL   , AT   ,  DLR ,   ASTR,  EQL, GT,                        AMPR ,LPRN ,RPRN ,COLN,PLUS,PIPE,
   //|-----+-------+------+------+-----+-----+-----.   ,---------|------+------+-----+------+----+----|
-     BL_S,        ,      ,      ,     ,     ,    ,      E_IQUE  ,E_QUES,LCBR ,RCBR ,      ,    ,    ,
+     BL_S,        ,      ,      ,     ,     ,    ,              ,  QUES,LCBR ,RCBR ,      ,    ,    ,
   //|-----+-------+------+------+-----+-----+----/     \--------|------+-----+-----+------+----+----|
                                       ,    ,DEL ,         DEL   ,      ,
   //                           `----+----+-----'         `------+------+----'
@@ -116,11 +87,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+-----+----+----.                ,-----+----+----+----+----+----.
      F12 , F1 , F2 , F3 , F4 , F5 ,                   F6  , F7 , F8 , F9 ,F10 ,F11 ,
   //|----+----+----+-----+----+----|                |-----+----+----+----+----+----|
-         ,EXLM,EQUO,HASH ,PERC,E_CIRC,                 PGDN,HOME,END ,LPRN,RPRN,    ,
+         ,EXLM,QUOT,HASH ,PERC,  CIRC,                 PGDN,HOME,END ,LPRN,RPRN,    ,
   //|----+----+----+-----+-----+----|               |-----+----+----+----+----+----|
-         , AT ,DLR ,E_AST,E_EQL,E_GT,                LEFT ,DOWN, UP ,RGHT,SCLN,DEL,
+         , AT ,DLR , ASTR,  EQL,  GT,                LEFT ,DOWN, UP ,RGHT,SCLN,DEL,
   //|----+----+----+----+------+----+----.   ,------|------+----+----+----+----+----|
-     MUTE,VOLU,VOLD,    ,E_MINS,E_LT ,   ,    E_IQUE ,E_QUES,END ,    ,    ,    ,    ,
+     MUTE,VOLU,VOLD,    ,  MINS,  LT ,   ,         ,  QUES,END ,    ,    ,    ,    ,
   //`----+----+----+----+----+----+----/    \------+-----+----+----+----+----+----'
                            ,    ,    ,             ,    ,
   //                  `----+----+----'        `----+----+----'
@@ -155,9 +126,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
  [_D] = LAYOUT_kc(
   //,----+----+----+----+----+----.               ,----+----+----+-----+----+----.
-     TILD,EXLM, AT ,HASH,DLR ,PERC,               CIRC,E_LBR,E_RBR,ESLS,    ,BSPC,
+     TILD,EXLM, AT ,HASH,DLR ,PERC,               CIRC,  LBRC, RBRC,SLSH,    ,BSPC,
   //|----+----+----+----+----+----|              |-----+----+----+-----+----+----|
-     RST , 1  , 2  , 3  , 4  , 5  ,               EPLUS, 7  , 8  , 9   , 0  ,    ,
+     RST , 1  , 2  , 3  , 4  , 5  ,               PLUS, 7  , 8  , 9   , 0  ,    ,
   //|----+----+----+----+----+----|              |-----+----+----+-----+----+----|
      DEL ,    ,    ,    ,    ,    ,                    ,  4 ,  5 ,  6  , 0  ,PIPE,
   //|----+----+----+----+----+----+----.    ,----|-----+----+----+-----+----+----|
