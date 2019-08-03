@@ -310,93 +310,74 @@ void matrix_scan_user(void)
   LEADER_DICTIONARY()
   {
     leading = false;
-    leader_end();
     /*  ONE KEY */
-    SEQ_ONE_KEY(KC_T)
-    {
+    SEQ_ONE_KEY(KC_T) {
       SEND_STRING("``" SS_TAP(X_LEFT));
     }
-    // International spanish accent vovels
-    SEQ_ONE_KEY(KC_A)
-    {
+    // International spanish accent vowels
+    SEQ_ONE_KEY(KC_A) {
       SEND_STRING(SS_LALT("e") "a");
     }
-    SEQ_ONE_KEY(KC_E)
-    {
+    SEQ_ONE_KEY(KC_E) {
       SEND_STRING(SS_LALT("e") "e");
     }
-    SEQ_ONE_KEY(KC_I)
-    {
+    SEQ_ONE_KEY(KC_I) {
       SEND_STRING(SS_LALT("e") "i");
     }
-    SEQ_ONE_KEY(KC_O)
-    {
+    SEQ_ONE_KEY(KC_O) {
       SEND_STRING(SS_LALT("e") "o");
     }
-    SEQ_ONE_KEY(KC_U)
-    {
+    SEQ_ONE_KEY(KC_U) {
       SEND_STRING(SS_LALT("e") "u");
     }
-    SEQ_ONE_KEY(KC_N) // ñ
-    {
+    SEQ_ONE_KEY(KC_N) { // ñ
       SEND_STRING(SS_LALT("n") "n");
     }
-    SEQ_ONE_KEY(KC_G) // grep
-    {
+    SEQ_ONE_KEY(KC_G) { // grep
       SEND_STRING(" | grep ");
     }
-    SEQ_TWO_KEYS(KC_D, KC_G) // vim delete all
-    {
+    SEQ_TWO_KEYS(KC_D, KC_G) { // vim delete all
       if(onMac){
         SEND_STRING(SS_LGUI("a") SS_TAP(X_D));
       } else {
         SEND_STRING(SS_LCTRL("a") SS_TAP(X_D));
       }
     }
-    SEQ_TWO_KEYS(KC_P, KC_G)
-    {
+    SEQ_TWO_KEYS(KC_P, KC_G) {
       SEND_STRING("ps -ef | grep ");
     }
-    SEQ_TWO_KEYS(KC_S, KC_S)
-    {
+    SEQ_TWO_KEYS(KC_S, KC_S) {
       SEND_STRING("~/.ssh/ "); // this is a pain to type
     }
-    SEQ_TWO_KEYS(KC_F, KC_T)
-    {
+    SEQ_TWO_KEYS(KC_F, KC_T) {
       SEND_STRING("feat():" SS_TAP(X_LEFT) SS_TAP(X_LEFT));
     }
     // ### LAYER CHANGE
-    SEQ_ONE_KEY(KC_1)
-    {
+    SEQ_ONE_KEY(KC_1) {
       layer_on(1);
     }
-    SEQ_ONE_KEY(KC_H) // control enter, because yes
-    {
+    SEQ_ONE_KEY(KC_H) { // control enter, because yes
       SEND_STRING(SS_DOWN(X_LCTRL) SS_TAP(X_ENTER) SS_UP(X_LCTRL));
     }
     // paste all
-    SEQ_ONE_KEY(KC_P)
-    {
+    SEQ_ONE_KEY(KC_P) {
       if(onMac){
         SEND_STRING(SS_LGUI("a") SS_LGUI("v"));
       } else {
         SEND_STRING(SS_LCTRL("a") SS_LCTRL("v"));
       }
     }
-    SEQ_THREE_KEYS(KC_M, KC_A, KC_C)
-    {
+    SEQ_THREE_KEYS(KC_M, KC_A, KC_C) {
       onMac = true;
       rgblight_setrgb(255, 255, 255);
 
     }
-    SEQ_THREE_KEYS(KC_W, KC_I, KC_N)
-    {
+    SEQ_THREE_KEYS(KC_W, KC_I, KC_N) {
       onMac = false;
       rgblight_setrgb(255, 255, 0);
     }
     /*  Copy all */
-    SEQ_ONE_KEY(KC_Y)
-    {
+    SEQ_ONE_KEY(KC_Y) {
       if(onMac){
         SEND_STRING(SS_LGUI("a") SS_LGUI("c"));
       } else {
@@ -404,22 +385,18 @@ void matrix_scan_user(void)
       }
     }
     //emoji bar
-    SEQ_TWO_KEYS(KC_E, KC_E)
-    {
+    SEQ_TWO_KEYS(KC_E, KC_E) {
       SEND_STRING(SS_DOWN(X_LGUI) SS_LCTRL(" ") SS_UP(X_LGUI));
     }
 
-    SEQ_TWO_KEYS(KC_F, KC_F)
-    {
+    SEQ_TWO_KEYS(KC_F, KC_F) {
       SEND_STRING("ps -ef | grep ");
     }
     // Triple ticks
-    SEQ_TWO_KEYS(KC_T, KC_T)
-    {
+    SEQ_TWO_KEYS(KC_T, KC_T) {
       SEND_STRING("```" SS_TAP(X_ENTER) SS_TAP(X_ENTER) "```" SS_TAP(X_UP));
     }
-    SEQ_TWO_KEYS(KC_H, KC_T)
-    {
+    SEQ_TWO_KEYS(KC_H, KC_T) {
       SEND_STRING("https://");
     }
 
