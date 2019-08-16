@@ -20,6 +20,8 @@
   "align.by.regex.templates": {
     "comma": ",\\s*(?![^()]*\\))"
   },
+  "editor.tabSize": 2,
+  "peacock.color": "#b52e31",
   "workbench.colorCustomizations": {
     "activityBar.background": "#d04649",
     "activityBar.foreground": "#e7e7e7",
@@ -33,6 +35,5 @@
     "statusBar.background": "#b52e31",
     "statusBarItem.hoverBackground": "#d04649",
     "statusBar.foreground": "#e7e7e7"
-  },
-  "editor.tabSize": 2
+  }
 }
