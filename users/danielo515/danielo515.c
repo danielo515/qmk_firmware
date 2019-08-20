@@ -217,11 +217,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     if (record->event.pressed) SEND_STRING(SS_LALT("e") "i"); return false;
   case AC_O:// Accent ó
     if (record->event.pressed) SEND_STRING(SS_LALT("e") "o"); return false;
-  case CUT:
-    if (record->event.pressed) {
-     onMac ?  SEND_STRING(SS_LGUI("x")) : SEND_STRING(SS_LCTRL("x"));
-    }
-    return false;
+  case CUT: if (record->event.pressed) return CMD(KC_X);
   case COPY:
     if (record->event.pressed) {
      onMac ?  SEND_STRING(SS_LGUI("c")) : SEND_STRING(SS_LCTRL("c"));
@@ -310,11 +306,14 @@ void matrix_scan_user(void)
   LEADER_DICTIONARY()
   {
     leading = false;
-    /*  ONE KEY */
     SEQ_ONE_KEY(KC_T) {
       SEND_STRING("``" SS_TAP(X_LEFT));
     }
-    // International spanish accent vowels
+    // Triple ticks
+    SEQ_TWO_KEYS(KC_T, KC_T) {
+      SEND_STRING("```" SS_TAP(X_ENTER) SS_TAP(X_ENTER) "```" SS_TAP(X_UP));
+    }
+    // ==== International spanish accent vowels ====
     SEQ_ONE_KEY(KC_A) {
       SEND_STRING(SS_LALT("e") "a");
     }
@@ -333,8 +332,12 @@ void matrix_scan_user(void)
     SEQ_ONE_KEY(KC_N) { // ñ
       SEND_STRING(SS_LALT("n") "n");
     }
+    // ==== MACROS ===
     SEQ_ONE_KEY(KC_G) { // grep
       SEND_STRING(" | grep ");
+    }
+    SEQ_ONE_KEY(KC_K) {
+        onMac ?  SEND_STRING(SS_LCTRL(" ")) : SEND_STRING(SS_LCTRL("f"));
     }
     SEQ_TWO_KEYS(KC_D, KC_G) { // vim delete all
       if(onMac){
@@ -342,6 +345,9 @@ void matrix_scan_user(void)
       } else {
         SEND_STRING(SS_LCTRL("a") SS_TAP(X_D));
       }
+    }
+    SEQ_ONE_KEY(KC_BSPACE) { // tripe delete!
+      SEND_STRING(SS_TAP(X_BSPACE) SS_TAP(X_BSPACE) SS_TAP(X_BSPACE));
     }
     SEQ_TWO_KEYS(KC_P, KC_G) {
       SEND_STRING("ps -ef | grep ");
