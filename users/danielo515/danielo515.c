@@ -303,7 +303,7 @@ void leader_end(){
 
 void matrix_scan_user(void)
 {
-  LEADER_DICTIONARY()
+  if (leading && leader_sequence_size > 0 && timer_elapsed(leader_time) > LEADER_TIMEOUT)
   {
     leading = false;
     SEQ_ONE_KEY(KC_T) {
@@ -397,10 +397,6 @@ void matrix_scan_user(void)
 
     SEQ_TWO_KEYS(KC_F, KC_F) {
       SEND_STRING("ps -ef | grep ");
-    }
-    // Triple ticks
-    SEQ_TWO_KEYS(KC_T, KC_T) {
-      SEND_STRING("```" SS_TAP(X_ENTER) SS_TAP(X_ENTER) "```" SS_TAP(X_UP));
     }
     SEQ_TWO_KEYS(KC_H, KC_T) {
       SEND_STRING("https://");
