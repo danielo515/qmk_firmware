@@ -21,7 +21,7 @@
 
 // Default is 5
 #undef  DEBOUNCE
-#define DEBOUNCE 5
+#define DEBOUNCE 10
 // Memory saving
 #undef NO_DEBUG
 #define NO_DEBUG
