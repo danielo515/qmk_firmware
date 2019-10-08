@@ -249,12 +249,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
     }
     return false;
  // == Multi Os END ===
-
+#ifdef RGBLIGHT_ENABLE
   case RGB_SLD:
     if (record->event.pressed) { rgblight_mode(1); }
     return false;
     break;
     //First time alt + tab, and alt stays sticky. Next press we just send tab. Any other key releases the alt
+#endif
   case ALT_TAB:
     if (record->event.pressed)
     {
@@ -292,6 +293,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 //**************** LEADER *********************//
 #ifdef LEADER_ENABLE
 LEADER_EXTERNS();
+#ifdef RGBLIGHT_ENABLE
 
 void leader_start() {
   rgblight_setrgb_range(5, 100, 199, 10,15);
@@ -300,6 +302,7 @@ void leader_start() {
 void leader_end(){
   rgblight_setrgb_range(200, 200, 255, 10,15);
 };
+#endif
 
 void matrix_scan_user(void)
 {
@@ -375,12 +378,15 @@ void matrix_scan_user(void)
     }
     SEQ_THREE_KEYS(KC_M, KC_A, KC_C) {
       onMac = true;
+    #ifdef RGBLIGHT_ENABLE
       rgblight_setrgb(255, 255, 255);
-
+    #endif
     }
     SEQ_THREE_KEYS(KC_W, KC_I, KC_N) {
       onMac = false;
+    #ifdef RGBLIGHT_ENABLE
       rgblight_setrgb(255, 255, 0);
+    #endif
     }
     /*  Copy all */
     SEQ_ONE_KEY(KC_Y) {
