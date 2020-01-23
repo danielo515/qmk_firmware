@@ -355,6 +355,9 @@ void matrix_scan_user(void)
     SEQ_TWO_KEYS(KC_P, KC_G) {
       SEND_STRING("ps -ef | grep ");
     }
+    SEQ_TWO_KEYS(KC_J, KC_A) {
+      SEND_STRING("() => {}"SS_TAP(X_LEFT) SS_TAP(X_LEFT)SS_TAP(X_LEFT) SS_TAP(X_LEFT)SS_TAP(X_LEFT) SS_TAP(X_LEFT)SS_TAP(X_LEFT));
+    }
     SEQ_TWO_KEYS(KC_S, KC_S) {
       SEND_STRING("~/.ssh/ "); // this is a pain to type
     }
