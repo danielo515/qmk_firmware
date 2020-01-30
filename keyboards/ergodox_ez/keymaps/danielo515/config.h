@@ -35,6 +35,3 @@
 #endif
 
 #undef RGBLIGHT_ANIMATIONS
-
-#define COMBO_COUNT 4
-#define COMBO_TERM 150
