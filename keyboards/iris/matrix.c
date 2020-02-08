@@ -30,7 +30,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "pro_micro.h"
 #include "config.h"
 #include "timer.h"
-#include "backlight.h"
+#ifdef BACKLIGHT_ENABLE
+        #include "backlight.h"
+#endif
 
 #ifdef USE_I2C
 #  include "i2c.h"
