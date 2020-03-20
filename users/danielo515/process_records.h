@@ -3,7 +3,7 @@
 
 enum custom_keycodes
 {
-    EPRM = SAFE_RANGE, 
+    EPRM = SAFE_RANGE,
     RGB_SLD,
     ALT_TAB,
     QWERTY,
@@ -95,7 +95,9 @@ enum layers {
 # define CTL_K RCTL_T(KC_K)
 # define ALT_J ALT_T(KC_J)
 # define SFT_MINS LSFT_T(KC_MINS) // tap - hold shift
+# define CMD_MINS GUI_T(KC_MINS) // tap - hold cmd
 # define CMD_QUOT GUI_T(KC_QUOTE) // tap ' hold cmd
+# define SFT_QUOT LSFT_T(KC_QUOTE) // tap ' hold shift
 //=============== Movement modified
 # define CTL_LEFT LCTL(KC_LEFT)
 # define CTL_RIGHT LCTL(KC_RIGHT)
