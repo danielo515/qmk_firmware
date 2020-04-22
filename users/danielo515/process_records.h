@@ -104,3 +104,5 @@ enum layers {
 
 # define SFT_LEFT LSFT(KC_LEFT)
 # define SFT_RIGHT LSFT(KC_RIGHT)
+# define SFT_LEFT_END LGUI(LSFT(KC_LEFT))
+# define SFT_RIGHT_END LGUI(LSFT(KC_RIGHT))
