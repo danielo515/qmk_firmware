@@ -24,14 +24,15 @@ const uint16_t PROGMEM m_comm[] = {KC_M,KC_COMMA,  COMBO_END};
 const uint16_t PROGMEM n_m[] = {KC_N, KC_M,COMBO_END};
 const uint16_t PROGMEM o_p_combo[]= {KC_O,KC_P, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
-    [JK_ESC] = COMBO(jk_combo, KC_ESC),
-    [YU_COM] = COMBO(yu_combo, KC_CIRC),
-    [UI_COM] = COMBO(ui_combo, KC_CIRC),
-    [IO_COM] = COMBO(io_combo, KC_TILD),
-    [QW_COM] = COMBO(qw_combo, KC_AT),
-    [DOT_SLS] = COMBO(dot_sls, KC_TILD),
+    [JK_ESC]  = COMBO(jk_combo, KC_ESC),
+    [YU_COM]  = COMBO(yu_combo, KC_AMPR),
+    [UI_COM]  = COMBO(ui_combo, KC_CIRC),
+    [IO_COM]  = COMBO(io_combo, KC_TILD),
+    [DOT_SLS] = COMBO(dot_sls, KC_EXLM),
     [COM_DOT] = COMBO(com_dot, KC_QUES),
-    [M_COMM] = COMBO(m_comm, KC_ESC),
-    [N_M] = COMBO(n_m, KC_DLR),
-    [OP_COM] = COMBO(o_p_combo, KC_HASH),
+    [M_COMM]  = COMBO(m_comm, KC_TILD),
+    [N_M]     = COMBO(n_m, KC_DLR),
+    [OP_COM]  = COMBO(o_p_combo, KC_HASH),
+    // Right hand side combos
+    [QW_COM]  = COMBO(qw_combo, KC_AT),
 };
