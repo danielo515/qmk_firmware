@@ -169,6 +169,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 onMac ? SEND_STRING(SS_LGUI("f")) : SEND_STRING(SS_LCTRL("f"));
             }
             return false;
+        case WIN_TO_RIGHT:
+            if (record->event.pressed) {
+                onMac ? tap_code16(SGUI(A(KC_RIGHT))) : tap_code16(G(KC_RIGHT));
+            }
+            return false;
+        case WIN_TO_LEFT:
+            if (record->event.pressed) {
+                onMac ? tap_code16(SGUI(A(KC_LEFT))) : tap_code16(G(KC_LEFT));
+            }
+            return false;
         case CHG_LAYOUT:
             if (record->event.pressed) {
                 onMac ? SEND_STRING(SS_LCTRL(" ")) : SEND_STRING(SS_LCTRL("f"));
