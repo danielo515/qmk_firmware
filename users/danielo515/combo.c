@@ -35,8 +35,10 @@ combo_t key_combos[COMBO_COUNT] = {
     [COM_DOT]  = COMBO(com_dot, KC_QUES),
     [N_M]      = COMBO(n_m, KC_DLR),
     [OP_COM]   = COMBO(o_p_combo, KC_HASH),
-    [M_COMM]   = COMBO(m_comm, KC_RBRC),
-    [M_CM_DOT] = COMBO(m_cm_dot_combo, KC_LBRC),
+    // m + , = {
+    [M_COMM]   = COMBO(m_comm, KC_LCBR),
+    // m + , + . = }
+    // [M_CM_DOT] = COMBO(m_cm_dot_combo, KC_RCBR),
     // Right hand side combos
     [QW_COM] = COMBO(qw_combo, KC_AT),
 };
