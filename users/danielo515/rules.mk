@@ -3,7 +3,7 @@ SRC +=  danielo515.c \
 		process_records.c
 
 ifeq ($(strip $(COMBO_ENABLE)), yes)
-    SRC += combo.c
+	VPATH += keyboards/gboards/
 endif
 
 ifeq ($(strip $(TAP_DANCE_ENABLE)), yes)
