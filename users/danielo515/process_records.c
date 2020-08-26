@@ -97,8 +97,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case IARROW: if (record->event.pressed) SEND_STRING("<-"); return false;
     case ARROW: if (record->event.pressed) SEND_STRING("->"); return false;
     case F_ARROW: if (record->event.pressed) SEND_STRING("=>"); return false;
-    case GREP: if (record->event.pressed) SEND_STRING(" | grep "); return false;
+    case PIPE_DOT: if (record->event.pressed) SEND_STRING("|."); return false;
     case CLN_EQ: if (record->event.pressed) SEND_STRING(":="); return false;
+    case GREP: if (record->event.pressed) SEND_STRING(" | grep "); return false;
  // == Macros END ===
  // == Multi Os START ===
   case KC_HOME:// make the home behave the same on OSX

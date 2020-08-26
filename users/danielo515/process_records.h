@@ -3,7 +3,7 @@
 
 enum custom_keycodes
 {
-    EPRM = SAFE_RANGE, 
+    EPRM = SAFE_RANGE,
     RGB_SLD,
     ALT_TAB,
     QWERTY,
@@ -15,6 +15,7 @@ enum custom_keycodes
     IARROW,
     CLN_EQ,
     F_ARROW,
+    PIPE_DOT,
     GREP,
 // Accented characters
     AC_A,
