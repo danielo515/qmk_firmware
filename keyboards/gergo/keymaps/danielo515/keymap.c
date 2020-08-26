@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                         ,-------------------------------------------.
  * |        |  !   |  @   |  {   |  }   | |.   |                         |      |      |      |      |      |  \ |   |
  * |--------+------+------+------+------+------|------.           .------|------+------+------+------+------+--------|
- * |        |  =:  |  $   |  (   |  )   | =>   |      |           |      |   +  |  -   |  /   |  *   |  %   |  ' "   |
+ * |        |  =:  |  $   |  (   |  )   | =>   |      |           |      |   +  |  !   |  /   |  *   |  %   |  ' "   |
  * |--------+------+------+------+------+------|------|           |------|------+------+------+------+------+--------|
  * |        |  <-  |  ^   |  [   |  ]   | ->   |      |           |      |   &  |  <   |  >   |  .   |  / ? | - _    |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [SYMB] = LAYOUT_gergo(
     KC_TRNS, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, PIPE_DOT,                                            KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSLS,
-    KC_TRNS, CLN_EQ, KC_DLR,  KC_LPRN, KC_RPRN, F_ARROW,  KC_TRNS,                          KC_TRNS, KC_PLUS, KC_MINS, KC_SLSH, KC_ASTR, KC_PERC, KC_QUOT,
+    KC_TRNS, CLN_EQ, KC_DLR,  KC_LPRN, KC_RPRN, F_ARROW,  KC_TRNS,                          KC_TRNS, KC_PLUS, KC_EXLM, KC_SLSH, KC_ASTR, KC_PERC, KC_QUOT,
     KC_TRNS, IARROW, KC_CIRC, KC_LBRC, KC_RBRC, ARROW, KC_TRNS, KC_TRNS,        KC_TRNS, KC_TRNS, KC_AMPR, KC_GT, KC_LT, KC_DOT,  KC_SLSH, KC_MINS,
                                         KC_TRNS, KC_TRNS, KC_SCLN, KC_TRNS,         KC_EQL,  KC_SCLN, KC_TRNS, KC_TRNS
     ),

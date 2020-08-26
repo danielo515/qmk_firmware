@@ -8,6 +8,9 @@ COMB(jkCol,       KC_COLN,         KC_J, RCTL_T(KC_K))
 COMB(dollar,      KC_DLR,         KC_N, KC_M)
 COMB(ji,          KC_EQL,         KC_J, KC_I)
 COMB(hj,          KC_UNDS,         KC_H, KC_J)
+COMB(mcomm,       KC_ASTR,         KC_M, KC_COMM)
+COMB(comdot,      KC_EXLM,         KC_COMM, KC_DOT)
+// ñ
 SUBS(jn,          SS_LALT("n") "n",         KC_J, KC_N)
 COMB(hu,          KC_CIRC,         KC_H, KC_U)
 // Right hand
